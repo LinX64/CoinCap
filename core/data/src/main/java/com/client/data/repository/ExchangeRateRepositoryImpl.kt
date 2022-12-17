@@ -5,6 +5,7 @@ import com.client.data.model.toExternalModel
 import com.client.data.network.di.BinDispatchers.*
 import com.client.data.network.di.Dispatcher
 import com.client.data.retrofit.ExchangesApi
+import com.client.data.util.Const.DELAY
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
@@ -18,10 +19,6 @@ class ExchangeRateRepositoryImpl @Inject constructor(
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
     private val exchangesApi: ExchangesApi
 ) : ExchangeRateRepository {
-
-    companion object {
-        private const val DELAY = 3000L
-    }
 
     override fun getExchangeRates(): Flow<List<Rate>> = flow {
         emit(getRatesCall())

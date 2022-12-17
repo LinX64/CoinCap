@@ -1,6 +1,7 @@
 package com.client.data.network.di
 
 import com.client.data.retrofit.ExchangesApi
+import com.client.data.util.Const
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 object NetworkModule {
 
     @Provides
-    fun provideBaseUrl() = "https://api.coincap.io/v2/"
+    fun provideBaseUrl() = Const.BASE_URL
 
     @Provides
     fun provideHttpClient() = OkHttpClient
