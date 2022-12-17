@@ -18,6 +18,7 @@ class HomeViewModel @Inject constructor(
 
     val liveRates: StateFlow<HomeUiState> = getExchangeRateUseCase
         .getLiveRates()
+        .distinctUntilChanged()
         .map { result -> handleState(result) }
         .flatMapLatest {
             flowOf(HomeUiState.Loading, it)
