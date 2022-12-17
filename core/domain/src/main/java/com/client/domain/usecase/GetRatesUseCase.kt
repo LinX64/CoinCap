@@ -4,7 +4,7 @@ import com.client.data.model.Rate
 import com.client.data.network.Result
 import kotlinx.coroutines.flow.Flow
 
-interface GetExchangeRatesUseCase {
+interface GetRatesUseCase {
     fun getRates(): Flow<Result<List<Rate>>>
     fun getLiveRates(): Flow<Result<List<Rate>>>
 }

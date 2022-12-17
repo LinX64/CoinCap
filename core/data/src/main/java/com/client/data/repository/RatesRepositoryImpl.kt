@@ -5,7 +5,7 @@ import com.client.data.model.Rate
 import com.client.data.model.toExternalModel
 import com.client.data.network.di.BinDispatchers.*
 import com.client.data.network.di.Dispatcher
-import com.client.data.retrofit.ExchangesApi
+import com.client.data.retrofit.RatesApi
 import com.client.data.util.Const.DELAY
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
@@ -14,12 +14,12 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class ExchangeRateRepositoryImpl @Inject constructor(
+class RatesRepositoryImpl @Inject constructor(
     @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
-    private val exchangesApi: ExchangesApi
-) : ExchangeRateRepository {
+    private val ratesApi: RatesApi
+) : RatesRepository {
 
-    override fun getExchangeRates(): Flow<List<Rate>> = flow {
+    override fun getRates(): Flow<List<Rate>> = flow {
         emit(getRatesCall())
     }.flowOn(ioDispatcher)
 
@@ -32,13 +32,13 @@ class ExchangeRateRepositoryImpl @Inject constructor(
         .retryWithDelay()
         .flowOn(ioDispatcher)
 
-    override fun getExchangeRateBy(id: String) = flow {
-        val rate = exchangesApi.getExchangeRateBy(id).rate
+    override fun getRateBy(id: String) = flow {
+        val rate = ratesApi.getRateBy(id).rate
         emit(rate)
     }.flowOn(ioDispatcher)
 
-    private suspend fun getRatesCall() = exchangesApi
-        .getExchangeRates()
+    private suspend fun getRatesCall() = ratesApi
+        .getRates()
         .rates
         .map { it.toExternalModel() }
         .sortedBy { it.currencySymbol }

@@ -1,6 +1,6 @@
 package com.client.data.network.di
 
-import com.client.data.retrofit.ExchangesApi
+import com.client.data.retrofit.RatesApi
 import com.client.data.util.Const
 import dagger.Module
 import dagger.Provides
@@ -41,6 +41,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideExchangesService(retrofit: Retrofit): ExchangesApi =
-        retrofit.create(ExchangesApi::class.java)
+    fun provideRatesService(retrofit: Retrofit): RatesApi =
+        retrofit.create(RatesApi::class.java)
 }

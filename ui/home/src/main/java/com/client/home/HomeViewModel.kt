@@ -6,17 +6,17 @@ import com.client.common.util.stateInViewModelScope
 import com.client.data.model.Rate
 import com.client.data.network.Result
 import com.client.data.network.Result.*
-import com.client.domain.usecase.GetExchangeRatesUseCase
+import com.client.domain.usecase.GetRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    getExchangeRateUseCase: GetExchangeRatesUseCase,
+    getRatesUseCase: GetRatesUseCase,
 ) : ViewModel() {
 
-    val liveRates: StateFlow<HomeUiState> = getExchangeRateUseCase
+    val liveRates: StateFlow<HomeUiState> = getRatesUseCase
         .getLiveRates()
         .distinctUntilChanged()
         .map { result -> handleState(result) }
