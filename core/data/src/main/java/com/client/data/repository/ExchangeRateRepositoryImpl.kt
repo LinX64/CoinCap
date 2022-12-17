@@ -1,5 +1,6 @@
 package com.client.data.repository
 
+import com.client.common.util.retryWithDelay
 import com.client.data.model.Rate
 import com.client.data.model.toExternalModel
 import com.client.data.network.di.BinDispatchers.*
@@ -11,8 +12,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.retryWhen
-import java.io.IOException
 import javax.inject.Inject
 
 class ExchangeRateRepositoryImpl @Inject constructor(
@@ -30,9 +29,7 @@ class ExchangeRateRepositoryImpl @Inject constructor(
             delay(DELAY)
         }
     }
-        .retryWhen { cause: Throwable, attempt: Long ->
-            cause is IOException && attempt < 10
-        }
+        .retryWithDelay()
         .flowOn(ioDispatcher)
 
     override fun getExchangeRateBy(id: String) = flow {
