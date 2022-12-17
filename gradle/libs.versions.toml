@@ -39,7 +39,7 @@ kotlinxSerializationJson = "1.4.1"
 ksp = "1.7.21-1.0.8"
 lint = "30.3.1"
 
-protobuf = "3.21.9"
+protobuf = "3.21.12"
 protobufPlugin = "0.8.19"
 
 retrofit = "2.9.0"
