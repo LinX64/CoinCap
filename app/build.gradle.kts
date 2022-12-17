@@ -1,3 +1,5 @@
+import com.client.coincap.CoinCapBuildType
+
 plugins {
     id("coincap.android.application")
     id("coincap.android.application.compose")
@@ -16,6 +18,20 @@ android {
         }
     }
 
+    buildTypes {
+        val debug by getting {
+            applicationIdSuffix = CoinCapBuildType.DEBUG.applicationIdSuffix
+        }
+        val release by getting {
+            isMinifyEnabled = true
+            applicationIdSuffix = CoinCapBuildType.RELEASE.applicationIdSuffix
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+    }
+
     packagingOptions {
         resources {
             excludes.add("/META-INF/{AL2.0,LGPL2.1}")
@@ -31,8 +47,10 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
     implementation(project(":core:ui"))
-    // todo: import some projects later
+    implementation(project(":ui:home"))
 
     api(libs.androidx.compose.foundation)
     api(libs.androidx.compose.foundation.layout)

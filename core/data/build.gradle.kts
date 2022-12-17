@@ -13,8 +13,12 @@ android {
 }
 
 dependencies {
-    implementation(libs.androidx.core.ktx)
+    implementation(project(":core:common"))
 
-    implementation(libs.kotlinx.datetime)
+    implementation(libs.androidx.core.ktx)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.retrofit.core)
+    implementation(libs.gson.core)
+    implementation(libs.gson.converter)
+    implementation(libs.okhttp.logging)
 }

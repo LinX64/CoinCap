@@ -11,25 +11,22 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply {
-                apply("nowinandroid.android.library")
-                apply("nowinandroid.android.hilt")
+                apply("coincap.android.library")
+                apply("coincap.android.hilt")
             }
             extensions.configure<LibraryExtension> {
                 defaultConfig {
-                    testInstrumentationRunner =
-                        "com.google.samples.apps.nowinandroid.core.testing.NiaTestRunner" //todo
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
             }
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
 
             dependencies {
-                add("implementation", project(":core:model"))
-                add("implementation", project(":core:ui"))
-                add("implementation", project(":core:designsystem"))
-                add("implementation", project(":core:data"))
                 add("implementation", project(":core:common"))
+                add("implementation", project(":core:data"))
                 add("implementation", project(":core:domain"))
+                add("implementation", project(":core:ui"))
 
                 add("testImplementation", kotlin("test"))
                 add("testImplementation", project(":core:testing"))

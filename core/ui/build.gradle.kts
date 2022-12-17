@@ -11,6 +11,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":core:data"))
     implementation(libs.androidx.core.ktx)
 
     api(libs.androidx.compose.foundation)

@@ -16,6 +16,11 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "CoinCap"
-include (":app")
-include (":core:ui")
+include(":app")
+
+include(":core:common")
+include(":core:data")
+include(":core:domain")
+include(":core:ui")
+
 include(":ui:home")
