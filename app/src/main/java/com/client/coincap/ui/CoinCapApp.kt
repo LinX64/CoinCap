@@ -32,6 +32,7 @@ fun CoinCapApp(
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onBackground,
+        topBar = { TopAppBar() },
         snackbarHost = { SnackbarHost(snackBarHostState) },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { padding ->
