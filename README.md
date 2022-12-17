@@ -22,3 +22,8 @@ the app more scalable and maintainable.
 The project is using Github Actions to build and test the app on every push and pull request on two
 devices. Also, it is using Renovate to keep the dependencies up to date.
 
+### TODO
+
+- Add Offline first support 
+- Tests
+- Add more features
