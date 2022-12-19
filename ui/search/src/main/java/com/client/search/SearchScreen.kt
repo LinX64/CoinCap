@@ -25,7 +25,7 @@ import com.client.ui.SearchBar
 fun SearchRoute(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.searchResultUiState.collectAsState()
+    val uiState by viewModel.searchResultUiState.collectAsStateWithLifecycle()
     val rates by viewModel.rates.collectAsStateWithLifecycle()
 
     SearchScreen(
