@@ -13,7 +13,7 @@ import com.client.search.navigation.searchScreen
 fun CoinCapNavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = searchNavigationRoute
+    startDestination: String = homeNavigationRoute
 ) {
     NavHost(
         navController = navController,
