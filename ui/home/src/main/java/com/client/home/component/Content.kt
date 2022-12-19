@@ -6,6 +6,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import com.client.detail.navigation.navigateToDetail
 import com.client.home.HomeUiState
 import com.client.ui.RateCell
 
@@ -13,7 +15,8 @@ import com.client.ui.RateCell
 internal fun HomeContent(
     modifier: Modifier,
     state: LazyGridState,
-    homeUiState: HomeUiState
+    homeUiState: HomeUiState,
+    navController: NavHostController
 ) {
     LazyVerticalGrid(
         columns = GridCells.Adaptive(200.dp),
@@ -23,9 +26,7 @@ internal fun HomeContent(
     ) {
         homeContent(
             homeUiState = homeUiState,
-            onRateClicked = { id ->
-                //TODO - navController.navigateToDetail(rate.id)
-            }
+            onRateClicked = { id -> navController.navigateToDetail(id) }
         )
     }
 }

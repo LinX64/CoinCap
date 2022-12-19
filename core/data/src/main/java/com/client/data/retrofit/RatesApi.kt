@@ -10,6 +10,6 @@ interface RatesApi {
     @GET("rates")
     suspend fun getRates(): RatesResp
 
-    @GET("{id}")
+    @GET("rates/{id}")
     suspend fun getRateBy(@Path("id") id: String): RateDetailResp
 }

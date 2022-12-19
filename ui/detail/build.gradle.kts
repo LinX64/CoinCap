@@ -8,15 +8,14 @@ android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    namespace = "com.client.coincap.core.search"
+    namespace = "com.client.coincap.core.detail"
 }
 
 dependencies {
     implementation(project(":core:common"))
     implementation(project(":core:data"))
-    implementation(project(":core:domain"))
     implementation(project(":core:ui"))
-    implementation(project(":ui:detail"))
+    implementation(project(":core:domain"))
 
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.androidx.compose.material3)

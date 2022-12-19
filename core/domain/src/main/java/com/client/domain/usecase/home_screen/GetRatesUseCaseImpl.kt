@@ -1,6 +1,7 @@
 package com.client.domain.usecase.home_screen
 
 import com.client.data.model.Rate
+import com.client.data.model.RateDetailResp
 import com.client.data.network.Result
 import com.client.data.network.asResult
 import com.client.data.repository.RatesRepository
@@ -8,11 +9,11 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
-class GetRateUseCaseImpl @Inject constructor(
+class GetRatesUseCaseImpl @Inject constructor(
     private val rateRepository: RatesRepository
 ) : GetRatesUseCase {
 
-    operator fun invoke(id: String): Flow<Result<Rate>> = rateRepository
+    operator fun invoke(id: String): Flow<Result<RateDetailResp>> = rateRepository
         .getRateBy(id)
         .asResult()
 

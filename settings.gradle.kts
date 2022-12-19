@@ -29,5 +29,6 @@ include(
 // Ui module
 include(
     ":ui:home",
-    ":ui:search"
+    ":ui:search",
+    ":ui:detail"
 )
