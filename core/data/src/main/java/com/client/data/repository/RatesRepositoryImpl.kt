@@ -21,7 +21,8 @@ class RatesRepositoryImpl @Inject constructor(
 
     override fun getRates(): Flow<List<Rate>> = flow {
         emit(getRatesCall())
-    }.flowOn(ioDispatcher)
+    }
+        .flowOn(ioDispatcher)
 
     override fun getLiveRates(): Flow<List<Rate>> = flow {
         while (true) {
@@ -41,5 +42,5 @@ class RatesRepositoryImpl @Inject constructor(
         .getRates()
         .rates
         .map { it.toExternalModel() }
-        .sortedBy { it.currencySymbol }
+        .sortedByDescending { it.currencySymbol }
 }

@@ -2,11 +2,10 @@ package com.client.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.client.common.util.stateInViewModelScope
 import com.client.data.model.Rate
 import com.client.data.network.Result
 import com.client.data.network.Result.*
-import com.client.domain.usecase.GetRatesUseCase
+import com.client.domain.usecase.home_screen.GetRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -17,13 +16,17 @@ class HomeViewModel @Inject constructor(
 ) : ViewModel() {
 
     val liveRates: StateFlow<HomeUiState> = getRatesUseCase
-        .getLiveRates()
+        .getLiveCryptoCurrencies()
         .distinctUntilChanged()
         .map { result -> handleState(result) }
         .flatMapLatest {
             flowOf(HomeUiState.Loading, it)
         }
-        .stateInViewModelScope(scope = viewModelScope, initialValue = HomeUiState.Loading)
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = HomeUiState.Loading
+        )
 
     private fun handleState(result: Result<List<Rate>>) = when (result) {
         is Loading -> HomeUiState.Loading

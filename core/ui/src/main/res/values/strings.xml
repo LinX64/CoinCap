@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="error_message_title">Something went wrong!</string>
+    <string name="search">Search rates</string>
+    <string name="try_again_desc">Please try again with a different query…</string>
 </resources>

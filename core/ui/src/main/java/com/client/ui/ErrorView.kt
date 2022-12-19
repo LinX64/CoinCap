@@ -21,8 +21,7 @@ fun ErrorView(
 ) {
     Column(
         modifier = modifier
-            .fillMaxSize()
-            .padding(48.dp)
+            .fillMaxHeight()
             .background(MaterialTheme.colorScheme.surface),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center

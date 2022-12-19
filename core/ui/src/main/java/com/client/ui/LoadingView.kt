@@ -5,8 +5,8 @@ import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
 fun LoadingView() {
@@ -14,7 +14,12 @@ fun LoadingView() {
         modifier = Modifier
             .fillMaxWidth()
             .testTag("ui:loading"),
-        trackColor = Color.Green,
-        color = MaterialTheme.colorScheme.surface
+        trackColor = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.5f)
     )
+}
+
+@Preview
+@Composable
+fun LinearPreview() {
+    LoadingView()
 }

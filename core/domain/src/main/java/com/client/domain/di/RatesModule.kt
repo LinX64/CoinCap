@@ -1,7 +1,7 @@
 package com.client.domain.di
 
-import com.client.domain.usecase.GetRateUseCaseImpl
-import com.client.domain.usecase.GetRatesUseCase
+import com.client.domain.usecase.home_screen.GetRateUseCaseImpl
+import com.client.domain.usecase.home_screen.GetRatesUseCase
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

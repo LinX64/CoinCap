@@ -16,9 +16,7 @@ interface DataModule {
 
     @Binds
     @Singleton
-    fun bindRateRepository(
-        repository: RatesRepositoryImpl
-    ): RatesRepository
+    fun bindRateRepository(repository: RatesRepositoryImpl): RatesRepository
 
     @Binds
     fun bindNetworkMonitor(networkMonitor: ConnectivityManagerNetworkMonitor): NetworkMonitor

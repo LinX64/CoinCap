@@ -1,5 +1,6 @@
 package com.client.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -12,9 +13,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.client.data.model.Rate
+import androidx.core.graphics.toColorInt
+import com.client.coincap.core.ui.R
+import com.client.common.util.formatToPrice
+import com.client.common.util.roundToInteger
+import java.util.*
 
 @Composable
 fun RateCell(
@@ -28,7 +35,7 @@ fun RateCell(
     Card(
         modifier = modifier
             .fillMaxWidth()
-            .padding(8.dp)
+            .padding(5.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(8.dp)
     ) {
@@ -45,52 +52,104 @@ fun Content(
 ) {
     Row(
         modifier = Modifier
-            .padding(12.dp)
+            .padding(10.dp)
             .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Box(
-            modifier = Modifier
-                .size(68.dp)
-                .clip(RoundedCornerShape(8.dp))
-                .background(Color.Gray),
-            contentAlignment = Alignment.Center
+        CurrencyBox(currencySymbol = currencySymbol)
+
+        Spacer(modifier = Modifier.width(16.dp))
+
+        ColumnItems(
+            rate = rate,
+            symbol = symbol,
+            type = type
+        )
+    }
+}
+
+@Composable
+private fun CurrencyBox(
+    modifier: Modifier = Modifier,
+    currencySymbol: String
+) {
+    Box(
+        modifier = modifier
+            .size(40.dp)
+            .fillMaxSize()
+            .clip(RoundedCornerShape(8.dp))
+            .background(MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.3f)),
+        contentAlignment = Alignment.Center
+    ) {
+        Text(
+            text = currencySymbol.take(3),
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+private fun ColumnItems(
+    rate: String,
+    symbol: String,
+    type: String
+) {
+    Column {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
         ) {
             Text(
-                text = currencySymbol,
+                text = symbol,
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
+            )
+
+            Text(
+                text = "$${rate.toDouble().formatToPrice()}",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold
             )
         }
 
-        Spacer(modifier = Modifier.width(16.dp))
-
-        Column {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            val capitalisedType =
+                type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
             Text(
-                text = type,
-                style = MaterialTheme.typography.titleMedium,
-                fontWeight = FontWeight.Bold
+                text = capitalisedType,
+                style = MaterialTheme.typography.bodyMedium,
+                fontWeight = FontWeight.Bold,
+                color = Color.Gray
             )
 
-            Spacer(modifier = Modifier.width(10.dp))
+            Row {
+                val changedPercentage = (rate.toDouble() * 0.01).roundToInteger()
+                val hadProfit = changedPercentage.toDouble() > 0
 
-            Text(
-                text = symbol,
-                style = MaterialTheme.typography.bodyMedium
-            )
-
-            Spacer(modifier = Modifier.width(10.dp))
-
-            Text(
-                text = rate,
-                style = MaterialTheme.typography.bodyMedium
-            )
+                Text(
+                    text = "$changedPercentage%",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = if (hadProfit) Color("#4CAF50".toColorInt()) else Color("#E91E63".toColorInt())
+                )
+                Image(
+                    painter = painterResource(
+                        id = if (hadProfit) R.drawable.ic_baseline_arrow_upward_24
+                        else R.drawable.ic_baseline_arrow_downward_24
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.size(16.dp)
+                )
+            }
         }
     }
 }
 
 @Composable
-@DevicePreviews
+@Preview
 fun RateCellPreview() {
     RateCell(
         rate = "1.0",

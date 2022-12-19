@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.client.coincap.R
 import com.client.coincap.navigation.CoinCapNavHost
 import com.client.data.util.NetworkMonitor
@@ -28,15 +29,15 @@ fun CoinCapApp(
         windowSizeClass = windowSizeClass
     )
 ) {
+    val isOffline by appState.isOffline.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onBackground,
-        topBar = { TopAppBar() },
+        topBar = { TopAppBar(appState.navController) },
         snackbarHost = { SnackbarHost(snackBarHostState) },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { padding ->
-        val isOffline by appState.isOffline.collectAsStateWithLifecycle()
 
         AppNavigation(
             appState = appState,

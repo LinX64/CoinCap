@@ -2,23 +2,24 @@ package com.client.home
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.client.ui.ErrorView
-import com.client.ui.LoadingView
-import com.client.ui.RateCell
-import com.client.ui.TrackScrollJank
+import com.client.coincap.ui.home.R
+import com.client.data.model.Rate
+import com.client.home.component.HomeContent
+import com.client.home.component.LineChartView
+import com.client.ui.*
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -30,7 +31,6 @@ internal fun HomeRoute(
     val homeUiState by viewModel.liveRates.collectAsStateWithLifecycle()
     HomeScreen(
         modifier = modifier,
-        viewModel = viewModel,
         homeUiState = homeUiState,
         navController = navController
     )
@@ -39,7 +39,6 @@ internal fun HomeRoute(
 @Composable
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel,
     homeUiState: HomeUiState,
     navController: NavHostController
 ) {
@@ -48,54 +47,46 @@ internal fun HomeScreen(
 
     TrackScrollJank(scrollableState = state, stateName = "ui:home:grid")
 
-    LazyVerticalGrid(
-        columns = GridCells.Adaptive(200.dp),
+    Column(
         modifier = modifier
             .fillMaxSize()
-            .testTag("ui:home:grid"),
-        contentPadding = PaddingValues(16.dp),
-        state = state
+            .padding(8.dp)
     ) {
-        homeContent(
-            homeUiState = homeUiState,
-            onRateClicked = { id ->
-                //TODO - navController.navigateToDetail(rate.id)
-            }
-        )
-    }
+        if (isLoading) LoadingView()
 
-    if (isLoading) {
-        LoadingView()
-    }
+        Spacer(modifier = Modifier.height(16.dp))
 
-    if (homeUiState is HomeUiState.Error) {
-        ErrorView(
-            modifier = modifier,
-            errorMessage = homeUiState.error
+        LineChartView()
+
+        Spacer(modifier = modifier.height(16.dp))
+
+        Text(
+            text = stringResource(R.string.top_crypto_currencies),
+            modifier = modifier
+                .padding(bottom = 8.dp)
+                .fillMaxWidth(),
+            style = MaterialTheme.typography.titleMedium
         )
+
+        HomeContent(modifier, state, homeUiState)
     }
 }
 
-private fun LazyGridScope.homeContent(
-    modifier: Modifier = Modifier,
-    homeUiState: HomeUiState,
-    onRateClicked: (String) -> Unit
-) = when (homeUiState) {
-    HomeUiState.Loading -> Unit
-    is HomeUiState.Success -> {
-        items(homeUiState.rates, key = { it.id }) { rate ->
-            Column(modifier = modifier) {
-                RateCell(
-                    rate = rate.rateUsd,
-                    symbol = rate.symbol,
-                    currencySymbol = rate.currencySymbol ?: rate.symbol,
-                    type = rate.type,
-                    onClick = { onRateClicked(rate.id) }
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenPreview() {
+    HomeScreen(
+        homeUiState = HomeUiState.Success(
+            rates = listOf(
+                Rate(
+                    id = "bitcoin",
+                    symbol = "BTC",
+                    currencySymbol = "USD",
+                    rateUsd = "1.0",
+                    type = "crypto"
                 )
-            }
-        }
-    }
-    is HomeUiState.Error -> {
-        /* do nothing */
-    }
+            )
+        ),
+        navController = rememberNavController()
+    )
 }
