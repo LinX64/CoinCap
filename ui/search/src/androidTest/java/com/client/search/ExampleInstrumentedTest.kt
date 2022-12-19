@@ -19,6 +19,6 @@ class ExampleInstrumentedTest {
     fun useAppContext() {
         // Context of the app under test.
         val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.client.search.test", appContext.packageName)
+        assertEquals("com.client.coincap.core.search.test", appContext.packageName)
     }
 }
