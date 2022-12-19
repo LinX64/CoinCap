@@ -20,8 +20,9 @@ the app more scalable and maintainable.
 ### Screenshots
 
 <p>
-<img src="https://i.imgur.com/8PCPlF5.png" height="340" />
-<img src="https://i.imgur.com/uAhmcqg.png" height="340" />
+<img src="https://i.imgur.com/iw2Vu3I.png" height="400" />
+<img src="https://i.imgur.com/araPWBu.png" height="400" />
+<img src="https://i.imgur.com/AL7LK5T.png" height="400" />
 </p>
 
 ### Features
@@ -31,6 +32,11 @@ the app more scalable and maintainable.
    and the Firewall won't block us.
 2. For home screen, I am planning to get some data from server for showing on the LineChart, but for
    now, I am using dummy data.
+
+
+### API
+
+For this project, I am using [CoinCap API](https://docs.coincap.io/#0a8102a5-c338-4661-aa99-f1c57661b5b1) for now. I will probably add more APIs in the future.
 
 ### Continuous Integration
 
