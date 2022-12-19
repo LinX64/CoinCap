@@ -68,7 +68,6 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
 
-    // TODO: maybe adding this as a separate module?
     api(libs.junit4)
     api(libs.androidx.test.core)
     api(libs.kotlinx.coroutines.test)
