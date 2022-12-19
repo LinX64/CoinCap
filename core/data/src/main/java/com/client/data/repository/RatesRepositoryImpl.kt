@@ -2,6 +2,7 @@ package com.client.data.repository
 
 import com.client.common.util.retryWithDelay
 import com.client.data.model.Rate
+import com.client.data.model.RateDetailResp
 import com.client.data.model.toExternalModel
 import com.client.data.network.di.BinDispatchers.*
 import com.client.data.network.di.Dispatcher
@@ -33,8 +34,8 @@ class RatesRepositoryImpl @Inject constructor(
         .retryWithDelay()
         .flowOn(ioDispatcher)
 
-    override fun getRateBy(id: String) = flow {
-        val rate = ratesApi.getRateBy(id).rate
+    override fun getRateBy(id: String): Flow<RateDetailResp> = flow {
+        val rate = ratesApi.getRateBy(id).toExternalModel()
         emit(rate)
     }.flowOn(ioDispatcher)
 

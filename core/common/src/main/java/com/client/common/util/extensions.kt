@@ -4,6 +4,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.retryWhen
 import java.io.IOException
+import java.util.*
 
 /**
  * Flow operator to retry a network call when an [IOException] is thrown.
@@ -19,5 +20,14 @@ fun <T> Flow<T>.retryWithDelay(
     } else false
 }
 
-fun Double.formatToPrice() = String.format("%.2f", this)
-fun Double.roundToInteger() = String.format("%.0f", this)
+fun Double.formatToPrice(): String = String.format("%.2f", this)
+fun Double.roundToInteger(): Int = String.format("%.0f", this).toInt()
+
+fun String.capitalize(): String =
+    replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+
+fun Int.formatToPrice(): String = toString()
+    .reversed()
+    .chunked(3)
+    .joinToString(",")
+    .reversed()

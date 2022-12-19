@@ -19,9 +19,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.client.coincap.core.ui.R
+import com.client.common.util.capitalize
 import com.client.common.util.formatToPrice
 import com.client.common.util.roundToInteger
-import java.util.*
 
 @Composable
 fun RateCell(
@@ -106,8 +106,10 @@ private fun ColumnItems(
                 fontWeight = FontWeight.Bold
             )
 
+            val formattedPrice =
+                rate.toDouble().roundToInteger().formatToPrice()
             Text(
-                text = "$${rate.toDouble().formatToPrice()}",
+                text = "$$formattedPrice",
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -117,10 +119,8 @@ private fun ColumnItems(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
-            val capitalisedType =
-                type.replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
             Text(
-                text = capitalisedType,
+                text = type.capitalize(),
                 style = MaterialTheme.typography.bodyMedium,
                 fontWeight = FontWeight.Bold,
                 color = Color.Gray

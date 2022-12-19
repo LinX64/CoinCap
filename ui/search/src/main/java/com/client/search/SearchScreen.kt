@@ -10,7 +10,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.client.coincap.core.search.R
+import com.client.detail.navigation.navigateToDetail
 import com.client.search.component.Content
 import com.client.search.component.InitialView
 import com.client.search.component.ratesStub
@@ -22,6 +25,7 @@ import com.client.ui.SearchBar
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SearchRoute(
+    navController: NavHostController,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.searchResultUiState.collectAsStateWithLifecycle()
@@ -29,7 +33,8 @@ fun SearchRoute(
 
     SearchScreen(
         onQueryChanged = viewModel::search,
-        searchUiState = uiState
+        searchUiState = uiState,
+        navController = navController
     )
 }
 
@@ -37,7 +42,8 @@ fun SearchRoute(
 fun SearchScreen(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
-    searchUiState: SearchUiState
+    searchUiState: SearchUiState,
+    navController: NavHostController
 ) {
     Column(
         modifier = modifier
@@ -50,9 +56,7 @@ fun SearchScreen(
 
         Content(
             searchUiState = searchUiState,
-            onRateClicked = {
-                // TODO: Navigate to details
-            })
+            onRateClicked = { id -> navController.navigateToDetail(id) })
 
         HandleStates(searchUiState)
     }
@@ -73,7 +77,8 @@ fun SearchScreenPreview() {
     val rates = ratesStub()
     SearchScreen(
         onQueryChanged = {},
-        searchUiState = SearchUiState.Loaded(rates = rates)
+        searchUiState = SearchUiState.Loaded(rates = rates),
+        navController = rememberNavController()
     )
 }
 
@@ -82,6 +87,7 @@ fun SearchScreenPreview() {
 fun SearchScreenEmptyStatePreview() {
     SearchScreen(
         onQueryChanged = {},
-        searchUiState = SearchUiState.Empty
+        searchUiState = SearchUiState.Empty,
+        navController = rememberNavController()
     )
 }

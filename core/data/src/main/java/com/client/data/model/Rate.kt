@@ -3,16 +3,16 @@ package com.client.data.model
 import com.google.gson.annotations.SerializedName
 
 data class Rate(
-    @SerializedName("currencySymbol")
-    val currencySymbol: String? = null,
     @SerializedName("id")
     val id: String,
-    @SerializedName("rateUsd")
-    val rateUsd: String,
     @SerializedName("symbol")
     val symbol: String,
+    @SerializedName("currencySymbol")
+    val currencySymbol: String? = null,
     @SerializedName("type")
-    val type: String
+    val type: String,
+    @SerializedName("rateUsd")
+    val rateUsd: String
 )
 
 fun Rate.toExternalModel() = Rate(

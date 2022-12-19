@@ -26,7 +26,7 @@ import com.client.ui.*
 internal fun HomeRoute(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel = hiltViewModel(),
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController
 ) {
     val homeUiState by viewModel.liveRates.collectAsStateWithLifecycle()
     HomeScreen(
@@ -63,12 +63,12 @@ internal fun HomeScreen(
         Text(
             text = stringResource(R.string.top_crypto_currencies),
             modifier = modifier
-                .padding(bottom = 8.dp)
+                .padding(start = 5.dp, top = 16.dp, bottom = 10.dp)
                 .fillMaxWidth(),
             style = MaterialTheme.typography.titleMedium
         )
 
-        HomeContent(modifier, state, homeUiState)
+        HomeContent(modifier, state, homeUiState, navController)
     }
 }
 
