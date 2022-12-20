@@ -20,7 +20,7 @@ fun NavController.navigateToDetail(rateId: String, navOptions: NavOptions? = nul
     this.navigate("$detailRoute/$rateId", navOptions)
 }
 
-fun NavGraphBuilder.detailScreen(navController: NavHostController) {
+fun NavGraphBuilder.detailScreen() {
     composable(
         route = "$detailRoute/{$rateIdArgKey}",
         arguments = listOf(navArgument(rateIdArgKey) { type = NavType.StringType })

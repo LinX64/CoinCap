@@ -30,13 +30,11 @@ fun CoinCapApp(
 ) {
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
-    val destination = appState.currentDestination
+    val currentDestination = appState.currentDestination
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onBackground,
-        topBar = {
-            TopAppBar(appState.navController, destination)
-        },
+        topBar = { TopAppBar(appState.navController, currentDestination) },
         snackbarHost = { SnackbarHost(snackBarHostState) },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { padding ->
