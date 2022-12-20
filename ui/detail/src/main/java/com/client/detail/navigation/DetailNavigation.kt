@@ -4,9 +4,10 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.SavedStateHandle
 import androidx.navigation.*
 import androidx.navigation.compose.composable
+import com.client.common.util.NavRoutes
 import com.client.detail.DetailRoute
 
-const val detailRoute = "detail_route"
+const val detailRoute = NavRoutes.coinDetailsRoute
 
 @VisibleForTesting
 internal const val rateIdArgKey = "rateId"
