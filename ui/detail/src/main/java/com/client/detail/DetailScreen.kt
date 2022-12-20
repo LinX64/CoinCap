@@ -5,6 +5,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -53,6 +54,7 @@ fun DetailView(
     Column(
         modifier = modifier
             .fillMaxHeight()
+            .padding(top = 8.dp)
     ) {
         CandleChart(rateRes = rateRes)
 
@@ -63,7 +65,8 @@ fun DetailView(
             modifier = modifier
                 .padding(bottom = 10.dp)
                 .fillMaxWidth(),
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
+            fontWeight = FontWeight.Bold
         )
 
         DetailCard(modifier, rateRes)

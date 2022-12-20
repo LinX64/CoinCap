@@ -34,8 +34,7 @@ internal fun CandleChart(
     )
     Box(
         modifier = modifier
-            .fillMaxWidth()
-            .padding(16.dp),
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
         LineChart(

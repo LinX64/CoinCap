@@ -1,6 +1,8 @@
 package com.client.home
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,7 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.ui.home.R
 import com.client.data.model.Rate
-import com.client.home.component.HomeContent
+import com.client.detail.navigation.navigateToDetail
 import com.client.home.component.LineChartView
 import com.client.ui.*
 
@@ -47,32 +49,61 @@ internal fun HomeScreen(
 
     TrackScrollJank(scrollableState = state, stateName = "ui:home:grid")
 
-    Column(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp)
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(8.dp)
     ) {
-        if (isLoading) LoadingView()
+        item {
+            if (isLoading) LoadingView()
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        LineChartView()
+            LineChartView()
 
-        Spacer(modifier = modifier.height(16.dp))
+            Spacer(modifier = modifier.height(16.dp))
 
-        Text(
-            text = stringResource(R.string.top_crypto_currencies),
-            modifier = modifier
-                .padding(start = 5.dp, top = 16.dp, bottom = 10.dp)
-                .fillMaxWidth(),
-            style = MaterialTheme.typography.titleMedium
-        )
+            Text(
+                text = stringResource(R.string.top_crypto_currencies),
+                modifier = modifier
+                    .padding(start = 5.dp, top = 16.dp, bottom = 10.dp)
+                    .fillMaxWidth(),
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
 
-        HomeContent(modifier, state, homeUiState, navController)
+        homeContent(homeUiState, modifier, navController)
     }
 }
 
-@Preview(showBackground = true)
+private fun LazyListScope.homeContent(
+    homeUiState: HomeUiState,
+    modifier: Modifier,
+    navController: NavHostController
+) {
+    item {
+        when (homeUiState) {
+            HomeUiState.Loading -> Unit
+            is HomeUiState.Success -> {
+                homeUiState.rates.forEach { rate ->
+                    Column(modifier = modifier) {
+                        RateCell(
+                            rate = rate.rateUsd,
+                            symbol = rate.symbol,
+                            currencySymbol = rate.currencySymbol ?: rate.symbol,
+                            type = rate.type,
+                            onClick = { navController.navigateToDetail(rate.id) }
+                        )
+                    }
+                }
+            }
+            is HomeUiState.Error -> {
+                /* do nothing */
+            }
+        }
+    }
+}
+
+@DevicePreviews
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
