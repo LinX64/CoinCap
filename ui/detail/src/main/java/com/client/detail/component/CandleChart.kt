@@ -33,9 +33,9 @@ internal fun CandleChart(
         Pair(17, 117.45)
     )
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(10.dp),
+            .padding(16.dp),
         contentAlignment = Alignment.Center
     ) {
         LineChart(

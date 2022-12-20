@@ -9,7 +9,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.client.coincap.core.search.R
 import com.client.search.SearchUiState
 
 @Composable
@@ -23,12 +25,12 @@ fun InitialView(uiState: SearchUiState) {
     ) {
         if (uiState is SearchUiState.Loading) {
             Text(
-                text = "Search for a currency...",
+                text = stringResource(R.string.search_body_desc),
                 style = MaterialTheme.typography.bodyMedium
             )
 
             Text(
-                text = "Example: USD, EUR, GBP, etc.",
+                text = stringResource(R.string.search_body_expl),
                 style = MaterialTheme.typography.bodySmall
             )
         }
