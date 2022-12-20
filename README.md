@@ -36,7 +36,7 @@ the app more scalable and maintainable.
 
 ### API
 
-For this project, I am using [CoinCap API](https://docs.coincap.io/#0a8102a5-c338-4661-aa99-f1c57661b5b1) for now. I will probably add more APIs in the future.
+For this project, I am using [CoinCap API](https://docs.coincap.io/#ee30bea9-bb6b-469d-958a-d3e35d442d7a) for now. I will probably add more APIs in the future.
 
 ### Continuous Integration
 
