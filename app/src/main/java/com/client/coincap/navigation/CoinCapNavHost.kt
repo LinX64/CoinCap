@@ -22,6 +22,6 @@ fun CoinCapNavHost(
     ) {
         homeScreen(navController)
         searchScreen(navController)
-        detailScreen(navController)
+        detailScreen()
     }
 }
