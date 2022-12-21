@@ -68,9 +68,8 @@ jobs:
     runs-on: macOS-12
     timeout-minutes: 30
     strategy:
-      fail-fast: true
       matrix:
-        api-level: [ 24, 29 ]
+        api-level: [ 26, 30 ]
 
     steps:
       - name: Checkout
@@ -85,7 +84,7 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      # Retrieve the AVD cache if available
+      # Retrieve AVD cache if available
       - name: Retrieve AVD cache (if available)
         uses: actions/cache@v3
         id: avd-cache
@@ -95,14 +94,14 @@ jobs:
             ~/.android/adb*
           key: ${{ runner.os }}-avd-${{ env.CACHE_VERSION }}-${{ steps.avd-info.outputs.arch }}-${{ steps.avd-info.outputs.target }}-${{ matrix.api-level }}
 
-      # If the AVD cache is not available, create a new AVD
+      # If AVD cache is not available, create a new AVD
       - name: Create AVD Snapshot
         if: steps.avd-cache.outputs.cache-hit != 'true'
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
           arch: x86_64
-          force-avd-creation: true
+          force-avd-creation: false
           disable-animations: false
           ram-size: 4096M
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
@@ -114,7 +113,6 @@ jobs:
           api-level: ${{ matrix.api-level }}
           force-avd-creation: false
           disable-animations: true
-          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
           script: ./gradlew connectedCheck
 
       - name: Upload test reports
