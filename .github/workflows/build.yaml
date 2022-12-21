@@ -65,12 +65,12 @@ jobs:
   androidTest:
     needs: check
     name: Android Tests
-    runs-on: macOS-latest
+    runs-on: macOS-12
     timeout-minutes: 30
     strategy:
       fail-fast: true
       matrix:
-        api-level: [ 26, 30 ]
+        api-level: [ 24, 29 ]
 
     steps:
       - name: Checkout
@@ -84,6 +84,16 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
+
+      # Retrieve the AVD cache if available
+      - name: Retrieve AVD cache (if available)
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: ${{ runner.os }}-avd-${{ env.CACHE_VERSION }}-${{ steps.avd-info.outputs.arch }}-${{ steps.avd-info.outputs.target }}-${{ matrix.api-level }}
 
       # If the AVD cache is not available, create a new AVD
       - name: Create AVD Snapshot
@@ -104,8 +114,7 @@ jobs:
           api-level: ${{ matrix.api-level }}
           force-avd-creation: false
           disable-animations: true
-          disk-size: 6000M
-          heap-size: 600M
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
           script: ./gradlew connectedCheck
 
       - name: Upload test reports
