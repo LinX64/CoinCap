@@ -69,7 +69,8 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        api-level: [ 26, 30 ]
+        channel: [ stable ]
+        api-level: [ 24, 30 ]
 
     steps:
       - name: Checkout
@@ -84,15 +85,6 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      # Retrieve AVD cache if available
-      - name: Retrieve AVD cache (if available)
-        uses: actions/cache@v3
-        id: avd-cache
-        with:
-          path: |
-            ~/.android/avd/*
-            ~/.android/adb*
-          key: ${{ runner.os }}-avd-${{ env.CACHE_VERSION }}-${{ steps.avd-info.outputs.arch }}-${{ steps.avd-info.outputs.target }}-${{ matrix.api-level }}
 
       # If AVD cache is not available, create a new AVD
       - name: Create AVD Snapshot
@@ -100,7 +92,6 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
-          arch: x86_64
           force-avd-creation: false
           disable-animations: false
           ram-size: 4096M
