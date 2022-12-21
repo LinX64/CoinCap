@@ -70,7 +70,7 @@ jobs:
     strategy:
       matrix:
         channel: [ stable ]
-        api-level: [ 24, 30 ]
+        api-level: [ 24, 29 ]
 
     steps:
       - name: Checkout
@@ -85,6 +85,15 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
+      # Retrieve AVD cache if available
+      - name: Retrieve AVD cache (if available)
+        uses: actions/cache@v3
+        id: avd-cache
+        with:
+          path: |
+            ~/.android/avd/*
+            ~/.android/adb*
+          key: ${{ runner.os }}-avd-${{ env.CACHE_VERSION }}-${{ steps.avd-info.outputs.arch }}-${{ steps.avd-info.outputs.target }}-${{ matrix.api-level }}
 
       # If AVD cache is not available, create a new AVD
       - name: Create AVD Snapshot
