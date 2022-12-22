@@ -48,6 +48,5 @@ devices. Also, it is using Renovate to keep the dependencies up to date.
 
 - Add Offline first support
 - Tests
-- Fix the navigation back icon issue while navigating
 - Get data from Server for LineChart
 - Add more features
