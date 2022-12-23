@@ -84,14 +84,9 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Get AVD info
-        uses: ./.github/actions/get-avd-info
-        id: avd-info
-        with:
-          api-level: ${{ matrix.api-level }}
-
       # Retrieve AVD cache if available
       - name: Retrieve AVD cache (if available)
+      - run: ./ci_clear_gradle_cache.sh
         uses: actions/cache@v3
         id: avd-cache
         with:
