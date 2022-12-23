@@ -69,8 +69,7 @@ jobs:
     timeout-minutes: 30
     strategy:
       matrix:
-        channel: [ stable ]
-        api-level: [ 24, 31 ]
+        api-level: [ 26, 31 ]
 
     steps:
       - name: Checkout
@@ -101,6 +100,8 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
+          arch: ${{ steps.avd-info.outputs.arch }}
+          target: ${{ steps.avd-info.outputs.target }}
           force-avd-creation: false
           disable-animations: false
           ram-size: 4096M
@@ -111,6 +112,8 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
+          arch: ${{ steps.avd-info.outputs.arch }}
+          target: ${{ steps.avd-info.outputs.target }}
           force-avd-creation: false
           disable-animations: true
           script: mv .github/debug.keystore ~/.android; ./gradlew connectedDebugAndroidTest
