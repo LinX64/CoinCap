@@ -4,8 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListScope
 import androidx.compose.foundation.lazy.grid.*
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -54,8 +53,6 @@ internal fun HomeScreen(
         contentPadding = PaddingValues(8.dp)
     ) {
         item {
-            if (isLoading) LoadingView()
-
             Spacer(modifier = Modifier.height(16.dp))
 
             LineChartView()
@@ -73,6 +70,8 @@ internal fun HomeScreen(
 
         homeContent(homeUiState, modifier, navController)
     }
+
+    if (isLoading) ProgressBar()
 }
 
 private fun LazyListScope.homeContent(
@@ -81,29 +80,23 @@ private fun LazyListScope.homeContent(
     navController: NavHostController
 ) {
     item {
-        when (homeUiState) {
-            HomeUiState.Loading -> Unit
-            is HomeUiState.Success -> {
-                homeUiState.rates.forEach { rate ->
-                    Column(modifier = modifier) {
-                        RateCell(
-                            rate = rate.rateUsd,
-                            symbol = rate.symbol,
-                            currencySymbol = rate.currencySymbol ?: rate.symbol,
-                            type = rate.type,
-                            onClick = { navController.navigateToDetail(rate.id) }
-                        )
-                    }
+        if (homeUiState is HomeUiState.Success) {
+            homeUiState.rates.forEach { rate ->
+                Column(modifier = modifier) {
+                    RateCell(
+                        rate = rate.rateUsd,
+                        symbol = rate.symbol,
+                        currencySymbol = rate.currencySymbol ?: rate.symbol,
+                        type = rate.type,
+                        onClick = { navController.navigateToDetail(rate.id) }
+                    )
                 }
-            }
-            is HomeUiState.Error -> {
-                /* do nothing */
             }
         }
     }
 }
 
-@DevicePreviews
+@Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
     HomeScreen(
@@ -112,6 +105,41 @@ fun HomeScreenPreview() {
                 Rate(
                     id = "bitcoin",
                     symbol = "BTC",
+                    currencySymbol = "USD",
+                    rateUsd = "1.0",
+                    type = "crypto"
+                ),
+                Rate(
+                    id = "ethereum",
+                    symbol = "ETH",
+                    currencySymbol = "USD",
+                    rateUsd = "1.0",
+                    type = "crypto"
+                ),
+                Rate(
+                    id = "dogecoin",
+                    symbol = "DOGE",
+                    currencySymbol = "USD",
+                    rateUsd = "1.0",
+                    type = "crypto"
+                ),
+                Rate(
+                    id = "cardano",
+                    symbol = "ADA",
+                    currencySymbol = "USD",
+                    rateUsd = "1.0",
+                    type = "crypto"
+                ),
+                Rate(
+                    id = "binancecoin",
+                    symbol = "BNB",
+                    currencySymbol = "USD",
+                    rateUsd = "1.0",
+                    type = "crypto"
+                ),
+                Rate(
+                    id = "tether",
+                    symbol = "USDT",
                     currencySymbol = "USD",
                     rateUsd = "1.0",
                     type = "crypto"
