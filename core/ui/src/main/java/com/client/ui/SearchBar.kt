@@ -26,14 +26,13 @@ import com.client.coincap.core.ui.R
 @Composable
 fun SearchBar(
     modifier: Modifier = Modifier,
-    onQueryChange: (TextFieldValue) -> Unit
+    onQueryChange: (TextFieldValue) -> Unit,
+    onClear: () -> Unit
 ) {
     val query = remember { mutableStateOf(TextFieldValue()) }
     val isQueryEmpty = query.value.text.isEmpty()
-
     Card(
-        modifier = modifier
-            .fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
     ) {
         Row(modifier = modifier.fillMaxWidth()) {
@@ -47,7 +46,7 @@ fun SearchBar(
                 placeholder = { if (isQueryEmpty) Text(text = stringResource(R.string.search)) },
                 keyboardOptions = keyboardOptions(),
                 leadingIcon = { LeadingIcon() },
-                trailingIcon = { if (!isQueryEmpty) TrailingIcon(query) },
+                trailingIcon = { if (!isQueryEmpty) TrailingIcon(query, onClear) },
                 colors = textFieldColors(),
                 singleLine = true,
                 textStyle = MaterialTheme.typography.bodyMedium
@@ -72,10 +71,19 @@ private fun LeadingIcon() {
 }
 
 @Composable
-private fun TrailingIcon(query: MutableState<TextFieldValue>) {
+private fun TrailingIcon(
+    query: MutableState<TextFieldValue>,
+    onClear: () -> Unit
+) {
     AnimatedVisibility(visible = true) {
-        IconButton(onClick = { query.value = TextFieldValue() }) {
-            Icon(Icons.Filled.Clear, contentDescription = null)
+        IconButton(onClick = {
+            query.value = TextFieldValue()
+            onClear()
+        }) {
+            Icon(
+                Icons.Filled.Clear,
+                contentDescription = null
+            )
         }
     }
 }
@@ -92,5 +100,5 @@ private fun textFieldColors() = TextFieldDefaults.textFieldColors(
 @Composable
 @DevicePreviews
 fun SearchBarPreview() {
-    SearchBar(onQueryChange = {})
+    SearchBar(onQueryChange = {}, onClear = {})
 }

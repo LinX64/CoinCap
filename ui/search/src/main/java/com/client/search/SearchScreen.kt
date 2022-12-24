@@ -28,11 +28,12 @@ fun SearchRoute(
     navController: NavHostController,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.searchResultUiState.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val rates by viewModel.rates.collectAsStateWithLifecycle()
 
     SearchScreen(
         onQueryChanged = viewModel::search,
+        onClear = viewModel::onClear,
         searchUiState = uiState,
         navController = navController
     )
@@ -42,6 +43,7 @@ fun SearchRoute(
 fun SearchScreen(
     modifier: Modifier = Modifier,
     onQueryChanged: (String) -> Unit,
+    onClear: () -> Unit,
     searchUiState: SearchUiState,
     navController: NavHostController
 ) {
@@ -50,7 +52,10 @@ fun SearchScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        SearchBar(onQueryChange = { onQueryChanged(it.text) })
+        SearchBar(
+            onQueryChange = { onQueryChanged(it.text) },
+            onClear = onClear
+        )
 
         Spacer(modifier = modifier.padding(8.dp))
 
@@ -77,6 +82,7 @@ fun SearchScreenPreview() {
     val rates = ratesStub()
     SearchScreen(
         onQueryChanged = {},
+        onClear = {},
         searchUiState = SearchUiState.Loaded(rates = rates),
         navController = rememberNavController()
     )
@@ -87,6 +93,7 @@ fun SearchScreenPreview() {
 fun SearchScreenEmptyStatePreview() {
     SearchScreen(
         onQueryChanged = {},
+        onClear = {},
         searchUiState = SearchUiState.Empty,
         navController = rememberNavController()
     )

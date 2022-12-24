@@ -8,10 +8,10 @@ import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.client.data.model.Rate
 import com.client.search.SearchUiState
+import com.client.ui.DevicePreviews
 import com.client.ui.RateCell
 
 @Composable
@@ -41,13 +41,14 @@ internal fun Content(
     }
 }
 
-@Preview(showBackground = true)
+@DevicePreviews
 @Composable
 fun ItemsContentPreview() {
     val rates = ratesStub()
     Content(
         searchUiState = SearchUiState.Loaded(rates = rates),
-        onRateClicked = {})
+        onRateClicked = {}
+    )
 }
 
 fun ratesStub(): List<Rate> {
