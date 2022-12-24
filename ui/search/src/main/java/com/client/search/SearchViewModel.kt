@@ -14,13 +14,18 @@ class SearchViewModel @Inject constructor(
     private val searchRateUseCase: SearchRateUseCase
 ) : ViewModel() {
 
-    private val _searchResultUiState: MutableStateFlow<SearchUiState> =
-        MutableStateFlow(SearchUiState.Loading)
-    val searchResultUiState = _searchResultUiState.asStateFlow()
+    private val _uiState: MutableStateFlow<SearchUiState> = MutableStateFlow(SearchUiState.Loading)
+    val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
 
     val rates: StateFlow<SearchUiState> = searchRateUseCase
         .getRates()
-        .map { result -> handleState(result) }
+        .map { result ->
+            when (result) {
+                is Result.Loading -> SearchUiState.Loading
+                is Result.Success -> SearchUiState.Loaded(result.data)
+                is Result.Error -> SearchUiState.Error(result.exception.toString())
+            }
+        }
         .stateIn(
             scope = viewModelScope,
             started = SharingStarted.WhileSubscribed(5_000),
@@ -31,22 +36,18 @@ class SearchViewModel @Inject constructor(
         val uiState = rates.value
         if (uiState is SearchUiState.Loaded) {
             searchRateUseCase(query, uiState.rates)
-                .onStart { _searchResultUiState.value = SearchUiState.Initial }
+                .onStart { _uiState.value = SearchUiState.Initial }
                 .map { rates ->
-                    when {
-                        rates.isNotEmpty() -> _searchResultUiState.value =
-                            SearchUiState.Success(rates)
-                        else -> _searchResultUiState.value = SearchUiState.Empty
-                    }
+                    if (rates.isNotEmpty()) {
+                        _uiState.value = SearchUiState.Success(rates)
+                    } else _uiState.value = SearchUiState.Empty
                 }
                 .launchIn(viewModelScope)
         }
     }
 
-    private fun handleState(result: Result<List<Rate>>) = when (result) {
-        is Result.Loading -> SearchUiState.Loading
-        is Result.Success -> SearchUiState.Loaded(result.data)
-        is Result.Error -> SearchUiState.Error(result.exception.toString())
+    fun onClear() {
+        _uiState.value = SearchUiState.Initial
     }
 }
 
