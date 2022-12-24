@@ -1,6 +1,7 @@
 package com.client.detail
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -31,45 +32,42 @@ fun DetailRoute(
 
 @Composable
 fun DetailScreen(
-    modifier: Modifier = Modifier,
     detailUiState: DetailUiState
 ) {
-    Column(modifier = modifier.fillMaxSize()) {
-        when (detailUiState) {
-            is DetailUiState.Loading -> ProgressBar()
-            is DetailUiState.Success -> DetailView(
-                modifier = modifier,
-                rateRes = detailUiState.rate
-            )
-            is DetailUiState.Error -> ErrorView(errorMessage = detailUiState.error)
-        }
+    when (detailUiState) {
+        is DetailUiState.Loading -> ProgressBar()
+        is DetailUiState.Success -> DetailView(rateRes = detailUiState.rate)
+        is DetailUiState.Error -> ErrorView(errorMessage = detailUiState.error)
     }
 }
 
 @Composable
 fun DetailView(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     rateRes: RateDetailResp
 ) {
-    Column(
-        modifier = modifier
-            .fillMaxHeight()
-            .padding(top = 8.dp)
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        contentPadding = PaddingValues(8.dp)
     ) {
-        CandleChart(rateRes = rateRes)
+        item {
+            CandleChart(rateRes = rateRes)
 
-        Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
-        Text(
-            text = rateRes.rate.symbol.capitalize(),
-            modifier = modifier
-                .padding(bottom = 10.dp)
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center,
-            fontWeight = FontWeight.Bold
-        )
+            Text(
+                text = rateRes.rate.symbol.capitalize(),
+                modifier = modifier
+                    .padding(bottom = 10.dp)
+                    .fillMaxWidth(),
+                textAlign = TextAlign.Center,
+                fontWeight = FontWeight.Bold
+            )
+        }
 
-        DetailCard(modifier, rateRes)
+        item {
+            DetailCard(modifier, rateRes)
+        }
     }
 }
 
@@ -95,7 +93,5 @@ fun DetailScreenPreview() {
 @DevicePreviews
 @Composable
 fun DetailScreenErrorPreview() {
-    DetailScreen(
-        detailUiState = DetailUiState.Error("Error")
-    )
+    DetailScreen(detailUiState = DetailUiState.Error("Error"))
 }
