@@ -67,6 +67,8 @@ dependencies {
     implementation(libs.accompanist.systemuicontroller)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.compiler)
 
     api(libs.junit4)
     api(libs.androidx.test.core)
