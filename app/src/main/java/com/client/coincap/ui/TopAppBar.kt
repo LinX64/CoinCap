@@ -22,7 +22,7 @@ fun TopAppBar(
 ) {
     val isCurrentRouteHome = destination?.route == NavRoutes.homeRoute
 
-    CenterAlignedTopAppBar(
+    TopAppBar(
         title = { Text(text = stringResource(R.string.app_name)) },
         navigationIcon = {
             if (!isCurrentRouteHome) {
