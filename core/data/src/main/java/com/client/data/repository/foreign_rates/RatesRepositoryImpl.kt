@@ -1,4 +1,4 @@
-package com.client.data.repository
+package com.client.data.repository.foreign_rates
 
 import com.client.common.util.retryWithDelay
 import com.client.data.model.Rate
@@ -7,7 +7,7 @@ import com.client.data.model.toExternalModel
 import com.client.data.network.di.BinDispatchers.*
 import com.client.data.network.di.Dispatcher
 import com.client.data.retrofit.RatesApi
-import com.client.data.util.Const.DELAY
+import com.client.data.util.Consts.DELAY
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
