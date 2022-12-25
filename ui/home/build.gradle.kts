@@ -18,6 +18,7 @@ dependencies {
     implementation(project(":core:domain"))
     implementation(project(":ui:detail"))
 
+    implementation(libs.hilt.android)
     implementation(libs.androidx.compose.material3.windowSizeClass)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.compose.runtime.tracing)
