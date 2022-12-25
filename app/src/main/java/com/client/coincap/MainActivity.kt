@@ -9,6 +9,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.ui.Modifier
+import androidx.core.view.WindowCompat
 import com.client.coincap.ui.CoinCapApp
 import com.client.coincap.ui.theme.CoinCapTheme
 import com.client.data.util.NetworkMonitor
@@ -26,16 +27,11 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            CoinCapTheme(androidTheme = true) {
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.surface
-                ) {
-                    CoinCapApp(
-                        networkMonitor = networkMonitor,
-                        windowSizeClass = calculateWindowSizeClass(this)
-                    )
-                }
+            CoinCapTheme(androidTheme = true,) {
+                CoinCapApp(
+                    networkMonitor = networkMonitor,
+                    windowSizeClass = calculateWindowSizeClass(this)
+                )
             }
         }
     }

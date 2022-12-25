@@ -46,7 +46,7 @@ internal fun Content(
 fun ItemsContentPreview() {
     val rates = ratesStub()
     Content(
-        searchUiState = SearchUiState.Loaded(rates = rates),
+        searchUiState = SearchUiState.Success(rates = rates),
         onRateClicked = {}
     )
 }
