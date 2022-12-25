@@ -20,7 +20,7 @@ fun <T> Flow<T>.retryWithDelay(
     } else false
 }
 
-fun Double.formatToPrice(): String = String.format("%.2f", this)
+fun Double.formatToPrice(): String = String.format("%.5f", this)
 fun Double.roundToInteger(): Int = String.format("%.0f", this).toInt()
 
 fun String.capitalize(): String =
