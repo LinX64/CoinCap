@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,6 +17,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.client.coincap.ui.home.R
 import com.client.data.model.Rate
 import com.client.detail.navigation.navigateToDetail
 import com.client.home.component.Header
@@ -47,35 +49,36 @@ internal fun HomeScreen(
 
     TrackScrollJank(scrollableState = state, stateName = "ui:home:grid")
 
-    LazyColumn(modifier = modifier.fillMaxSize()) {
+    if (isLoading) LoadingView()
+
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(start = 8.dp, end = 8.dp)
+    ) {
         item { Header() }
         item {
             Spacer(modifier = Modifier.height(16.dp))
         }
         item {
             Text(
-                text = "Iranian Rial Exchange Rates",
+                text = stringResource(R.string.iranian_rial_title),
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(start = 10.dp, top = 16.dp),
+                    .padding(start = 5.dp),
                 style = MaterialTheme.typography.titleMedium
             )
-            Spacer(modifier = Modifier.height(3.dp))
             Text(
-                text = "Prices are in Iranian Toman (1 Toman = 10 Rials)",
+                text = stringResource(R.string.iranian_rial_subtitle),
                 modifier = modifier
                     .fillMaxWidth()
-                    .padding(start = 13.dp, bottom = 10.dp),
-                style = MaterialTheme.typography.titleSmall,
+                    .padding(start = 5.dp, bottom = 8.dp),
+                style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
         }
         item {
-            LazyRow(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(start = 10.dp)
-            ) {
+            LazyRow(modifier = modifier.fillMaxWidth()) {
                 items(10) {
                     LocalCurrencyItem(onClick = {})
                 }
@@ -83,22 +86,22 @@ internal fun HomeScreen(
         }
         item {
             Text(
-                text = "Top Cryptocurrencies",
-                modifier = modifier.padding(start = 10.dp, top = 16.dp),
+                text = stringResource(id = R.string.top_crypto_currencies),
+                modifier = modifier.padding(start = 5.dp, top = 16.dp),
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.height(3.dp))
             Text(
-                text = "Up-to-date prices and market capitalization",
-                modifier = modifier.padding(start = 13.dp, bottom = 10.dp),
-                style = MaterialTheme.typography.titleSmall,
+                text = stringResource(R.string.up_to_date_data),
+                modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
+                style = MaterialTheme.typography.bodySmall,
                 color = Color.Gray
             )
         }
         item {
             if (homeUiState is HomeUiState.Success) {
                 homeUiState.rates.forEach { rate ->
-                    Column(modifier = modifier.padding(start = 10.dp, end = 10.dp)) {
+                    Column(modifier = modifier.padding(start = 5.dp, end = 10.dp)) {
                         RateCell(
                             rate = rate.rateUsd,
                             symbol = rate.symbol,

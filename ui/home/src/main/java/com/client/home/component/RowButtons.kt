@@ -80,7 +80,7 @@ fun RowButtons(
             Text(
                 text = stringResource(R.string.send),
                 color = Color.White,
-                modifier = modifier.padding(start = 5.dp, end = 8.dp),
+                modifier = modifier.padding(start = 5.dp),
             )
         }
     }

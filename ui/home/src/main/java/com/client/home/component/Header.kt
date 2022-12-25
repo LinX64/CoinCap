@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
@@ -21,27 +22,31 @@ import com.client.common.util.roundToInteger
 @Composable
 fun Header(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.padding(horizontal = 5.dp),
+        modifier = modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
             text = "Total balance",
             style = MaterialTheme.typography.titleSmall,
-            color = Color.Gray
+            modifier = modifier.fillMaxWidth(),
+            color = Color.Gray,
+            textAlign = TextAlign.Center
         )
 
         Spacer(modifier = Modifier.height(5.dp))
 
         Text(
-            text = "$1,000.00",
-            style = MaterialTheme.typography.titleLarge,
+            text = "$16,722.68",
+            style = MaterialTheme.typography.headlineLarge,
+            modifier = modifier.fillMaxWidth(),
             fontWeight = FontWeight.Bold,
+            textAlign = TextAlign.Center
         )
 
-        Spacer(modifier = Modifier.height(5.dp))
-
         Row(
-            modifier = modifier.fillMaxWidth(),
+            modifier = modifier
+                .fillMaxWidth()
+                .padding(5.dp),
             horizontalArrangement = Arrangement.Center
         ) {
             val rate = 1100.00
@@ -56,13 +61,13 @@ fun Header(modifier: Modifier = Modifier) {
             )
 
             Text(
-                text = "$5,546.91" + " • " + "50%",
-                style = MaterialTheme.typography.bodyMedium,
+                text = "$5,722.91" + " • " + "126%",
+                style = MaterialTheme.typography.bodySmall,
                 color = if (hadProfit) Color("#4CAF50".toColorInt()) else Color("#E91E63".toColorInt())
             )
         }
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.height(8.dp))
 
         PortfolioCard(modifier)
     }
@@ -79,7 +84,7 @@ private fun PortfolioCard(modifier: Modifier) {
             containerColor = Color("#014B35".toColorInt())
         )
     ) {
-        Column(modifier = modifier.padding(16.dp)) {
+        Column(modifier = modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
             Row(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -97,17 +102,17 @@ private fun PortfolioCard(modifier: Modifier) {
             Spacer(modifier = Modifier.height(10.dp))
 
             Text(
-                text = "$1,200.00",
-                style = MaterialTheme.typography.bodyLarge,
+                text = "$ 1,200.00",
+                style = MaterialTheme.typography.titleMedium,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
             )
 
             Spacer(modifier = Modifier.height(5.dp))
 
-            BalancesRow(modifier)
+            BalancesRow()
 
-            Spacer(modifier = Modifier.height(18.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             RowButtons()
         }
@@ -115,10 +120,10 @@ private fun PortfolioCard(modifier: Modifier) {
 }
 
 @Composable
-private fun BalancesRow(modifier: Modifier) {
-    Row(
-        modifier = modifier
-    ) {
+private fun BalancesRow(
+    modifier: Modifier = Modifier
+) {
+    Row(modifier = modifier.fillMaxWidth()) {
         val rate = 1.0
         val changedPercentage = (rate * 0.01).roundToInteger()
         val hadProfit = changedPercentage.toDouble() > 0
