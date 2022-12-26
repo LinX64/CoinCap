@@ -1,8 +1,12 @@
 package com.client.data.network.di
 
+import com.client.data.model.local_rates.LocalRateResponse
 import com.client.data.retrofit.LocalRatesApi
 import com.client.data.retrofit.RatesApi
 import com.client.data.util.Consts
+import com.client.data.util.CurrencyDeserializer
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -54,12 +58,17 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named(Consts.LOCAL_CURRENCY)
-    fun provideLocalCurrencyRetrofit(httpClient: OkHttpClient): Retrofit = Retrofit
-        .Builder()
-        .client(httpClient)
-        .addConverterFactory(provideGsonConverterFactory())
-        .baseUrl(provideLocalUrl())
-        .build()
+    fun provideLocalCurrencyRetrofit(httpClient: OkHttpClient): Retrofit {
+        val gson: Gson = GsonBuilder()
+            .registerTypeAdapter(LocalRateResponse::class.java, CurrencyDeserializer())
+            .create()
+        return Retrofit
+            .Builder()
+            .client(httpClient)
+            .addConverterFactory(GsonConverterFactory.create(gson))
+            .baseUrl(provideLocalUrl())
+            .build()
+    }
 
     @Provides
     fun provideRatesService(@Named(Consts.NORMAL) retrofit: Retrofit): RatesApi =

@@ -16,23 +16,26 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.toColorInt
 import com.client.common.util.CountryFlags
+import com.client.common.util.capitalize
 import com.client.common.util.formatToPrice
+import com.client.data.model.local_rates.LocalRate
+import com.client.data.model.local_rates.LocalRateResponse
 
 @Composable
 fun LocalCurrencyItem(
     modifier: Modifier = Modifier,
-    flag: String = CountryFlags.getCountryFlagByCode("US"),
-    title: String = "US Dollar",
-    currency: String = "USD",
-    sellPrice: String = "40850",
-    buyPrice: String = "40550",
-    onClick: () -> Unit
+    localRate: LocalRate,
+    onClick: () -> Unit = {}
 ) {
+    val code = localRate.code.uppercase().take(2)
+    val flag = CountryFlags.getCountryFlagByCode(code)
+    val title = localRate.code
+
     Card(
         modifier = modifier
             .padding(5.dp)
             .width(110.dp)
-            .height(130.dp)
+            .height(120.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(8.dp)
     ) {
@@ -47,23 +50,14 @@ fun LocalCurrencyItem(
             Spacer(modifier = Modifier.height(5.dp))
 
             Text(
-                text = title,
+                text = title.uppercase(),
                 modifier = modifier.fillMaxWidth(),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Bold,
                 textAlign = TextAlign.Center
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Text(
-                text = currency,
-                modifier = modifier.fillMaxWidth(),
-                style = MaterialTheme.typography.bodySmall,
-                textAlign = TextAlign.Center
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
+            Spacer(modifier = Modifier.height(25.dp))
 
             Row(
                 modifier = modifier
@@ -91,13 +85,13 @@ fun LocalCurrencyItem(
                 verticalAlignment = Alignment.Bottom
             ) {
                 Text(
-                    text = sellPrice.toInt().formatToPrice(),
+                    text = localRate.sell.formatToPrice(),
                     color = Color("#4CAF50".toColorInt()),
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    text = buyPrice.toInt().formatToPrice(),
+                    text = localRate.buy.formatToPrice(),
                     color = Color("#E91E63".toColorInt()),
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold
@@ -110,5 +104,12 @@ fun LocalCurrencyItem(
 @Composable
 @Preview
 fun LocalCurrencyPreview() {
-    LocalCurrencyItem(onClick = {})
+    LocalCurrencyItem(
+        onClick = {},
+        localRate = LocalRate(
+            code = "USD",
+            buy = 41000,
+            sell = 40800
+        )
+    )
 }
