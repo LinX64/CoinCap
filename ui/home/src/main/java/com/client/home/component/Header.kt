@@ -81,7 +81,7 @@ private fun PortfolioCard(modifier: Modifier) {
             .padding(8.dp)
             .height(160.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color("#014B35".toColorInt())
+            containerColor = Color(0xFF005227)
         )
     ) {
         Column(modifier = modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {

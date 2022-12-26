@@ -8,7 +8,10 @@ import com.client.data.network.Result.*
 import com.client.domain.usecase.home_screen.local_currency.GetLocalCurrencyUseCase
 import com.client.domain.usecase.home_screen.rates.GetRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -17,25 +20,23 @@ class HomeViewModel @Inject constructor(
     getLocalCurrencyUseCase: GetLocalCurrencyUseCase
 ) : ViewModel() {
 
-    private val _localLiveRates = MutableStateFlow<HomeLocalUiState>(HomeLocalUiState.Loading)
-    val localLiveRates: StateFlow<HomeLocalUiState> = _localLiveRates.asStateFlow()
-
-    init {
-        getLocalCurrencyUseCase.getLocalCurrency()
-            .map {
-                when (it) {
-                    is Loading -> _localLiveRates.value = HomeLocalUiState.Loading
-                    is Success -> _localLiveRates.value = HomeLocalUiState.Success(it.data)
-                    is Error -> _localLiveRates.value =
-                        HomeLocalUiState.Error(it.exception.toString())
-                }
+    val localLiveRates: StateFlow<HomeLocalUiState> = getLocalCurrencyUseCase
+        .getLocalCurrency()
+        .map { result ->
+            when (result) {
+                is Loading -> HomeLocalUiState.Loading
+                is Success -> HomeLocalUiState.Success(result.data)
+                is Error -> HomeLocalUiState.Error(result.exception.toString())
             }
-            .launchIn(viewModelScope)
-    }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = HomeLocalUiState.Loading
+        )
 
     val cryptoLiveRates: StateFlow<HomeUiState> = getRatesUseCase
         .getLiveCryptoCurrencies()
-        .distinctUntilChanged()
         .map { result ->
             when (result) {
                 is Loading -> HomeUiState.Loading

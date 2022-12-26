@@ -55,6 +55,9 @@ internal fun HomeScreen(
 
     if (isLoading) LoadingView()
 
+    val rates = (homeUiState as? HomeUiState.Success)?.rates ?: emptyList()
+    val localRates = (localUiState as? HomeLocalUiState.Success)?.localRates ?: emptyList()
+
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
@@ -82,15 +85,10 @@ internal fun HomeScreen(
             )
         }
         item {
-            if (localUiState is HomeLocalUiState.Success) {
-                val localRates = localUiState.localRates
-                LazyRow(modifier = modifier.fillMaxWidth()) {
-                    items(localRates.size) { index ->
-                        val rate = localRates[index]
-                        LocalCurrencyItem(
-                            localRate = rate
-                        )
-                    }
+            LazyRow(modifier = modifier.fillMaxWidth()) {
+                items(localRates.size) {
+                    val localRate = localRates[it]
+                    LocalCurrencyItem(localRate = localRate)
                 }
             }
         }
@@ -109,17 +107,16 @@ internal fun HomeScreen(
             )
         }
         item {
-            if (homeUiState is HomeUiState.Success) {
-                homeUiState.rates.forEach { rate ->
-                    Column(modifier = modifier.padding(start = 5.dp, end = 10.dp)) {
-                        RateCell(
-                            rate = rate.rateUsd,
-                            symbol = rate.symbol,
-                            currencySymbol = rate.currencySymbol ?: rate.symbol,
-                            type = rate.type,
-                            onClick = { navController.navigateToDetail(rate.id) }
-                        )
-                    }
+            val usDollar = localRates.find { it.code == "usd" }?.sell ?: 0.0
+            rates.forEach { rate ->
+                Column(modifier = modifier.padding(start = 5.dp, end = 10.dp)) {
+                    RateCell(
+                        rate = rate.rateUsd,
+                        symbol = rate.symbol,
+                        type = rate.type,
+                        dollarPrice = usDollar.toString(),
+                        onClick = { navController.navigateToDetail(rate.id) }
+                    )
                 }
             }
         }
@@ -131,60 +128,88 @@ internal fun HomeScreen(
 fun HomeScreenPreview() {
     HomeScreen(
         homeUiState = HomeUiState.Success(
-            rates = listOf(
-                Rate(
-                    id = "bitcoin",
-                    symbol = "BTC",
-                    currencySymbol = "USD",
-                    rateUsd = "1.0",
-                    type = "crypto"
-                ),
-                Rate(
-                    id = "ethereum",
-                    symbol = "ETH",
-                    currencySymbol = "USD",
-                    rateUsd = "1.0",
-                    type = "crypto"
-                ),
-                Rate(
-                    id = "dogecoin",
-                    symbol = "DOGE",
-                    currencySymbol = "USD",
-                    rateUsd = "1.0",
-                    type = "crypto"
-                ),
-                Rate(
-                    id = "cardano",
-                    symbol = "ADA",
-                    currencySymbol = "USD",
-                    rateUsd = "1.0",
-                    type = "crypto"
-                ),
-                Rate(
-                    id = "binancecoin",
-                    symbol = "BNB",
-                    currencySymbol = "USD",
-                    rateUsd = "1.0",
-                    type = "crypto"
-                ),
-                Rate(
-                    id = "tether",
-                    symbol = "USDT",
-                    currencySymbol = "USD",
-                    rateUsd = "1.0",
-                    type = "crypto"
-                )
-            )
+            rates = rates()
         ),
         localUiState = HomeLocalUiState.Success(
-            localRates = listOf(
-                LocalRate(
-                    code = "IRR",
-                    sell = 1,
-                    buy = 1
-                )
-            )
+            localRates = localRates()
         ),
         navController = rememberNavController()
+    )
+}
+
+private fun rates(): List<Rate> {
+    return listOf(
+        Rate(
+            id = "bitcoin",
+            symbol = "BTC",
+            currencySymbol = "USD",
+            rateUsd = "1.0",
+            type = "crypto"
+        ),
+        Rate(
+            id = "ethereum",
+            symbol = "ETH",
+            currencySymbol = "USD",
+            rateUsd = "1.0",
+            type = "crypto"
+        ),
+        Rate(
+            id = "dogecoin",
+            symbol = "DOGE",
+            currencySymbol = "USD",
+            rateUsd = "1.0",
+            type = "crypto"
+        ),
+        Rate(
+            id = "cardano",
+            symbol = "ADA",
+            currencySymbol = "USD",
+            rateUsd = "1.0",
+            type = "crypto"
+        ),
+        Rate(
+            id = "binancecoin",
+            symbol = "BNB",
+            currencySymbol = "USD",
+            rateUsd = "1.0",
+            type = "crypto"
+        ),
+        Rate(
+            id = "tether",
+            symbol = "USDT",
+            currencySymbol = "USD",
+            rateUsd = "1.0",
+            type = "crypto"
+        )
+    )
+}
+
+private fun localRates(): List<LocalRate> {
+    return listOf(
+        LocalRate(
+            code = "US",
+            sell = 41000,
+            buy = 40800
+        ),
+        LocalRate(
+            code = "EU",
+            sell = 41000,
+            buy = 40800
+        ),
+        LocalRate(
+            code = "GB",
+            sell = 41000,
+            buy = 40800
+        ),
+        LocalRate(
+            code = "CA",
+            sell = 41000,
+            buy = 40800
+        ),
+        LocalRate(
+            code = "AU",
+            sell = 41000,
+            buy = 40800
+        )
     )
 }
