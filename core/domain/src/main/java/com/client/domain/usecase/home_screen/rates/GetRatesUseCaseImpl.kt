@@ -27,8 +27,8 @@ class GetRatesUseCaseImpl @Inject constructor(
 
     override fun getLiveCryptoCurrencies(): Flow<Result<List<Rate>>> = rateRepository
         .getLiveRates()
-        .map {
-            it.filter { rate -> rate.type == "crypto" }
+        .map { rates ->
+            rates.filter { rate -> rate.type == "crypto" }
         }
         .asResult()
 }

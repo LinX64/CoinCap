@@ -28,13 +28,13 @@ internal fun Content(
             .testTag("ui:search:grid"),
         state = state
     ) {
-        if (searchUiState is SearchUiState.Success) {
+        if (searchUiState is SearchUiState.Success ) {
             items(searchUiState.rates, key = { it.id }) { rate ->
                 RateCell(
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
-                    currencySymbol = rate.currencySymbol ?: rate.symbol,
                     type = rate.type,
+                    dollarPrice = "",
                     onClick = { onRateClicked(rate.id) })
             }
         }

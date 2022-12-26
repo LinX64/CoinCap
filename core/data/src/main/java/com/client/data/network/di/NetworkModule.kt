@@ -1,9 +1,9 @@
 package com.client.data.network.di
 
+import com.client.common.util.Consts
 import com.client.data.model.local_rates.LocalRateResponse
 import com.client.data.retrofit.LocalRatesApi
 import com.client.data.retrofit.RatesApi
-import com.client.data.util.Consts
 import com.client.data.util.CurrencyDeserializer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -12,9 +12,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
 
@@ -34,12 +34,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideHttpClient() = OkHttpClient
-        .Builder()
-        .connectTimeout(60, TimeUnit.SECONDS)
-        .writeTimeout(60, TimeUnit.SECONDS)
-        .readTimeout(60, TimeUnit.SECONDS)
-        .build()
+    fun provideHttpClient(): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor()
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
+        return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .build()
+    }
 
     @Provides
     @Singleton
