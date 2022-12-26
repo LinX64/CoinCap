@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="top_crypto_currencies">Top Crypto Currencies</string>
+    <string name="top_crypto_currencies">Top CryptoCurrencies</string>
     <string name="send">Send</string>
     <string name="sell">Sell</string>
     <string name="buy">Buy</string>
