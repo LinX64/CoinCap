@@ -11,8 +11,8 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.client.data.model.Rate
 import com.client.search.SearchUiState
+import com.client.ui.CryptoCurrencyItem
 import com.client.ui.DevicePreviews
-import com.client.ui.RateCell
 
 @Composable
 internal fun Content(
@@ -30,12 +30,11 @@ internal fun Content(
     ) {
         if (searchUiState is SearchUiState.Success ) {
             items(searchUiState.rates, key = { it.id }) { rate ->
-                RateCell(
+                CryptoCurrencyItem(
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
-                    type = rate.type,
-                    dollarPrice = "",
-                    onClick = { onRateClicked(rate.id) })
+                    dollarPrice = ""
+                ) { onRateClicked(rate.id) }
             }
         }
     }

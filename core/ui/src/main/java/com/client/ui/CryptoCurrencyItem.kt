@@ -22,11 +22,10 @@ import com.client.common.util.roundToInteger
 import java.util.*
 
 @Composable
-fun RateCell(
+fun CryptoCurrencyItem(
     modifier: Modifier = Modifier,
     rate: String,
     symbol: String,
-    type: String,
     dollarPrice: String,
     onClick: () -> Unit
 ) {
@@ -122,11 +121,9 @@ private fun ColumnItems(
 @Composable
 @Preview(showBackground = true)
 fun RateCellPreview() {
-    RateCell(
+    CryptoCurrencyItem(
         rate = "1.0",
         symbol = "BTC",
-        type = "Bitcoin",
-        dollarPrice = "695656566",
-        onClick = {}
-    )
+        dollarPrice = "695656566"
+    ) {}
 }

@@ -29,7 +29,7 @@ class LocalCurrencyRepositoryImpl @Inject constructor(
         if (day in dayRange && hour in hourRange) {
             while (true) {
                 emit(localRates)
-                delay(Consts.DELAY)
+                delay(Consts.LONG_DELAY)
             }
         } else emit(localRates)
     }

@@ -28,8 +28,8 @@ import com.client.ui.*
 @Composable
 internal fun HomeRoute(
     modifier: Modifier = Modifier,
-    viewModel: HomeViewModel = hiltViewModel(),
-    navController: NavHostController
+    navController: NavHostController,
+    viewModel: HomeViewModel = hiltViewModel()
 ) {
     val homeUiState by viewModel.cryptoLiveRates.collectAsStateWithLifecycle()
     val localRates by viewModel.localLiveRates.collectAsStateWithLifecycle()
@@ -61,11 +61,11 @@ internal fun HomeScreen(
     LazyColumn(
         modifier = modifier
             .fillMaxSize()
-            .padding(start = 8.dp, end = 8.dp)
+            .padding(8.dp)
     ) {
         item { Header() }
         item {
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(8.dp))
         }
         item {
             Text(
@@ -88,14 +88,17 @@ internal fun HomeScreen(
             LazyRow(modifier = modifier.fillMaxWidth()) {
                 items(localRates.size) {
                     val localRate = localRates[it]
-                    LocalCurrencyItem(localRate = localRate)
+                    LocalCurrencyItem(localRate = localRate, onClick = {})
                 }
             }
         }
         item {
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+        item {
             Text(
                 text = stringResource(id = R.string.top_crypto_currencies),
-                modifier = modifier.padding(start = 5.dp, top = 16.dp),
+                modifier = modifier.padding(start = 5.dp),
                 style = MaterialTheme.typography.titleMedium
             )
             Spacer(modifier = Modifier.height(3.dp))
@@ -106,18 +109,16 @@ internal fun HomeScreen(
                 color = Color.Gray
             )
         }
-        item {
-            val usDollar = localRates.find { it.code == "usd" }?.sell ?: 0.0
-            rates.forEach { rate ->
-                Column(modifier = modifier.padding(start = 5.dp, end = 10.dp)) {
-                    RateCell(
-                        rate = rate.rateUsd,
-                        symbol = rate.symbol,
-                        type = rate.type,
-                        dollarPrice = usDollar.toString(),
-                        onClick = { navController.navigateToDetail(rate.id) }
-                    )
-                }
+        items(rates.size) {
+            val usDollar = localRates.find { rate -> rate.code == "usd" }?.sell ?: 0.0
+            val rate = rates[it]
+
+            Column(modifier = modifier.fillMaxWidth()) {
+                CryptoCurrencyItem(
+                    rate = rate.rateUsd,
+                    symbol = rate.symbol,
+                    dollarPrice = usDollar.toString()
+                ) { navController.navigateToDetail(rate.id) }
             }
         }
     }
