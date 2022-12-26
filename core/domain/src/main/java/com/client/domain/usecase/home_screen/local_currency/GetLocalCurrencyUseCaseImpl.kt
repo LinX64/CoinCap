@@ -14,4 +14,6 @@ class GetLocalCurrencyUseCaseImpl @Inject constructor(
     override fun getLocalCurrency(): Flow<Result<List<LocalRate>>> = localCurrencyRepository
         .getLivePrice()
         .asResult()
+
+    //TODO: How about combining the two rates into one?
 }

@@ -17,10 +17,12 @@ class CalenderHelper {
             val day = calendar.get(Calendar.DAY_OF_WEEK)
             val hour = calendar.get(Calendar.HOUR_OF_DAY)
             val minute = calendar.get(Calendar.MINUTE)
+            val second = calendar.get(Calendar.SECOND)
             return hashMapOf(
                 "day" to day,
                 "hour" to hour,
-                "minute" to minute
+                "minute" to minute,
+                "second" to second
             )
         }
 
@@ -29,5 +31,7 @@ class CalenderHelper {
         fun getHour(): Int = getIranTime()["hour"] ?: 0
 
         fun getMinute(): Int = getIranTime()["minute"] ?: 0
+
+        fun getSecond(): Int = getIranTime()["second"] ?: 0
     }
 }
