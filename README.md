@@ -20,10 +20,10 @@ the app more scalable and maintainable.
 ### Screenshots
 
 <p>
-<img src="https://i.imgur.com/2O20IGa.png" height="400" />
-<img src="https://i.imgur.com/8mcrfij.png" height="400" />
-<img src="https://i.imgur.com/59Kj14a.png" height="400" />
-<img src="https://i.imgur.com/J7aMJr2.png" height="400" />
+<img src="https://i.imgur.com/0f7TvSq.png" height="440" />
+<img src="https://i.imgur.com/8mcrfij.png" height="440" />
+<img src="https://i.imgur.com/59Kj14a.png" height="440" />
+<img src="https://i.imgur.com/J7aMJr2.png" height="440" />
 </p>
 
 ### Features
