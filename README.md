@@ -33,11 +33,19 @@ the app more scalable and maintainable.
    and the Firewall won't block us.
 2. For home screen, I am planning to get some data from server for showing on the LineChart, but for
    now, I am using dummy data.
-
+3. Unfortunately, the API doesn't provide the data for the LineChart, so I am using dummy data for
+   now.
+4. Iran (my home country) has been facing inflation for the last decade, and surprisingly, because
+   of protests and the lack of management, the inflation rate is increasing day by day. So, I took
+   the chance and put a logic for showing the rates in different currencies as **Local Currency**,
+   with a refresh policy between Saturday to Thursday, and the rates will be updated every 5
+   minutes. For Friday, the rates will be retrieved from the previous day.
 
 ### API
 
-For this project, I am using [CoinCap API](https://docs.coincap.io/#ee30bea9-bb6b-469d-958a-d3e35d442d7a) for now. I will probably add more APIs in the future.
+For this project, I am
+using [CoinCap API](https://docs.coincap.io/#ee30bea9-bb6b-469d-958a-d3e35d442d7a) for now. I will
+probably add more APIs in the future.
 
 ### Continuous Integration
 
@@ -47,6 +55,7 @@ devices. Also, it is using Renovate to keep the dependencies up to date.
 ### TODO
 
 - Add Offline first support
+- Fix search issue with price
 - Tests
 - Get data from Server for LineChart
 - Add more features
