@@ -32,8 +32,7 @@ internal fun Content(
             items(searchUiState.rates, key = { it.id }) { rate ->
                 CryptoCurrencyItem(
                     rate = rate.rateUsd,
-                    symbol = rate.symbol,
-                    dollarPrice = ""
+                    symbol = rate.symbol
                 ) { onRateClicked(rate.id) }
             }
         }
