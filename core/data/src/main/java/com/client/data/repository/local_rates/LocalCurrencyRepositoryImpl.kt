@@ -23,15 +23,18 @@ class LocalCurrencyRepositoryImpl @Inject constructor(
     private val dayRange = Consts.DAY_RANGE
     private val hourRange = Consts.HOUR_RANGE
 
+    /**
+     * Repeat the flow based on the specific policy & availability of data from API.
+     * Data is available between 9:00 AM & 16:00 PM, Saturday to Thursday (Iran Time), excluding Fridays.
+     * For other days, there will be only one emit with the last available data.
+     */
     override fun getLivePrice(): Flow<List<LocalRate>> = flow {
         val localRates = localRatesApi.getLocalRates().localRates
-
         if (day in dayRange && hour in hourRange) {
             while (true) {
                 emit(localRates)
                 delay(Consts.LONG_DELAY)
             }
         } else emit(localRates)
-    }
-        .flowOn(ioDispatcher)
+    }.flowOn(ioDispatcher)
 }

@@ -8,10 +8,7 @@ import com.client.data.network.Result.*
 import com.client.domain.usecase.home_screen.local_currency.GetLocalCurrencyUseCase
 import com.client.domain.usecase.home_screen.rates.GetRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +19,7 @@ class HomeViewModel @Inject constructor(
 
     val localLiveRates: StateFlow<HomeLocalUiState> = getLocalCurrencyUseCase
         .getLocalCurrency()
+        .distinctUntilChanged()
         .map { result ->
             when (result) {
                 is Loading -> HomeLocalUiState.Loading
@@ -37,6 +35,7 @@ class HomeViewModel @Inject constructor(
 
     val cryptoLiveRates: StateFlow<HomeUiState> = getRatesUseCase
         .getLiveCryptoCurrencies()
+        .distinctUntilChanged()
         .map { result ->
             when (result) {
                 is Loading -> HomeUiState.Loading
