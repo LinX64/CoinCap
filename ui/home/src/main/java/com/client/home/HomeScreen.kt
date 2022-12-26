@@ -19,6 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.ui.home.R
 import com.client.data.model.Rate
+import com.client.data.model.local_rates.LocalRate
 import com.client.detail.navigation.navigateToDetail
 import com.client.home.component.Header
 import com.client.ui.*
@@ -30,10 +31,12 @@ internal fun HomeRoute(
     viewModel: HomeViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
-    val homeUiState by viewModel.liveRates.collectAsStateWithLifecycle()
+    val homeUiState by viewModel.cryptoLiveRates.collectAsStateWithLifecycle()
+    val localRates by viewModel.localLiveRates.collectAsStateWithLifecycle()
     HomeScreen(
         modifier = modifier,
         homeUiState = homeUiState,
+        localUiState = localRates,
         navController = navController
     )
 }
@@ -42,6 +45,7 @@ internal fun HomeRoute(
 internal fun HomeScreen(
     modifier: Modifier = Modifier,
     homeUiState: HomeUiState,
+    localUiState: HomeLocalUiState,
     navController: NavHostController
 ) {
     val isLoading = homeUiState is HomeUiState.Loading
@@ -78,9 +82,15 @@ internal fun HomeScreen(
             )
         }
         item {
-            LazyRow(modifier = modifier.fillMaxWidth()) {
-                items(10) {
-                    LocalCurrencyItem(onClick = {})
+            if (localUiState is HomeLocalUiState.Success) {
+                val localRates = localUiState.localRates
+                LazyRow(modifier = modifier.fillMaxWidth()) {
+                    items(localRates.size) { index ->
+                        val rate = localRates[index]
+                        LocalCurrencyItem(
+                            localRate = rate
+                        )
+                    }
                 }
             }
         }
@@ -163,6 +173,15 @@ fun HomeScreenPreview() {
                     currencySymbol = "USD",
                     rateUsd = "1.0",
                     type = "crypto"
+                )
+            )
+        ),
+        localUiState = HomeLocalUiState.Success(
+            localRates = listOf(
+                LocalRate(
+                    code = "IRR",
+                    sell = 1,
+                    buy = 1
                 )
             )
         ),
