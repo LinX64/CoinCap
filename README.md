@@ -22,8 +22,8 @@ the app more scalable and maintainable.
 <p>
 <img src="https://i.imgur.com/2O20IGa.png" height="400" />
 <img src="https://i.imgur.com/8mcrfij.png" height="400" />
-<img src="https://i.imgur.com/1hK0pFC.png" height="400" />
-<img src="https://i.imgur.com/HJsrNNT.png" height="400" />
+<img src="https://i.imgur.com/59Kj14a.png" height="400" />
+<img src="https://i.imgur.com/J7aMJr2.png" height="400" />
 </p>
 
 ### Features
