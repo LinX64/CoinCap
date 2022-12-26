@@ -1,10 +1,10 @@
-package com.client.domain.usecase.home_screen
+package com.client.domain.usecase.home_screen.rates
 
 import com.client.data.model.Rate
 import com.client.data.model.RateDetailResp
 import com.client.data.network.Result
 import com.client.data.network.asResult
-import com.client.data.repository.RatesRepository
+import com.client.data.repository.foreign_rates.RatesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
@@ -27,8 +27,8 @@ class GetRatesUseCaseImpl @Inject constructor(
 
     override fun getLiveCryptoCurrencies(): Flow<Result<List<Rate>>> = rateRepository
         .getLiveRates()
-        .map {
-            it.filter { rate -> rate.type == "crypto" }
+        .map { rates ->
+            rates.filter { rate -> rate.type == "crypto" }
         }
         .asResult()
 }

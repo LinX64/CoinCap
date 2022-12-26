@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.client.coincap.R
 import com.client.coincap.navigation.CoinCapNavHost
+import com.client.common.util.NavRoutes
 import com.client.data.util.NetworkMonitor
 
 @OptIn(
@@ -31,10 +32,18 @@ fun CoinCapApp(
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
     val currentDestination = appState.currentDestination
+    val isCurrentRouteSearch = currentDestination?.route == NavRoutes.searchRoute
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onBackground,
-        topBar = { TopAppBar(appState.navController, currentDestination) },
+        topBar = {
+            if (!isCurrentRouteSearch) {
+                TopAppBar(
+                    navController = appState.navController,
+                    destination = currentDestination
+                )
+            }
+        },
         snackbarHost = { SnackbarHost(snackBarHostState) },
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
     ) { padding ->

@@ -1,6 +1,5 @@
 plugins {
     id("coincap.android.library")
-    id("coincap.android.hilt")
 }
 
 android {

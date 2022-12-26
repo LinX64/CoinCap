@@ -11,7 +11,7 @@ import java.util.*
  * @param [maxRetries] is the maximum number of retries.
  */
 fun <T> Flow<T>.retryWithDelay(
-    delayMillis: Long = 3000L,
+    delayMillis: Long = Consts.DELAY,
     maxRetries: Int = Int.MAX_VALUE
 ): Flow<T> = retryWhen { cause, attempt ->
     if (cause is IOException || attempt < maxRetries) {
@@ -20,7 +20,7 @@ fun <T> Flow<T>.retryWithDelay(
     } else false
 }
 
-fun Double.formatToPrice(): String = String.format("%.2f", this)
+fun Double.formatToPrice(): String = String.format("%.4f", this)
 fun Double.roundToInteger(): Int = String.format("%.0f", this).toInt()
 
 fun String.capitalize(): String =
@@ -31,3 +31,4 @@ fun Int.formatToPrice(): String = toString()
     .chunked(3)
     .joinToString(",")
     .reversed()
+

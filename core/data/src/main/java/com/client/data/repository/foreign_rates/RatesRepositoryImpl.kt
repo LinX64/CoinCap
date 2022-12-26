@@ -1,16 +1,16 @@
-package com.client.data.repository
+package com.client.data.repository.foreign_rates
 
-import com.client.common.util.retryWithDelay
+import com.client.common.util.Consts
 import com.client.data.model.Rate
 import com.client.data.model.RateDetailResp
 import com.client.data.model.toExternalModel
 import com.client.data.network.di.BinDispatchers.*
 import com.client.data.network.di.Dispatcher
 import com.client.data.retrofit.RatesApi
-import com.client.data.util.Const.DELAY
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
@@ -28,10 +28,12 @@ class RatesRepositoryImpl @Inject constructor(
     override fun getLiveRates(): Flow<List<Rate>> = flow {
         while (true) {
             emit(getRatesCall())
-            delay(DELAY)
+            delay(Consts.DELAY)
         }
     }
-        .retryWithDelay()
+        .catch {
+            println("Error: $it")
+        }
         .flowOn(ioDispatcher)
 
     override fun getRateBy(id: String): Flow<RateDetailResp> = flow {

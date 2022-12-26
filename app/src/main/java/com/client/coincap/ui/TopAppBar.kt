@@ -1,9 +1,11 @@
 package com.client.coincap.ui
 
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
@@ -17,13 +19,14 @@ import com.client.search.navigation.navigateToSearch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
+    modifier: Modifier = Modifier,
     navController: NavHostController,
     destination: NavDestination?
 ) {
     val isCurrentRouteHome = destination?.route == NavRoutes.homeRoute
-
-    CenterAlignedTopAppBar(
+    TopAppBar(
         title = { Text(text = stringResource(R.string.app_name)) },
+        modifier = modifier.fillMaxWidth(),
         navigationIcon = {
             if (!isCurrentRouteHome) {
                 IconButton(onClick = { navController.popBackStack() }) {
@@ -53,7 +56,7 @@ fun TopAppBarPreview() {
     val navController = rememberNavController()
     CoinCapTheme {
         TopAppBar(
-            navController,
+            navController = navController,
             destination = null
         )
     }

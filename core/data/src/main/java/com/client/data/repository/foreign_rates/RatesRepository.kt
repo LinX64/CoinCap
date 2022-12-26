@@ -1,4 +1,4 @@
-package com.client.data.repository
+package com.client.data.repository.foreign_rates
 
 import com.client.data.model.Rate
 import com.client.data.model.RateDetailResp
