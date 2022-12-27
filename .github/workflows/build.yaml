@@ -50,19 +50,6 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
 
-      - name: Upload build outputs (APKs)
-        uses: actions/upload-artifact@v3
-        with:
-          name: build-outputs
-          path: app/build/outputs
-
-      - name: Upload build reports
-          if: always()
-          uses: actions/upload-artifact@v3
-          with:
-            name: build-reports
-            path: app/build/reports
-
   unit-tests:
     needs: check
     name: Unit tests
@@ -142,6 +129,3 @@ jobs:
         with:
           name: test-reports-${{ matrix.api-level }}
           path: '*/build/reports/androidTests'
-
-    build:
-      needs: check
