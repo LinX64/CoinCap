@@ -36,8 +36,8 @@ jobs:
 
       - name: Setup detekt
         uses: peter-murray/setup-detekt@v2
-          with:
-            detekt_version: ${{ env.CACHE_VERSION }}
+        with:
+          detekt_version: ${{ env.CACHE_VERSION }}
 
       - name: Run detekt
         run: detekt-cli --version
