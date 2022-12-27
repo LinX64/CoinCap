@@ -17,18 +17,23 @@ fun <T> Flow<T>.retryWithDelay(
     if (cause is IOException || attempt < maxRetries) {
         delay(delayMillis)
         true
-    } else false
+    } else {
+        false
+    }
 }
 
-fun Double.formatToPrice(): String = String.format("%.4f", this)
-fun Double.roundToInteger(): Int = String.format("%.0f", this).toInt()
+fun Double.formatToPrice(): String = String.format(Locale.US, "%,.4f", this)
+fun Double.roundToInteger(): Int = String.format(
+    Locale.US,
+    "%.0f",
+    this
+).toInt()
 
 fun String.capitalize(): String =
-    replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.ROOT) else it.toString() }
+    replaceFirstChar { if (it.isLowerCase()) it.titlecase(Locale.US) else it.toString() }
 
 fun Int.formatToPrice(): String = toString()
     .reversed()
     .chunked(3)
     .joinToString(",")
     .reversed()
-

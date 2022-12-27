@@ -9,14 +9,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.client.data.model.Rate
-import com.client.data.model.RateDetailResp
 import com.client.ui.LineChart
 
 @Composable
 internal fun CandleChart(
-    modifier: Modifier = Modifier,
-    rateRes: RateDetailResp
+    modifier: Modifier = Modifier
 ) {
     val data = listOf(
         Pair(6, 111.45),
@@ -51,15 +48,6 @@ internal fun CandleChart(
 @Preview
 private fun PreviewCandleChart() {
     CandleChart(
-        modifier = Modifier,
-        rateRes = RateDetailResp(
-            rate = Rate(
-                id = "id",
-                symbol = "symbol",
-                type = "type",
-                currencySymbol = "currencySymbol",
-                rateUsd = "12232",
-            ), timestamp = 324234234234
-        )
+        modifier = Modifier
     )
 }

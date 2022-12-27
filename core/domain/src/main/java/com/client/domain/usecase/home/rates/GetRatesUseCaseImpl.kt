@@ -1,10 +1,10 @@
-package com.client.domain.usecase.home_screen.rates
+package com.client.domain.usecase.home.rates
 
 import com.client.data.model.Rate
 import com.client.data.model.RateDetailResp
 import com.client.data.network.Result
 import com.client.data.network.asResult
-import com.client.data.repository.foreign_rates.RatesRepository
+import com.client.data.repository.foreignRates.RatesRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject

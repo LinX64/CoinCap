@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.client.data.model.RateDetailResp
 import com.client.data.network.Result
 import com.client.detail.navigation.DetailArgs
-import com.client.domain.usecase.home_screen.rates.GetRatesUseCaseImpl
+import com.client.domain.usecase.home.rates.GetRatesUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

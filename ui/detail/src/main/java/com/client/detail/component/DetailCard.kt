@@ -26,110 +26,145 @@ internal fun DetailCard(
             .size(200.dp)
             .padding(16.dp)
     ) {
-        val rate = rateRes.rate
+        DetailContent(rateRes, modifier)
+    }
+}
 
-        Column(
-            modifier = modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 16.dp),
-            verticalArrangement = Arrangement.SpaceEvenly
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "ID",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+@Composable
+private fun DetailContent(
+    rateRes: RateDetailResp,
+    modifier: Modifier
+) {
+    val rate = rateRes.rate
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 16.dp),
+        verticalArrangement = Arrangement.SpaceEvenly
+    ) {
+        RowID(rate)
 
-                Text(
-                    text = rate.symbol,
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+        RowName(rate)
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Name",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+        Spacer(modifier = Modifier.height(10.dp))
 
-                Text(
-                    text = rate.id.capitalize(),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+        RowPrice(rate)
 
-            Spacer(modifier = Modifier.height(10.dp))
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Price",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+        RowType(modifier, rate)
 
-                val formattedPrice =
-                    rate.rateUsd.toDouble().formatToPrice()
-                Text(
-                    text = "$$formattedPrice",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
-            }
+        Spacer(modifier = Modifier.height(10.dp))
 
-            Spacer(modifier = Modifier.height(10.dp))
+        RowLastUpdated(modifier, rateRes)
+    }
+}
 
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Type",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+@Composable
+private fun RowID(rate: Rate) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "ID",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
 
-                Spacer(modifier = Modifier.width(10.dp))
+        Text(
+            text = rate.symbol,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
 
-                Text(
-                    text = rate.type.capitalize(),
-                    style = MaterialTheme.typography.bodyMedium
-                )
-            }
+@Composable
+private fun RowName(rate: Rate) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Name",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
 
-            Spacer(modifier = Modifier.height(10.dp))
+        Text(
+            text = rate.id.capitalize(),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
 
-            Row(
-                modifier = modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
-                    text = "Last Updated",
-                    style = MaterialTheme.typography.bodyMedium,
-                    fontWeight = FontWeight.Bold
-                )
+@Composable
+private fun RowPrice(rate: Rate) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Price",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
 
-                Spacer(modifier = Modifier.width(10.dp))
+        val formattedPrice =
+            rate.rateUsd.toDouble().formatToPrice()
+        Text(
+            text = "$$formattedPrice",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
 
-                Text(
-                    text = rateRes.timestamp.toTimeAgo(),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.primary
-                )
-            }
-        }
+@Composable
+private fun RowType(modifier: Modifier, rate: Rate) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Type",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Text(
+            text = rate.type.capitalize(),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+private fun RowLastUpdated(
+    modifier: Modifier,
+    rateRes: RateDetailResp
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Last Updated",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Text(
+            text = rateRes.timestamp.toTimeAgo(),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
@@ -144,7 +179,8 @@ fun DetailCardPreview() {
                 type = "type",
                 currencySymbol = "currencySymbol",
                 rateUsd = "12232",
-            ), timestamp = 324234234234
+            ),
+            timestamp = 324234234234
         )
     )
 }

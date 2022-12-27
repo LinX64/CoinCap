@@ -1,14 +1,23 @@
 plugins {
     id("coincap.android.library")
     id("coincap.android.library.compose")
+    id("coincap.kotlin.detekt")
     id("coincap.android.hilt")
 }
 
 android {
+    namespace = "com.client.coincap.ui.home"
+
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    namespace = "com.client.coincap.ui.home"
+
+    detekt {
+        config = files("$rootDir/app/config/detekt/config.yml")
+        parallel = true
+        buildUponDefaultConfig = true
+        autoCorrect = true
+    }
 }
 
 dependencies {

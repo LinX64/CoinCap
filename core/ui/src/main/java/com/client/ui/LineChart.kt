@@ -52,7 +52,8 @@ fun LineChart(
         }
 
         val priceStep = (upperValue - lowerValue) / 5f
-        (0..4).forEach { i ->
+        val mRange = 0..4
+        mRange.forEach { i ->
             drawContext.canvas.nativeCanvas.apply {
                 drawText(
                     round(lowerValue + priceStep * i).toString(),

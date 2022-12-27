@@ -44,5 +44,9 @@ gradlePlugin {
             id = "coincap.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+        register("kotlinDetekt") {
+            id = "coincap.kotlin.detekt"
+            implementationClass = "KotlinDetektConventionPlugin"
+        }
     }
 }

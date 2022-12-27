@@ -61,7 +61,8 @@ fun SearchScreen(
 
         Content(
             searchUiState = searchUiState,
-            onRateClicked = { id -> navController.navigateToDetail(id) })
+            onRateClicked = { id -> navController.navigateToDetail(id) }
+        )
 
         HandleStates(searchUiState)
     }
@@ -72,7 +73,7 @@ fun HandleStates(searchUiState: SearchUiState) {
     when (searchUiState) {
         is SearchUiState.Error -> ErrorView(errorMessage = searchUiState.message)
         is SearchUiState.Empty -> EmptyView(errorMessage = stringResource(R.string.no_results))
-        else -> InitialView(uiState = searchUiState)
+        else -> InitialView()
     }
 }
 

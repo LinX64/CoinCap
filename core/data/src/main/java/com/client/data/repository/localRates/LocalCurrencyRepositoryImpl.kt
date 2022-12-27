@@ -1,8 +1,8 @@
-package com.client.data.repository.local_rates
+package com.client.data.repository.localRates
 
 import com.client.common.util.CalenderHelper
 import com.client.common.util.Consts
-import com.client.data.model.local_rates.LocalRate
+import com.client.data.model.localRates.LocalRate
 import com.client.data.network.di.BinDispatchers.*
 import com.client.data.network.di.Dispatcher
 import com.client.data.retrofit.LocalRatesApi
@@ -35,6 +35,8 @@ class LocalCurrencyRepositoryImpl @Inject constructor(
                 emit(localRates)
                 delay(Consts.LONG_DELAY)
             }
-        } else emit(localRates)
+        } else {
+            emit(localRates)
+        }
     }.flowOn(ioDispatcher)
 }

@@ -3,10 +3,10 @@ package com.client.home
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.client.data.model.Rate
-import com.client.data.model.local_rates.LocalRate
+import com.client.data.model.localRates.LocalRate
 import com.client.data.network.Result.*
-import com.client.domain.usecase.home_screen.local_currency.GetLocalCurrencyUseCase
-import com.client.domain.usecase.home_screen.rates.GetRatesUseCase
+import com.client.domain.usecase.home.localCurrency.GetLocalCurrencyUseCase
+import com.client.domain.usecase.home.rates.GetRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject

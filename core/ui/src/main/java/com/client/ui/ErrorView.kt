@@ -26,7 +26,6 @@ fun ErrorView(
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-
         Image(
             painter = painterResource(id = R.drawable.ic_error_no_internet),
             contentDescription = null

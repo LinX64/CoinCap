@@ -40,7 +40,9 @@ class SearchViewModel @Inject constructor(
                 .map { rates ->
                     if (rates.isNotEmpty()) {
                         _uiState.value = SearchUiState.Success(rates)
-                    } else _uiState.value = SearchUiState.Empty
+                    } else {
+                        _uiState.value = SearchUiState.Empty
+                    }
                 }
                 .launchIn(viewModelScope)
         }

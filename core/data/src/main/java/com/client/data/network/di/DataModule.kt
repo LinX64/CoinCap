@@ -1,9 +1,9 @@
 package com.client.data.network.di
 
-import com.client.data.repository.foreign_rates.RatesRepository
-import com.client.data.repository.foreign_rates.RatesRepositoryImpl
-import com.client.data.repository.local_rates.LocalCurrencyRepository
-import com.client.data.repository.local_rates.LocalCurrencyRepositoryImpl
+import com.client.data.repository.foreignRates.RatesRepository
+import com.client.data.repository.foreignRates.RatesRepositoryImpl
+import com.client.data.repository.localRates.LocalCurrencyRepository
+import com.client.data.repository.localRates.LocalCurrencyRepositoryImpl
 import com.client.data.util.ConnectivityManagerNetworkMonitor
 import com.client.data.util.NetworkMonitor
 import dagger.Binds

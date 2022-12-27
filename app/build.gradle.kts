@@ -3,10 +3,13 @@ import com.client.coincap.CoinCapBuildType
 plugins {
     id("coincap.android.application")
     id("coincap.android.application.compose")
+    id("coincap.kotlin.detekt")
     id("coincap.android.hilt")
 }
 
 android {
+    namespace = "com.client.coincap"
+
     defaultConfig {
         applicationId = "com.client.coincap"
         versionCode = 1
@@ -43,7 +46,13 @@ android {
             isIncludeAndroidResources = true
         }
     }
-    namespace = "com.client.coincap"
+
+    detekt {
+        config = files("$rootDir/app/config/detekt/config.yml")
+        parallel = true
+        buildUponDefaultConfig = true
+        autoCorrect = true
+    }
 }
 
 dependencies {

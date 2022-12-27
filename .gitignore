@@ -13,6 +13,7 @@
 .externalNativeBuild
 .cxx
 local.properties
+.idea/detekt.xml
 
 # Project exclude paths
 /build-logic/convention/build/

@@ -1,4 +1,4 @@
-package com.client.domain.usecase.home_screen.rates
+package com.client.domain.usecase.home.rates
 
 import com.client.data.model.Rate
 import com.client.data.network.Result

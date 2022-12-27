@@ -55,10 +55,12 @@ fun CoinCapApp(
 
         val notConnected = stringResource(R.string.no_internet_connection)
         LaunchedEffect(isOffline) {
-            if (isOffline) snackBarHostState.showSnackbar(
-                message = notConnected,
-                duration = SnackbarDuration.Long
-            )
+            if (isOffline) {
+                snackBarHostState.showSnackbar(
+                    message = notConnected,
+                    duration = SnackbarDuration.Long
+                )
+            }
         }
     }
 }
@@ -73,5 +75,3 @@ fun AppNavigation(appState: CoinCapState, padding: PaddingValues) {
             .consumedWindowInsets(padding),
     )
 }
-
-
