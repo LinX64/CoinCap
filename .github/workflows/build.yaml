@@ -29,7 +29,6 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: ${{ env.JAVA_VERSION }}
-        run: ./ci_clear_gradle_cache.sh
 
       - name: Gradle Cache
         uses: actions/cache@v3
