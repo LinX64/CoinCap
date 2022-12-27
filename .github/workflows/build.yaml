@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  CACHE_VERSION: 4
+  CACHE_VERSION: 5
   JAVA_VERSION: 19
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Setup JDK
+      - name: Set up JDK 11
         uses: actions/setup-java@v3
         with:
           distribution: 'zulu'
@@ -44,17 +44,30 @@ jobs:
       - name: Check Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Run detekt && Autoformat
+      - name: Run Detekt & AutoCorrect
         run: ./gradlew detekt --auto-correct
 
       - name: Run Lint
         run: ./gradlew lint
 
+      - name: Upload build outputs (APKs)
+          uses: actions/upload-artifact@v3
+          with:
+            name: build-outputs
+            path: app/build/outputs
+
+      - name: Upload build reports
+          if: always()
+          uses: actions/upload-artifact@v3
+          with:
+            name: build-reports
+            path: app/build/reports
+
   unit-tests:
     needs: check
     name: Unit tests
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 10
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -64,9 +77,6 @@ jobs:
 
       - name: Run Tests
         run: ./gradlew test
-
-      - name: Run Build
-        run: ./gradlew assemble
 
   androidTest:
     needs: check
@@ -80,6 +90,14 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Copy CI gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - name: Set up JDK 11
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -124,3 +142,6 @@ jobs:
         with:
           name: test-reports-${{ matrix.api-level }}
           path: '*/build/reports/androidTests'
+
+    build:
+      needs: check
