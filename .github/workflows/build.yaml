@@ -44,6 +44,9 @@ jobs:
       - name: Run Detekt & AutoCorrect
         run: ./gradlew detekt --auto-correct
 
+      - name: Execute Build
+        run: ./gradlew build
+
   unit-tests:
     needs: check
     name: Unit tests
