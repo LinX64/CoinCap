@@ -3,8 +3,8 @@ import com.client.coincap.CoinCapBuildType
 plugins {
     id("coincap.android.application")
     id("coincap.android.application.compose")
-    id("coincap.android.hilt")
     id("coincap.kotlin.detekt")
+    id("coincap.android.hilt")
 }
 
 android {
