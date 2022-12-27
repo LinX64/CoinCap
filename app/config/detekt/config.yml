@@ -496,6 +496,12 @@ potential-bugs:
   WrongEqualsTypeParameter:
     active: true
 
+formatting:
+  active: true
+  android: true
+  NoWildcardImports:
+    active: false
+
 style:
   active: true
   AlsoCouldBeApply:
