@@ -34,7 +34,7 @@ jobs:
         uses: gradle/wrapper-validation-action@v1
 
       - name: Check Detekt
-        script: ./gradlew detekt
+        run: ./gradlew detekt
 
       - name: Check Lint
         run: ./gradlew lint
