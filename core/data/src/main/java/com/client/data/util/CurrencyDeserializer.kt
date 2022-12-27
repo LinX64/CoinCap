@@ -1,7 +1,7 @@
 package com.client.data.util
 
-import com.client.data.model.local_rates.LocalRate
-import com.client.data.model.local_rates.LocalRateResponse
+import com.client.data.model.localRates.LocalRate
+import com.client.data.model.localRates.LocalRateResponse
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
 import com.google.gson.JsonElement
@@ -14,7 +14,7 @@ class CurrencyDeserializer : JsonDeserializer<LocalRateResponse> {
         typeOfT: Type?,
         context: JsonDeserializationContext?
     ): LocalRateResponse {
-        if (json == null || context == null) throw Exception("Error")
+        if (json == null || context == null) throw NullPointerException("Json or context is null!")
 
         val ratesSet = json.asJsonObject.entrySet()
         val ratesList = ratesSet.map {
@@ -23,7 +23,6 @@ class CurrencyDeserializer : JsonDeserializer<LocalRateResponse> {
             val buy = it.value.asJsonObject.get("buy").asInt
             LocalRate(name, sell, buy)
         }
-
         return LocalRateResponse(ratesList)
     }
 }

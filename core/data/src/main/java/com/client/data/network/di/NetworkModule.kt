@@ -1,7 +1,7 @@
 package com.client.data.network.di
 
 import com.client.common.util.Consts
-import com.client.data.model.local_rates.LocalRateResponse
+import com.client.data.model.localRates.LocalRateResponse
 import com.client.data.retrofit.LocalRatesApi
 import com.client.data.retrofit.RatesApi
 import com.client.data.util.CurrencyDeserializer

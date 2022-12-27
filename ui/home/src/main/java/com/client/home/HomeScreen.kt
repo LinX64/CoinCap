@@ -19,7 +19,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.ui.home.R
 import com.client.data.model.Rate
-import com.client.data.model.local_rates.LocalRate
+import com.client.data.model.localRates.LocalRate
 import com.client.detail.navigation.navigateToDetail
 import com.client.home.component.Header
 import com.client.ui.*

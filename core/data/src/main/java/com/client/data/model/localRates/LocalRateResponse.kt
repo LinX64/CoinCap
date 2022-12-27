@@ -1,4 +1,4 @@
-package com.client.data.model.local_rates
+package com.client.data.model.localRates
 
 import com.google.gson.annotations.SerializedName
 

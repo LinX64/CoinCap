@@ -1,6 +1,6 @@
-package com.client.domain.usecase.home_screen.local_currency
+package com.client.domain.usecase.home.localCurrency
 
-import com.client.data.model.local_rates.LocalRate
+import com.client.data.model.localRates.LocalRate
 import com.client.data.network.Result
 import kotlinx.coroutines.flow.Flow
 

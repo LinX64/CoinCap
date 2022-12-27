@@ -2,7 +2,7 @@ package com.client.domain.usecase.search
 
 import com.client.data.model.Rate
 import com.client.data.network.Result
-import com.client.domain.usecase.home_screen.rates.GetRatesUseCase
+import com.client.domain.usecase.home.rates.GetRatesUseCase
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 

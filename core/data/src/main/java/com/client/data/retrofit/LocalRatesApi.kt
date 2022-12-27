@@ -1,6 +1,6 @@
 package com.client.data.retrofit
 
-import com.client.data.model.local_rates.LocalRateResponse
+import com.client.data.model.localRates.LocalRateResponse
 import retrofit2.http.GET
 
 interface LocalRatesApi {

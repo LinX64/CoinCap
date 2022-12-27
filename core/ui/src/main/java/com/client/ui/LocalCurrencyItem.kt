@@ -19,7 +19,7 @@ import androidx.core.graphics.toColorInt
 import com.client.coincap.core.ui.R
 import com.client.common.util.CountryFlags
 import com.client.common.util.formatToPrice
-import com.client.data.model.local_rates.LocalRate
+import com.client.data.model.localRates.LocalRate
 
 @Composable
 fun LocalCurrencyItem(
