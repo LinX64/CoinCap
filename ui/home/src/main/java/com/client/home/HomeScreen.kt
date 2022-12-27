@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -18,11 +19,11 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.ui.home.R
-import com.client.data.model.Rate
-import com.client.data.model.localRates.LocalRate
 import com.client.detail.navigation.navigateToDetail
 import com.client.home.component.Header
 import com.client.ui.*
+import com.client.ui.util.DummyData.localRates
+import com.client.ui.util.DummyData.rates
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -62,6 +63,7 @@ internal fun HomeScreen(
         modifier = modifier
             .fillMaxSize()
             .padding(8.dp)
+            .testTag("ui:home:list")
     ) {
         item { Header() }
         item {
@@ -122,6 +124,10 @@ internal fun HomeScreen(
             }
         }
     }
+
+    if (homeUiState is HomeUiState.Error) {
+        ErrorView(errorMessage = "No data found!")
+    }
 }
 
 @Preview(showBackground = true)
@@ -138,79 +144,16 @@ fun HomeScreenPreview() {
     )
 }
 
-private fun rates(): List<Rate> {
-    return listOf(
-        Rate(
-            id = "bitcoin",
-            symbol = "BTC",
-            currencySymbol = "USD",
-            rateUsd = "1.0",
-            type = "crypto"
+@Preview(showBackground = true)
+@Composable
+fun HomeScreenErrorPreview() {
+    HomeScreen(
+        homeUiState = HomeUiState.Error(
+            error = "Error"
         ),
-        Rate(
-            id = "ethereum",
-            symbol = "ETH",
-            currencySymbol = "USD",
-            rateUsd = "1.0",
-            type = "crypto"
+        localUiState = HomeLocalUiState.Success(
+            localRates = localRates()
         ),
-        Rate(
-            id = "dogecoin",
-            symbol = "DOGE",
-            currencySymbol = "USD",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "cardano",
-            symbol = "ADA",
-            currencySymbol = "USD",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "binancecoin",
-            symbol = "BNB",
-            currencySymbol = "USD",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "tether",
-            symbol = "USDT",
-            currencySymbol = "USD",
-            rateUsd = "1.0",
-            type = "crypto"
-        )
-    )
-}
-
-private fun localRates(): List<LocalRate> {
-    return listOf(
-        LocalRate(
-            code = "US",
-            sell = 41000,
-            buy = 40800
-        ),
-        LocalRate(
-            code = "EU",
-            sell = 41000,
-            buy = 40800
-        ),
-        LocalRate(
-            code = "GB",
-            sell = 41000,
-            buy = 40800
-        ),
-        LocalRate(
-            code = "CA",
-            sell = 41000,
-            buy = 40800
-        ),
-        LocalRate(
-            code = "AU",
-            sell = 41000,
-            buy = 40800
-        )
+        navController = rememberNavController()
     )
 }
