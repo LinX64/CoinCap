@@ -12,6 +12,7 @@ concurrency:
 
 env:
   CACHE_VERSION: 4
+  JAVA_VERSION: 19
 
 jobs:
   check:
@@ -23,11 +24,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Check Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
-
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+      - name: Setup JDK
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'zulu'
+          java-version: ${{ env.JAVA_VERSION }}
+        run: ./ci_clear_gradle_cache.sh
 
       - name: Gradle Cache
         uses: actions/cache@v3
@@ -35,7 +37,13 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
+            key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
+
+      - name: Check Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Copy CI gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
       - name: Run detekt && Autoformat
         run: ./gradlew detekt --auto-correct
@@ -51,12 +59,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Setup JDK
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: 11
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
@@ -79,12 +81,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
-      - name: Set up JDK 11
-        uses: actions/setup-java@v3
-        with:
-          distribution: 'zulu'
-          java-version: 11
 
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
