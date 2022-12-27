@@ -11,6 +11,7 @@ concurrency:
 
 env:
   CACHE_VERSION: 3
+  DETEKT_VERSION: 1.22.0
 
 jobs:
   check:
@@ -33,8 +34,13 @@ jobs:
       - name: Check Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Check Detekt
-        run: ./gradlew detekt
+      - name: Setup detekt
+        uses: peter-murray/setup-detekt@v2
+          with:
+            detekt_version: ${{ env.CACHE_VERSION }}
+
+      - name: Run detekt
+        run: detekt-cli --version
 
       - name: Check Lint
         run: ./gradlew lint
