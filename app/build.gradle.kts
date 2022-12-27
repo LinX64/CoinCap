@@ -45,6 +45,12 @@ android {
         }
     }
     namespace = "com.client.coincap"
+
+    detekt {
+        config = files("$rootDir/app/config/detekt/config.yml")
+        parallel = true
+        buildUponDefaultConfig = true
+    }
 }
 
 dependencies {

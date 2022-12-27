@@ -51,7 +51,7 @@ fun DetailView(
         contentPadding = PaddingValues(8.dp)
     ) {
         item {
-            CandleChart(rateRes = rateRes)
+            CandleChart()
 
             Spacer(modifier = Modifier.height(16.dp))
 

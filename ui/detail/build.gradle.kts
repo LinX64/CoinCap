@@ -6,10 +6,17 @@ plugins {
 }
 
 android {
+    namespace = "com.client.coincap.core.detail"
+
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-    namespace = "com.client.coincap.core.detail"
+
+    detekt {
+        config = files("$rootDir/app/config/detekt/config.yml")
+        parallel = true
+        buildUponDefaultConfig = true
+    }
 }
 
 dependencies {
