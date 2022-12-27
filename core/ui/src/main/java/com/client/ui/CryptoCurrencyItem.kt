@@ -109,9 +109,9 @@ private fun ColumnItems(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        //val price = rate.toDouble() * dollarPrice.toDouble()
+        val price = rate.toDouble() * dollarPrice.toDouble()
         Text(
-            text = " t",
+            text = (price.toInt().formatToPrice() + " t"),
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold
         )
