@@ -51,10 +51,10 @@ jobs:
         run: ./gradlew lint
 
       - name: Upload build outputs (APKs)
-          uses: actions/upload-artifact@v3
-          with:
-            name: build-outputs
-            path: app/build/outputs
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-outputs
+          path: app/build/outputs
 
       - name: Upload build reports
           if: always()
