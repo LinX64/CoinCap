@@ -8,7 +8,7 @@ on:
 
 concurrency:
   group: build-${{ github.ref }}
-    cancel-in-progress: true
+  cancel-in-progress: true
 
 env:
   CACHE_VERSION: 3
