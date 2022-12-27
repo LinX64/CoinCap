@@ -26,7 +26,7 @@ fun CryptoCurrencyItem(
     modifier: Modifier = Modifier,
     rate: String,
     symbol: String,
-    dollarPrice: String,
+    dollarPrice: String = "0",
     onClick: () -> Unit
 ) {
     Card(
@@ -109,9 +109,9 @@ private fun ColumnItems(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        val price = rate.toDouble() * dollarPrice.toDouble()
+        //val price = rate.toDouble() * dollarPrice.toDouble()
         Text(
-            text = price.toInt().formatToPrice() + " t",
+            text = " t",
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold
         )

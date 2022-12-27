@@ -4,6 +4,7 @@ plugins {
     id("coincap.android.application")
     id("coincap.android.application.compose")
     id("coincap.android.hilt")
+    id("coincap.kotlin.detekt")
 }
 
 android {

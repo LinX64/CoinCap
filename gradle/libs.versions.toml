@@ -46,7 +46,7 @@ gson = "2.10"
 gsonConverter = "2.9.0"
 
 room = "2.5.0-rc01"
-secrets = "2.0.1"
+detekt = "1.22.0"
 turbine = "0.12.1"
 
 [libraries]
@@ -131,4 +131,4 @@ android-library = { id = "com.android.library", version.ref = "androidGradlePlug
 android-test = { id = "com.android.test", version.ref = "androidGradlePlugin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
-secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secrets" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

@@ -1,5 +1,6 @@
 plugins {
     id("coincap.android.library")
+    id("coincap.kotlin.detekt")
 }
 
 android {

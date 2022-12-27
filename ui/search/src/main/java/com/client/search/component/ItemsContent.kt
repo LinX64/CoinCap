@@ -28,12 +28,12 @@ internal fun Content(
             .testTag("ui:search:grid"),
         state = state
     ) {
-        if (searchUiState is SearchUiState.Success ) {
+        if (searchUiState is SearchUiState.Success) {
             items(searchUiState.rates, key = { it.id }) { rate ->
                 CryptoCurrencyItem(
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
-                    dollarPrice = ""
+                    dollarPrice = "100"
                 ) { onRateClicked(rate.id) }
             }
         }
