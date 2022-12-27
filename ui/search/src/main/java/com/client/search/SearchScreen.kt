@@ -61,7 +61,8 @@ fun SearchScreen(
 
         Content(
             searchUiState = searchUiState,
-            onRateClicked = { id -> navController.navigateToDetail(id) })
+            onRateClicked = { id -> navController.navigateToDetail(id) }
+        )
 
         HandleStates(searchUiState)
     }

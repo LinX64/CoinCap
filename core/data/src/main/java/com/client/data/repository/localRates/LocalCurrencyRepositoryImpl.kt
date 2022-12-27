@@ -35,6 +35,8 @@ class LocalCurrencyRepositoryImpl @Inject constructor(
                 emit(localRates)
                 delay(Consts.LONG_DELAY)
             }
-        } else emit(localRates)
+        } else {
+            emit(localRates)
+        }
     }.flowOn(ioDispatcher)
 }

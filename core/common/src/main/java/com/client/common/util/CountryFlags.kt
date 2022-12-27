@@ -65,6 +65,8 @@ object CountryFlags {
     fun getCountryFlagByCode(countryCode: String): String {
         return if (countryCode.length == 2) {
             getCodeByCharacter(countryCode[0]) + getCodeByCharacter(countryCode[1])
-        } else ""
+        } else {
+            ""
+        }
     }
 }

@@ -15,5 +15,5 @@ class GetLocalCurrencyUseCaseImpl @Inject constructor(
         .getLivePrice()
         .asResult()
 
-    //TODO: Consider combining the two repositories into one in the future.
+    // TODO: Consider combining the two repositories into one in the future.
 }

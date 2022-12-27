@@ -42,101 +42,129 @@ private fun DetailContent(
             .padding(start = 20.dp, end = 20.dp, top = 16.dp, bottom = 16.dp),
         verticalArrangement = Arrangement.SpaceEvenly
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "ID",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = rate.symbol,
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
+        RowID(rate)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Name",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            Text(
-                text = rate.id.capitalize(),
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
+        RowName(rate)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Price",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            val formattedPrice =
-                rate.rateUsd.toDouble().formatToPrice()
-            Text(
-                text = "$$formattedPrice",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
-        }
+        RowPrice(rate)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Type",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
-
-            Spacer(modifier = Modifier.width(10.dp))
-
-            Text(
-                text = rate.type.capitalize(),
-                style = MaterialTheme.typography.bodyMedium
-            )
-        }
+        RowType(modifier, rate)
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        Row(
-            modifier = modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Last Updated",
-                style = MaterialTheme.typography.bodyMedium,
-                fontWeight = FontWeight.Bold
-            )
+        RowLastUpdated(modifier, rateRes)
+    }
+}
 
-            Spacer(modifier = Modifier.width(10.dp))
+@Composable
+private fun RowID(rate: Rate) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "ID",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
 
-            Text(
-                text = rateRes.timestamp.toTimeAgo(),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
+        Text(
+            text = rate.symbol,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+private fun RowName(rate: Rate) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Name",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Text(
+            text = rate.id.capitalize(),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+private fun RowPrice(rate: Rate) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Price",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        val formattedPrice =
+            rate.rateUsd.toDouble().formatToPrice()
+        Text(
+            text = "$$formattedPrice",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+    }
+}
+
+@Composable
+private fun RowType(modifier: Modifier, rate: Rate) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Type",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Text(
+            text = rate.type.capitalize(),
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+@Composable
+private fun RowLastUpdated(
+    modifier: Modifier,
+    rateRes: RateDetailResp
+) {
+    Row(
+        modifier = modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = "Last Updated",
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Text(
+            text = rateRes.timestamp.toTimeAgo(),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
     }
 }
 
@@ -151,7 +179,8 @@ fun DetailCardPreview() {
                 type = "type",
                 currencySymbol = "currencySymbol",
                 rateUsd = "12232",
-            ), timestamp = 324234234234
+            ),
+            timestamp = 324234234234
         )
     )
 }

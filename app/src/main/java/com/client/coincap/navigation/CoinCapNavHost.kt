@@ -5,7 +5,6 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.client.detail.navigation.detailScreen
-import com.client.home.navigation.homeNavigationRoute
 import com.client.home.navigation.homeScreen
 import com.client.search.navigation.searchNavigationRoute
 import com.client.search.navigation.searchScreen

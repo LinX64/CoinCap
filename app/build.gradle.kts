@@ -8,6 +8,8 @@ plugins {
 }
 
 android {
+    namespace = "com.client.coincap"
+
     defaultConfig {
         applicationId = "com.client.coincap"
         versionCode = 1
@@ -44,7 +46,6 @@ android {
             isIncludeAndroidResources = true
         }
     }
-    namespace = "com.client.coincap"
 
     detekt {
         config = files("$rootDir/app/config/detekt/config.yml")

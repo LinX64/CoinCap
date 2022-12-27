@@ -17,7 +17,8 @@ class SearchRateUseCase @Inject constructor(
             .map { ratesList ->
                 ratesList.filter { rate ->
                     rate.symbol.startsWith(
-                        query, ignoreCase = true
+                        query,
+                        ignoreCase = true
                     )
                 }
             }
