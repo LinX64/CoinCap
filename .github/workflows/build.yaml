@@ -47,9 +47,6 @@ jobs:
       - name: Run Detekt & AutoCorrect
         run: ./gradlew detekt --auto-correct
 
-      - name: Run Lint
-        run: ./gradlew lint
-
       - name: Build
         run: ./gradlew build --scan
 
