@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  CACHE_VERSION: 3
+  CACHE_VERSION: 4
 
 jobs:
   check:
@@ -23,6 +23,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Check Gradle wrapper
+        uses: gradle/wrapper-validation-action@v1
+
+      - name: Copy CI gradle.properties
+        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
+
       - name: Gradle Cache
         uses: actions/cache@v3
         with:
@@ -31,13 +37,10 @@ jobs:
             ~/.gradle/wrapper
           key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
 
-      - name: Check Gradle wrapper
-        uses: gradle/wrapper-validation-action@v1
-
       - name: Run detekt && Autoformat
         run: ./gradlew detekt --auto-correct
 
-      - name: Check Lint
+      - name: Run Lint
         run: ./gradlew lint
 
   unit-tests:
