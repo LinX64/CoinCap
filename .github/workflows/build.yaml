@@ -50,6 +50,9 @@ jobs:
       - name: Run Lint
         run: ./gradlew lint
 
+      - name: Build
+        run: ./gradlew build --scan
+
   unit-tests:
     needs: check
     name: Unit tests
@@ -77,6 +80,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
       - name: Copy CI gradle.properties
         run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
 
@@ -113,7 +117,7 @@ jobs:
           emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none
           script: echo "Generated AVD snapshot for caching."
 
-      - name: run tests
+      - name: Run instrumentation tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: ${{ matrix.api-level }}
@@ -121,6 +125,8 @@ jobs:
           target: google_apis
           force-avd-creation: false
           disable-animations: true
+          disk-size: 6000M
+          heap-size: 600M
           script: mv .github/debug.keystore ~/.android; ./gradlew connectedDebugAndroidTest
 
       - name: Upload test reports
