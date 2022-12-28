@@ -18,16 +18,6 @@ an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions
 - Material 3
 - Compose Navigation
 
-### Architecture
-
-I've tried to follow the best practices from Google's official
-repository [nowInAndroid](https://github.com/android/nowinandroid), and used Modularization to make
-the app is more scalable and maintainable.
-
-#### Modules
-
-<img src="https://i.imgur.com/21DcyNY.png" width="400">
-
 ### Screenshots
 
 <p>
@@ -36,6 +26,16 @@ the app is more scalable and maintainable.
 <img src="https://i.imgur.com/59Kj14a.png" height="420" />
 <img src="https://i.imgur.com/J7aMJr2.png" height="420" />
 </p>
+
+### Architecture
+
+I've tried to follow the best practices from Google's official
+repository [nowInAndroid](https://github.com/android/nowinandroid), and used Modularization to make
+the app is more scalable and maintainable.
+
+### Modules
+
+<img src="https://i.imgur.com/21DcyNY.png" width="400">
 
 ### Features
 
