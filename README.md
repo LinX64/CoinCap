@@ -78,7 +78,6 @@ Please see: https://detekt.dev/docs/rules/formatting
 
 ### TODO
 
-- Add Detekt and features only once into the project.
 - Add Offline first support
 - Fix the search issue with the price
 - Tests
