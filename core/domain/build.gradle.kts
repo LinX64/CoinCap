@@ -7,13 +7,6 @@ plugins {
 
 android {
     namespace = "com.client.coincap.core.domain"
-
-    detekt {
-        config = files("$rootDir/app/config/detekt/config.yml")
-        parallel = true
-        buildUponDefaultConfig = true
-        autoCorrect = true
-    }
 }
 
 dependencies {

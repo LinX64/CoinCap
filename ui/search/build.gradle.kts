@@ -12,13 +12,6 @@ android {
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
-
-    detekt {
-        config = files("$rootDir/app/config/detekt/config.yml")
-        parallel = true
-        buildUponDefaultConfig = true
-        autoCorrect = true
-    }
 }
 
 dependencies {
