@@ -11,41 +11,63 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SearchViewModel @Inject constructor(
-    private val searchRateUseCase: SearchRateUseCase
+    searchRateUseCase: SearchRateUseCase
 ) : ViewModel() {
 
     private val _uiState: MutableStateFlow<SearchUiState> = MutableStateFlow(SearchUiState.Loading)
-    val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
+    val uiState: StateFlow<SearchUiState> = _uiState
 
-    val rates: StateFlow<SearchUiState> = searchRateUseCase
-        .getRates()
-        .map { result ->
-            when (result) {
-                is Result.Loading -> SearchUiState.Loading
-                is Result.Success -> SearchUiState.Loaded(result.data)
-                is Result.Error -> SearchUiState.Error(result.exception.toString())
+    init {
+        searchRateUseCase
+            .getRates()
+            .map { result ->
+                when (result) {
+                    is Result.Loading -> _uiState.value = SearchUiState.Loading
+                    is Result.Success -> _uiState.value = SearchUiState.Loaded(result.data)
+                    is Result.Error -> _uiState.value =
+                        SearchUiState.Error(result.exception.toString())
+                }
             }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = SearchUiState.Loading
-        )
+            .launchIn(viewModelScope)
+    }
 
     fun search(query: String) {
-        val uiState = rates.value
-        if (uiState is SearchUiState.Loaded) {
-            searchRateUseCase(query, uiState.rates)
-                .onStart { _uiState.value = SearchUiState.Initial }
-                .map { rates ->
-                    if (rates.isNotEmpty()) {
-                        _uiState.value = SearchUiState.Success(rates)
-                    } else {
-                        _uiState.value = SearchUiState.Empty
-                    }
+        val state = uiState.value
+        flowOf(query)
+            .debounce(500)
+            .distinctUntilChanged()
+            .flatMapLatest {
+                flowOf(it)
+            }
+            .launchIn(viewModelScope)
+
+        if (query.isNotEmpty()) {
+            when (state) {
+                is SearchUiState.Loaded -> {
+                    val filteredRates = flowOf(state.rates)
+                        .map {
+                            it.filter { rate ->
+                                rate.symbol.startsWith(query, ignoreCase = true)
+                            }
+                        }
+                        .map { filteredRates ->
+                            if (filteredRates.isNotEmpty()) {
+                                _uiState.value = SearchUiState.Success(filteredRates)
+                            } else _uiState.value = SearchUiState.Empty
+                        }
+                        .stateIn(
+                            scope = viewModelScope,
+                            started = SharingStarted.WhileSubscribed(5_000),
+                            initialValue = SearchUiState.Empty
+                        )
+
+                    println("filteredRates: $filteredRates")
                 }
-                .launchIn(viewModelScope)
+                else -> Unit
+            }
         }
+
+        // TODO: Business logic Should go to use case
     }
 
     fun onClear() {
