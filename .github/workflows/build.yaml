@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 env:
-  CACHE_VERSION: 5
+  CACHE_VERSION: 6
   JAVA_VERSION: 19
 
 jobs:
@@ -24,17 +24,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Copy CI gradle.properties
-        run: mkdir -p ~/.gradle ; cp .github/ci-gradle.properties ~/.gradle/gradle.properties
-
-      - name: Gradle Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.gradle/caches
-            ~/.gradle/wrapper
-          key: ${{ runner.os }}-gradle-${{ env.CACHE_VERSION }}-${{ hashFiles('**/**.gradle.kts', '**/gradle/wrapper/gradle-wrapper.properties', '**/libs.versions.toml') }}
-
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
@@ -43,9 +32,6 @@ jobs:
 
       - name: Run Detekt & AutoCorrect
         run: ./gradlew detekt --auto-correct
-
-      - name: Execute Build
-        run: ./gradlew build
 
   unit-tests:
     needs: check
@@ -121,6 +107,7 @@ jobs:
           disable-animations: true
           disk-size: 6000M
           heap-size: 600M
+          emulator-options: -no-window -gpu swiftshader_indirect -noaudio -no-boot-anim -camera-back none -no-snapshot-save
           script: mv .github/debug.keystore ~/.android; ./gradlew connectedDebugAndroidTest
 
       - name: Upload test reports
