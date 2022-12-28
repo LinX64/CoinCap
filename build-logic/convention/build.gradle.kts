@@ -46,7 +46,7 @@ gradlePlugin {
         }
         register("kotlinDetekt") {
             id = "coincap.kotlin.detekt"
-            implementationClass = "KotlinDetektConventionPlugin"
+            implementationClass = "DetektConventionPlugin"
         }
     }
 }
