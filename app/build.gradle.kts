@@ -46,13 +46,6 @@ android {
             isIncludeAndroidResources = true
         }
     }
-
-    detekt {
-        config = files("$rootDir/app/config/detekt/config.yml")
-        parallel = true
-        buildUponDefaultConfig = true
-        autoCorrect = true
-    }
 }
 
 dependencies {

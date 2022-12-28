@@ -1,3 +1,5 @@
+import com.client.coincap.configureDetekt
+import io.gitlab.arturbosch.detekt.extensions.DetektExtension
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -10,8 +12,8 @@ class DetektConventionPlugin : Plugin<Project> {
         with(target) {
             pluginManager.apply("io.gitlab.arturbosch.detekt")
 
-            //val extension = extensions.getByType<DetektExtension>()
-            // TODO: Configure detekt
+            val extension = extensions.getByType<DetektExtension>()
+            configureDetekt(extension)
 
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             dependencies {
