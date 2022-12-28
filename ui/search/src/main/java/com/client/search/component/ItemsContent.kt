@@ -10,14 +10,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import com.client.data.model.Rate
-import com.client.search.SearchUiState
 import com.client.ui.CryptoCurrencyItem
 import com.client.ui.DevicePreviews
+import com.client.ui.util.DummyData
 
 @Composable
-internal fun Content(
+internal fun ItemsContent(
     modifier: Modifier = Modifier,
-    searchUiState: SearchUiState,
+    rates: List<Rate>,
     onRateClicked: (String) -> Unit,
 ) {
     val state = rememberLazyGridState()
@@ -28,14 +28,12 @@ internal fun Content(
             .testTag("ui:search:grid"),
         state = state
     ) {
-        if (searchUiState is SearchUiState.Success) {
-            items(searchUiState.rates, key = { it.id }) { rate ->
-                CryptoCurrencyItem(
-                    rate = rate.rateUsd,
-                    symbol = rate.symbol,
-                    dollarPrice = "100"
-                ) { onRateClicked(rate.id) }
-            }
+        items(rates, key = { it.id }) { rate ->
+            CryptoCurrencyItem(
+                rate = rate.rateUsd,
+                symbol = rate.symbol,
+                dollarPrice = "100"
+            ) { onRateClicked(rate.id) }
         }
     }
 }
@@ -43,84 +41,11 @@ internal fun Content(
 @DevicePreviews
 @Composable
 fun ItemsContentPreview() {
-    val rates = ratesStub()
-    Content(
-        searchUiState = SearchUiState.Success(rates = rates),
+    val rates = DummyData.rates()
+    ItemsContent(
+        rates = rates,
         onRateClicked = {}
     )
 }
 
-fun ratesStub(): List<Rate> {
-    return listOf(
-        Rate(
-            id = "1",
-            symbol = "BTC",
-            currencySymbol = "BTC",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "2",
-            symbol = "ETH",
-            currencySymbol = "ETH",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "3",
-            symbol = "XRP",
-            currencySymbol = "XRP",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "4",
-            symbol = "LTC",
-            currencySymbol = "LTC",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "5",
-            symbol = "BCH",
-            currencySymbol = "BCH",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "6",
-            symbol = "EOS",
-            currencySymbol = "EOS",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "7",
-            symbol = "XLM",
-            currencySymbol = "XLM",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "8",
-            symbol = "ADA",
-            currencySymbol = "ADA",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "9",
-            symbol = "XMR",
-            currencySymbol = "XMR",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-        Rate(
-            id = "10",
-            symbol = "DASH",
-            currencySymbol = "DASH",
-            rateUsd = "1.0",
-            type = "crypto"
-        ),
-    )
-}
+

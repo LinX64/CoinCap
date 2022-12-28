@@ -1,51 +1,53 @@
 package com.client.search
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.client.coincap.core.search.R
 import com.client.detail.navigation.navigateToDetail
-import com.client.search.component.Content
 import com.client.search.component.InitialView
-import com.client.search.component.ratesStub
+import com.client.search.component.ItemsContent
 import com.client.ui.DevicePreviews
-import com.client.ui.EmptyView
 import com.client.ui.ErrorView
+import com.client.ui.ProgressBar
 import com.client.ui.SearchBar
+import com.client.ui.util.DummyData
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 fun SearchRoute(
     navController: NavHostController,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val rates by viewModel.rates.collectAsStateWithLifecycle()
+    val uiState by viewModel.uiState.collectAsState()
+    if (uiState is SearchUiState.Loaded) {
+        val rates = (uiState as SearchUiState.Loaded).rates
+        println(rates)
+    }
 
     SearchScreen(
-        onQueryChanged = viewModel::search,
-        onClear = viewModel::onClear,
         searchUiState = uiState,
-        navController = navController
+        navController = navController,
+        onQueryChanged = viewModel::search,
+        onClear = viewModel::onClear
     )
 }
 
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit,
-    onClear: () -> Unit,
     searchUiState: SearchUiState,
-    navController: NavHostController
+    navController: NavHostController,
+    onQueryChanged: (String) -> Unit,
+    onClear: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -59,28 +61,26 @@ fun SearchScreen(
 
         Spacer(modifier = modifier.padding(8.dp))
 
-        Content(
-            searchUiState = searchUiState,
-            onRateClicked = { id -> navController.navigateToDetail(id) }
-        )
+        when (searchUiState) {
+            is SearchUiState.Loading -> ProgressBar()
+            is SearchUiState.Success -> ItemsContent(
+                rates = searchUiState.rates,
+                onRateClicked = { rateId ->
+                    navController.navigateToDetail(rateId)
+                }
+            )
+            is SearchUiState.Error -> ErrorView(errorMessage = searchUiState.message)
+            else -> Unit
+        }
 
-        HandleStates(searchUiState)
-    }
-}
-
-@Composable
-fun HandleStates(searchUiState: SearchUiState) {
-    when (searchUiState) {
-        is SearchUiState.Error -> ErrorView(errorMessage = searchUiState.message)
-        is SearchUiState.Empty -> EmptyView(errorMessage = stringResource(R.string.no_results))
-        else -> InitialView()
+        InitialView()
     }
 }
 
 @DevicePreviews
 @Composable
 fun SearchScreenPreview() {
-    val rates = ratesStub()
+    val rates = DummyData.rates()
     SearchScreen(
         onQueryChanged = {},
         onClear = {},
