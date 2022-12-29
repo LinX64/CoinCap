@@ -36,7 +36,7 @@ fun CryptoCurrencyItem(
             .clickable { onClick() },
         shape = RoundedCornerShape(8.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background
+            containerColor = Color(0xFF005227).copy(alpha = 0.1f),
         )
     ) {
         Row(

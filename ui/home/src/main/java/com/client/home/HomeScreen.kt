@@ -103,7 +103,6 @@ internal fun HomeScreen(
                 modifier = modifier.padding(start = 5.dp),
                 style = MaterialTheme.typography.titleMedium
             )
-            Spacer(modifier = Modifier.height(3.dp))
             Text(
                 text = stringResource(R.string.up_to_date_data),
                 modifier = modifier.padding(start = 5.dp, bottom = 10.dp),

@@ -6,6 +6,6 @@
     <string name="buy">Buy</string>
     <string name="holding_portfolio">✌️ Holding portfolio</string>
     <string name="iranian_rial_title">Iranian Rial Exchange Rates</string>
-    <string name="iranian_rial_subtitle">Prices in Iranian Toman (1 Toman = 10 Rials)</string>
-    <string name="up_to_date_data">Up-to-date prices &amp; market capitalization</string>
+    <string name="iranian_rial_subtitle">prices in Iranian Toman (1 Toman = 10 Rials)</string>
+    <string name="up_to_date_data">up-to-date prices &amp; market capitalization</string>
 </resources>
