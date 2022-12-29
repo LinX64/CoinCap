@@ -1,9 +1,11 @@
 package com.client.search
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -14,13 +16,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.core.search.R
 import com.client.detail.navigation.navigateToDetail
-import com.client.search.component.Content
 import com.client.search.component.InitialView
-import com.client.search.component.ratesStub
-import com.client.ui.DevicePreviews
-import com.client.ui.EmptyView
-import com.client.ui.ErrorView
-import com.client.ui.SearchBar
+import com.client.ui.*
+import com.client.ui.util.DummyData
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -29,24 +27,23 @@ fun SearchRoute(
     viewModel: SearchViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
-    val rates by viewModel.rates.collectAsStateWithLifecycle()
-
     SearchScreen(
-        onQueryChanged = viewModel::search,
-        onClear = viewModel::onClear,
         searchUiState = uiState,
-        navController = navController
+        navController = navController,
+        onQueryChanged = viewModel::search,
+        onClear = viewModel::onClear
     )
 }
 
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    onQueryChanged: (String) -> Unit,
-    onClear: () -> Unit,
     searchUiState: SearchUiState,
-    navController: NavHostController
+    navController: NavHostController,
+    onQueryChanged: (String) -> Unit,
+    onClear: () -> Unit
 ) {
+    val state = rememberLazyGridState()
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -59,32 +56,58 @@ fun SearchScreen(
 
         Spacer(modifier = modifier.padding(8.dp))
 
-        Content(
-            searchUiState = searchUiState,
-            onRateClicked = { id -> navController.navigateToDetail(id) }
-        )
+        LazyVerticalGrid(
+            columns = GridCells.Adaptive(200.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .testTag("ui:search:grid"),
+            state = state
+        ) {
+            onboardingView(searchUiState, navController)
+        }
 
-        HandleStates(searchUiState)
+        when (searchUiState) {
+            is SearchUiState.Loading -> ProgressBar(modifier.testTag("search:loading"))
+            is SearchUiState.Empty -> EmptyView(
+                modifier.testTag("search:empty"),
+                errorMessage = stringResource(id = R.string.no_results)
+            )
+            is SearchUiState.Initial -> InitialView(modifier.testTag("search:init"))
+            else -> Unit
+        }
     }
 }
 
-@Composable
-fun HandleStates(searchUiState: SearchUiState) {
+private fun LazyGridScope.onboardingView(
+    searchUiState: SearchUiState,
+    navController: NavHostController
+) {
     when (searchUiState) {
-        is SearchUiState.Error -> ErrorView(errorMessage = searchUiState.message)
-        is SearchUiState.Empty -> EmptyView(errorMessage = stringResource(R.string.no_results))
-        else -> InitialView()
+        is SearchUiState.Loading,
+        is SearchUiState.Empty,
+        is SearchUiState.Initial -> Unit
+        is SearchUiState.Success -> {
+            items(searchUiState.rates, key = { it.id }) { rate ->
+                CryptoCurrencyItem(
+                    modifier = Modifier.testTag("search:success"),
+                    rate = rate.rateUsd,
+                    symbol = rate.symbol,
+                    dollarPrice = "100"
+                ) { navController.navigateToDetail(rate.id) }
+            }
+        }
+        else -> {}
     }
 }
 
 @DevicePreviews
 @Composable
 fun SearchScreenPreview() {
-    val rates = ratesStub()
+    val rates = DummyData.rates()
     SearchScreen(
         onQueryChanged = {},
         onClear = {},
-        searchUiState = SearchUiState.Loaded(rates = rates),
+        searchUiState = SearchUiState.Success(rates = rates),
         navController = rememberNavController()
     )
 }

@@ -14,41 +14,38 @@ class SearchViewModel @Inject constructor(
     private val searchRateUseCase: SearchRateUseCase
 ) : ViewModel() {
 
-    private val _uiState: MutableStateFlow<SearchUiState> = MutableStateFlow(SearchUiState.Loading)
+    private val _uiState: MutableStateFlow<SearchUiState> = MutableStateFlow(SearchUiState.Initial)
     val uiState: StateFlow<SearchUiState> = _uiState.asStateFlow()
-
-    val rates: StateFlow<SearchUiState> = searchRateUseCase
-        .getRates()
-        .map { result ->
-            when (result) {
-                is Result.Loading -> SearchUiState.Loading
-                is Result.Success -> SearchUiState.Loaded(result.data)
-                is Result.Error -> SearchUiState.Error(result.exception.toString())
-            }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = SearchUiState.Loading
-        )
+    private val searchQuery = MutableStateFlow("")
 
     fun search(query: String) {
-        val uiState = rates.value
-        if (uiState is SearchUiState.Loaded) {
-            searchRateUseCase(query, uiState.rates)
-                .onStart { _uiState.value = SearchUiState.Initial }
-                .map { rates ->
-                    if (rates.isNotEmpty()) {
-                        _uiState.value = SearchUiState.Success(rates)
-                    } else {
-                        _uiState.value = SearchUiState.Empty
-                    }
+        with(searchQuery) {
+            value = query.trim()
+            debounce(500)
+                .filterNotNull()
+                .distinctUntilChanged()
+                .flatMapLatest {
+                    searchRateUseCase.getRates().map { result -> handleState(result) }
                 }
                 .launchIn(viewModelScope)
         }
     }
 
+    private fun handleState(result: Result<List<Rate>>) = when (result) {
+        is Result.Success -> {
+            val filteredRates = searchRateUseCase(searchQuery.value, result.data)
+            if (filteredRates.isNotEmpty()) {
+                _uiState.value = SearchUiState.Success(filteredRates)
+            } else {
+                _uiState.value = SearchUiState.Empty
+            }
+        }
+        is Result.Error -> _uiState.value = SearchUiState.Error(result.exception.toString())
+        is Result.Loading -> _uiState.value = SearchUiState.Loading
+    }
+
     fun onClear() {
+        searchQuery.value = ""
         _uiState.value = SearchUiState.Initial
     }
 }
@@ -57,10 +54,6 @@ sealed interface SearchUiState {
     object Initial : SearchUiState
     object Empty : SearchUiState
     object Loading : SearchUiState
-
-    data class Loaded(
-        val rates: List<Rate>
-    ) : SearchUiState
 
     data class Success(
         val rates: List<Rate>
