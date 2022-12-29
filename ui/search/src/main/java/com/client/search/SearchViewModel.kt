@@ -20,17 +20,16 @@ class SearchViewModel @Inject constructor(
     private val searchQuery = MutableStateFlow("")
 
     fun search(query: String) {
-        searchQuery.value = query.trim()
-        searchQuery
-            .debounce(500)
-            .filterNotNull()
-            .distinctUntilChanged()
-            .flatMapLatest {
-                searchRateUseCase.getRates()
-                    .asResult()
-                    .map { result -> handleState(result) }
-            }
-            .launchIn(viewModelScope)
+        with(searchQuery) {
+            value = query.trim()
+            debounce(500)
+                .filterNotNull()
+                .distinctUntilChanged()
+                .flatMapLatest {
+                    searchRateUseCase.getRates().map { result -> handleState(result) }
+                }
+                .launchIn(viewModelScope)
+        }
     }
 
     private fun handleState(result: Result<List<Rate>>) = when (result) {
