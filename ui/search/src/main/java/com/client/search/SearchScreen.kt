@@ -67,9 +67,12 @@ fun SearchScreen(
         }
 
         when (searchUiState) {
-            is SearchUiState.Loading -> ProgressBar()
-            is SearchUiState.Empty -> EmptyView(errorMessage = stringResource(id = R.string.no_results))
-            is SearchUiState.Initial -> InitialView()
+            is SearchUiState.Loading -> ProgressBar(modifier.testTag("search:loading"))
+            is SearchUiState.Empty -> EmptyView(
+                modifier.testTag("search:empty"),
+                errorMessage = stringResource(id = R.string.no_results)
+            )
+            is SearchUiState.Initial -> InitialView(modifier.testTag("search:init"))
             else -> Unit
         }
     }
@@ -86,6 +89,7 @@ private fun LazyGridScope.onboardingView(
         is SearchUiState.Success -> {
             items(searchUiState.rates, key = { it.id }) { rate ->
                 CryptoCurrencyItem(
+                    modifier = Modifier.testTag("search:success"),
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
                     dollarPrice = "100"
