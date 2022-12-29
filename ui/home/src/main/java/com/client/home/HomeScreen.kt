@@ -18,6 +18,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.ui.home.R
+import com.client.common.util.formatToPrice
 import com.client.detail.navigation.navigateToDetail
 import com.client.home.component.Header
 import com.client.ui.*
@@ -110,14 +111,12 @@ internal fun HomeScreen(
             )
         }
         items(rates.size) {
-            val usDollar = localRates.find { rate -> rate.code == "usd" }?.sell ?: 0.0
             val rate = rates[it]
-
             Column(modifier = modifier.fillMaxWidth()) {
                 CryptoCurrencyItem(
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
-                    dollarPrice = usDollar.toString()
+                    dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
                 ) { navController.navigateToDetail(rate.id) }
             }
         }

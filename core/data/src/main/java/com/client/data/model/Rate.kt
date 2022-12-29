@@ -12,7 +12,9 @@ data class Rate(
     @SerializedName("type")
     val type: String,
     @SerializedName("rateUsd")
-    val rateUsd: String
+    val rateUsd: String,
+    @SerializedName("usdPrice")
+    val usdPrice: Int? = null,
 )
 
 fun Rate.toExternalModel() = Rate(
