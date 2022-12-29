@@ -9,6 +9,9 @@ object Consts {
     const val LOCAL_CURRENCY = "Local"
     const val DELAY = 5000L // 5 seconds
     const val LONG_DELAY = 300000L // 5 minutes
+    const val CRYPTO_STRING = "crypto"
+    const val USD_STRING = "usd"
+
     val DAY_RANGE: IntRange = 0..5
     val HOUR_RANGE: IntRange = 9..16
 }
