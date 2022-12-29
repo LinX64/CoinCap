@@ -83,7 +83,7 @@ internal fun HomeScreen(
                     .fillMaxWidth()
                     .padding(start = 5.dp, bottom = 8.dp),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.outline
             )
         }
         item {
@@ -107,7 +107,7 @@ internal fun HomeScreen(
                 text = stringResource(R.string.up_to_date_data),
                 modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
                 style = MaterialTheme.typography.bodySmall,
-                color = Color.Gray
+                color = MaterialTheme.colorScheme.outline
             )
         }
         items(rates.size) {

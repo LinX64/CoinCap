@@ -30,7 +30,7 @@ fun Header(modifier: Modifier = Modifier) {
             text = "Total balance",
             style = MaterialTheme.typography.titleSmall,
             modifier = modifier.fillMaxWidth(),
-            color = Color.Gray,
+            color = MaterialTheme.colorScheme.outline,
             textAlign = TextAlign.Center
         )
 
@@ -58,13 +58,13 @@ fun Header(modifier: Modifier = Modifier) {
                 if (hadProfit) Icons.Default.North else Icons.Default.South,
                 contentDescription = null,
                 modifier = Modifier.size(16.dp),
-                tint = if (hadProfit) Color("#4CAF50".toColorInt()) else Color("#E91E63".toColorInt())
+                tint = if (hadProfit) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
             )
 
             Text(
                 text = "$5,722.91" + " • " + "126%",
                 style = MaterialTheme.typography.bodySmall,
-                color = if (hadProfit) Color("#4CAF50".toColorInt()) else Color("#E91E63".toColorInt())
+                color = if (hadProfit) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
             )
         }
 
@@ -81,15 +81,19 @@ private fun PortfolioCard(modifier: Modifier) {
             .fillMaxWidth()
             .padding(8.dp)
             .height(160.dp),
-        shape = RoundedCornerShape(20.dp),
+        shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
-            containerColor = Color(0xFF005227)
+            containerColor = MaterialTheme.colorScheme.surfaceTint
         ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 16.dp
         )
     ) {
-        Column(modifier = modifier.padding(16.dp)) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
             Row(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -98,7 +102,6 @@ private fun PortfolioCard(modifier: Modifier) {
                     text = stringResource(R.string.holding_portfolio),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.White
-
                 )
 
                 Icon(Icons.Default.MoreVert, contentDescription = null, tint = Color.White)
