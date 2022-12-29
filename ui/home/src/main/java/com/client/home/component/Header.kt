@@ -1,6 +1,7 @@
 package com.client.home.component
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.North
@@ -80,11 +81,15 @@ private fun PortfolioCard(modifier: Modifier) {
             .fillMaxWidth()
             .padding(8.dp)
             .height(160.dp),
+        shape = RoundedCornerShape(20.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color(0xFF005227)
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 16.dp
         )
     ) {
-        Column(modifier = modifier.padding(start = 16.dp, end = 16.dp, top = 16.dp)) {
+        Column(modifier = modifier.padding(16.dp)) {
             Row(
                 modifier = modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
