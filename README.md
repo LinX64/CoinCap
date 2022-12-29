@@ -39,9 +39,7 @@ the app is more scalable and maintainable.
 
 ### Features
 
-1. The logic behind searching is to get the data only once and then filter it locally, so the user
-   can search for any coin without any delay. This way, we won't make too many requests to the API,
-   and the Firewall won't block us.
+1. The logic behind searching is to get the data only after the last character is entered (using flatMapLatest() flow operator).
 2. For the home screen, I am planning to get some data from the server for showing on the LineChart, but for
    now, I am using dummy data.
 3. Unfortunately, the API doesn't provide the data for the LineChart, so I am using dummy data for
@@ -80,7 +78,7 @@ Please see: https://detekt.dev/docs/rules/formatting
 
 - Add Detekt and features only once into the project.
 - Add Offline first support
-- Fix the search issue with the price
+- Fix the search issue with the price (combine two repositories)
 - Tests
 - Get data from Server for LineChart
 - Add more features

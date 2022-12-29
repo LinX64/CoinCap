@@ -40,9 +40,7 @@ class SearchViewModel @Inject constructor(
                 _uiState.value = SearchUiState.Empty
             }
         }
-        is Result.Error -> {
-            _uiState.value = SearchUiState.Error(result.exception.toString())
-        }
+        is Result.Error -> _uiState.value = SearchUiState.Error(result.exception.toString())
         is Result.Loading -> _uiState.value = SearchUiState.Loading
     }
 
