@@ -40,9 +40,6 @@ fun LocalCurrencyItem(
             .clickable { onClick() }
             .testTag("ui:localCurrency"),
         shape = RoundedCornerShape(8.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.onSecondary
-        ),
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
         )
@@ -92,13 +89,13 @@ private fun CardContent(
                 Icon(
                     imageVector = Icons.Default.ArrowUpward,
                     contentDescription = null,
-                    tint = Color("#E91E63".toColorInt()),
+                    tint = MaterialTheme.colorScheme.error,
                     modifier = modifier.size(16.dp)
                 )
                 Text(
                     text = stringResource(R.string.sell),
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.outline,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -107,13 +104,13 @@ private fun CardContent(
                 Icon(
                     imageVector = Icons.Default.ArrowDownward,
                     contentDescription = null,
-                    tint = Color("#4CAF50".toColorInt()),
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = modifier.size(16.dp)
                 )
                 Text(
                     text = stringResource(R.string.buy),
                     style = MaterialTheme.typography.bodySmall,
-                    color = Color.Gray,
+                    color = MaterialTheme.colorScheme.outline,
                     fontWeight = FontWeight.Bold
                 )
             }
@@ -126,14 +123,14 @@ private fun CardContent(
             ) {
                 Text(
                     text = localRate.sell.formatToPrice(),
-                    color = Color("#E91E63".toColorInt()),
+                    color = MaterialTheme.colorScheme.error,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold
                 )
 
                 Text(
                     text = localRate.buy.formatToPrice(),
-                    color = Color("#4CAF50".toColorInt()),
+                    color = MaterialTheme.colorScheme.primary,
                     style = MaterialTheme.typography.bodySmall,
                     fontWeight = FontWeight.Bold
                 )
