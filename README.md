@@ -21,10 +21,10 @@ an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions
 ### Screenshots
 
 <p>
-<img src="https://i.imgur.com/AJyBa70.png" height="420" />
-<img src="https://i.imgur.com/O3DEBxa.png" height="420" />
-<img src="https://i.imgur.com/n2rnMnD.png" height="420" />
-<img src="https://i.imgur.com/TAgLVr2.png" height="420" />
+<img src="https://i.imgur.com/eZ6xYNT.png" height="420" />
+<img src="https://i.imgur.com/8mcrfij.png" height="420" />
+<img src="https://i.imgur.com/59Kj14a.png" height="420" />
+<img src="https://i.imgur.com/J7aMJr2.png" height="420" />
 </p>
 
 ### Architecture
@@ -39,9 +39,10 @@ the app is more scalable and maintainable.
 
 ### Features
 
-1. The logic behind searching is to get the data only after the last character is entered (using flatMapLatest() flow operator).
-2. For the home screen, I am planning to get some data from the server for showing on the LineChart, but for
-   now, I am using dummy data.
+1. The logic behind searching is to get the data only after the last character is entered (using
+   flatMapLatest() flow operator).
+2. For the home screen, I am planning to get some data from the server for showing on the LineChart,
+   but for now, I am using dummy data.
 3. Unfortunately, the API doesn't provide the data for the LineChart, so I am using dummy data for
    now.
 4. Iran (my home country) has been facing inflation for the last decade, and surprisingly, because
@@ -49,6 +50,48 @@ the app is more scalable and maintainable.
    the chance and put a logic for showing the rates in different currencies as **Local Currency**,
    with a refresh policy between Saturday to Thursday, and the rates will be updated every 5
    minutes. For Friday, the rates will be retrieved from the previous day.
+
+### Implementation
+
+This section is for those who are interested in the implementation details.
+
+#### Home Screen
+
+I had to combine two flows into one to avoid unnecessary network calls and extra logics inside
+views. So here is how I did it:
+
+<img src="https://i.imgur.com/c4rrVzx.jpg" width="520">
+
+The implementation is pretty simple. I am using the `combine` operator to combine the two flows into
+one. The `combine` operator will emit a new [Rate] model after multiplying the two values. The logic
+and code is available in
+the [GetRatesUseCaseImpl](https://github.com/LinX64/CoinCap/blob/master/core/data/src/main/java/com/client/data/repository/foreignRates/RatesRepositoryImpl.kt)
+class.
+
+#### API calls and deserialization
+
+I am using Retrofit for making API calls, and I am using a custom deserializer for the local
+currency API. The problem that I faced at first was that the original API was not free so I had to
+use an already made API instead. Another problem was that the API was returning the data in a
+different format, something like this format:
+
+````
+{
+  "usd": {
+    "sell": 43000,
+    "buy": 42900
+  },
+  "eur": {
+    "sell": 45870,
+    "buy": 45720
+  }
+}
+````
+
+It was pretty hard to deserialize the data, so I had to write a custom deserializer for it. The
+deserializer is basically converting all those three objects into a list of [LocalRate] objects. Here you can find the deserializer: [CurrencyDeserializer](https://github.com/LinX64/CoinCap/blob/master/core/data/src/main/java/com/client/data/util/CurrencyDeserializer.kt)
+
+I am sure this is one of the major problems that all Android developers may face while using GSON and Retrofit, so I hope this will help you.
 
 ### API
 
