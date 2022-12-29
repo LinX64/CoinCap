@@ -17,9 +17,8 @@ class GetRatesUseCaseImpl @Inject constructor(
         .getRateBy(id)
         .asResult()
 
-    override fun getRates(): Flow<Result<List<Rate>>> = rateRepository
+    override fun getRates(): Flow<List<Rate>> = rateRepository
         .getRates()
-        .asResult()
 
     override fun getLiveRates(): Flow<Result<List<Rate>>> = rateRepository
         .getLiveRates()

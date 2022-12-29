@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.client.data.model.Rate
 import com.client.data.network.Result
+import com.client.data.network.asResult
 import com.client.domain.usecase.search.SearchRateUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
@@ -25,12 +26,10 @@ class SearchViewModel @Inject constructor(
             .filterNotNull()
             .distinctUntilChanged()
             .flatMapLatest {
-                flowOf(it)
+                searchRateUseCase.getRates()
+                    .asResult()
+                    .map { result -> handleState(result) }
             }
-            .launchIn(viewModelScope)
-
-        searchRateUseCase.getRates()
-            .map { result -> handleState(result) }
             .launchIn(viewModelScope)
     }
 
