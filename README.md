@@ -21,7 +21,7 @@ an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions
 ### Screenshots
 
 <p>
-<img src="https://i.imgur.com/0f7TvSq.png" height="420" />
+<img src="https://i.imgur.com/eZ6xYNT.png" height="420" />
 <img src="https://i.imgur.com/8mcrfij.png" height="420" />
 <img src="https://i.imgur.com/59Kj14a.png" height="420" />
 <img src="https://i.imgur.com/J7aMJr2.png" height="420" />
