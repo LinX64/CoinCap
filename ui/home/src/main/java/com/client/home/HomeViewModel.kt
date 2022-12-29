@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.client.data.model.Rate
 import com.client.data.model.localRates.LocalRate
 import com.client.data.network.Result.*
+import com.client.data.network.asResult
 import com.client.domain.usecase.home.localCurrency.GetLocalCurrencyUseCase
 import com.client.domain.usecase.home.rates.GetRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -19,6 +20,7 @@ class HomeViewModel @Inject constructor(
 
     val localLiveRates: StateFlow<HomeLocalUiState> = getLocalCurrencyUseCase
         .getLocalCurrency()
+        .asResult()
         .distinctUntilChanged()
         .map { result ->
             when (result) {

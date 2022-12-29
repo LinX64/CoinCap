@@ -15,6 +15,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.core.search.R
+import com.client.common.util.formatToPrice
 import com.client.detail.navigation.navigateToDetail
 import com.client.search.component.InitialView
 import com.client.ui.*
@@ -92,7 +93,7 @@ private fun LazyGridScope.onboardingView(
                     modifier = Modifier.testTag("search:success"),
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
-                    dollarPrice = "100"
+                    dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
                 ) { navController.navigateToDetail(rate.id) }
             }
         }
