@@ -22,5 +22,6 @@ fun Rate.toExternalModel() = Rate(
     symbol = symbol,
     currencySymbol = currencySymbol,
     type = type,
-    rateUsd = rateUsd
+    rateUsd = rateUsd,
+    usdPrice = usdPrice
 )

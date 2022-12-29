@@ -1,5 +1,6 @@
 package com.client.domain.usecase.home.rates
 
+import com.client.common.util.Consts
 import com.client.data.model.Rate
 import com.client.data.model.RateDetailResp
 import com.client.data.network.Result
@@ -26,18 +27,23 @@ class GetRatesUseCaseImpl @Inject constructor(
     override fun getLiveCryptoCurrencies(): Flow<Result<List<Rate>>> {
         return getCombinedRates()
             .map { rates ->
-                rates.filter { rate -> rate.type == "crypto" }
+                rates.filter { rate -> rate.type == Consts.CRYPTO_STRING }
             }
             .asResult()
     }
 
+    /**
+     * This function combines the live rates from the coincap API with the local currency rates.
+     * It basically does a multiplication of the current USD rate of the currency with the local rate.
+     * @return Flow<List<Rate>>
+     */
     private fun getCombinedRates(): Flow<List<Rate>> {
         val liveRates = getLiveRates()
         val localCurrency = getLocalCurrencyUseCase.getLocalCurrency()
 
         return combine(liveRates, localCurrency) { rates, localRates ->
             rates.map { rate ->
-                val sellPrice = localRates.find { it.code == "usd" }?.sell?.toDouble()
+                val sellPrice = localRates.find { it.code == Consts.USD_STRING }?.sell?.toDouble()
                 val inUsdPrice = rate.rateUsd.toDouble()
                 val price = sellPrice?.times(inUsdPrice)
 
