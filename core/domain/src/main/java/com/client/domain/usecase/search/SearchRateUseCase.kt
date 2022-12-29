@@ -1,9 +1,8 @@
 package com.client.domain.usecase.search
 
 import com.client.data.model.Rate
-import com.client.data.network.Result
 import com.client.domain.usecase.home.rates.GetRatesUseCase
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class SearchRateUseCase @Inject constructor(
@@ -14,5 +13,5 @@ class SearchRateUseCase @Inject constructor(
         return rates.filter { it.symbol.startsWith(query, true) }
     }
 
-    fun getRates(): Flow<Result<List<Rate>>> = getRatesUseCase.getRates()
+    fun getRates(): Flow<List<Rate>> = getRatesUseCase.getRates()
 }
