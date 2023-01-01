@@ -55,6 +55,7 @@ dependencies {
     implementation(project(":ui:home"))
     implementation(project(":ui:search"))
     implementation(project(":ui:detail"))
+    implementation(project(":ui:convert"))
 
     implementation(libs.androidx.compose.material.iconsExtended)
     implementation(libs.androidx.compose.material3)

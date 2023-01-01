@@ -10,6 +10,7 @@ object Consts {
     const val DELAY = 5000L // 5 seconds
     const val LONG_DELAY = 300000L // 5 minutes
     const val CRYPTO_STRING = "crypto"
+    const val FIAT_STRING = "fiat"
     const val USD_STRING = "usd"
 
     val DAY_RANGE: IntRange = 0..5

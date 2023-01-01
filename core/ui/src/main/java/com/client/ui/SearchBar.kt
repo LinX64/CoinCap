@@ -1,7 +1,6 @@
 package com.client.ui
 
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -35,23 +34,21 @@ fun SearchBar(
         modifier = modifier.fillMaxWidth(),
         shape = RoundedCornerShape(8.dp),
     ) {
-        Row(modifier = modifier.fillMaxWidth()) {
-            TextField(
-                modifier = modifier.fillMaxWidth(),
-                value = query.value,
-                onValueChange = {
-                    query.value = it
-                    onQueryChange(it)
-                },
-                placeholder = { if (isQueryEmpty) Text(text = stringResource(R.string.search)) },
-                keyboardOptions = keyboardOptions(),
-                leadingIcon = { LeadingIcon() },
-                trailingIcon = { if (!isQueryEmpty) TrailingIcon(query, onClear) },
-                colors = textFieldColors(),
-                singleLine = true,
-                textStyle = MaterialTheme.typography.bodyMedium
-            )
-        }
+        TextField(
+            modifier = modifier.fillMaxWidth(),
+            value = query.value,
+            onValueChange = {
+                query.value = it
+                onQueryChange(it)
+            },
+            placeholder = { if (isQueryEmpty) Text(text = stringResource(R.string.search)) },
+            keyboardOptions = keyboardOptions(),
+            leadingIcon = { LeadingIcon() },
+            trailingIcon = { if (!isQueryEmpty) TrailingIcon(query, onClear) },
+            colors = textFieldColors(),
+            singleLine = true,
+            textStyle = MaterialTheme.typography.bodyMedium
+        )
     }
 }
 

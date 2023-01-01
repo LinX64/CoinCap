@@ -1,4 +1,4 @@
-package com.client.domain.usecase.home.localCurrency
+package com.client.domain.usecase.localCurrency
 
 import com.client.data.model.localRates.LocalRate
 import com.client.data.repository.localRates.LocalCurrencyRepository

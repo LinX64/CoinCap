@@ -23,7 +23,7 @@ import com.client.ui.util.DummyData
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun SearchRoute(
+internal fun SearchRoute(
     navController: NavHostController,
     viewModel: SearchViewModel = hiltViewModel()
 ) {
@@ -37,7 +37,7 @@ fun SearchRoute(
 }
 
 @Composable
-fun SearchScreen(
+internal fun SearchScreen(
     modifier: Modifier = Modifier,
     searchUiState: SearchUiState,
     navController: NavHostController,
