@@ -6,8 +6,8 @@ import com.client.data.model.Rate
 import com.client.data.model.localRates.LocalRate
 import com.client.data.network.Result.*
 import com.client.data.network.asResult
-import com.client.domain.usecase.home.localCurrency.GetLocalCurrencyUseCase
-import com.client.domain.usecase.home.rates.GetRatesUseCase
+import com.client.domain.usecase.localCurrency.GetLocalCurrencyUseCase
+import com.client.domain.usecase.rates.GetRatesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
@@ -50,6 +50,22 @@ class HomeViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = HomeUiState.Loading
         )
+
+    val fiatLiveRates: StateFlow<FiatState> = getRatesUseCase
+        .getLiveFiatCurrencies()
+        .distinctUntilChanged()
+        .map { result ->
+            when (result) {
+                is Loading -> FiatState.Loading
+                is Success -> FiatState.Success(result.data)
+                is Error -> FiatState.Error(result.exception.toString())
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = FiatState.Loading
+        )
 }
 
 sealed interface HomeUiState {
@@ -70,4 +86,14 @@ sealed interface HomeLocalUiState {
     ) : HomeLocalUiState
 
     data class Error(val error: String) : HomeLocalUiState
+}
+
+sealed interface FiatState {
+    object Loading : FiatState
+
+    data class Success(
+        val rates: List<Rate>
+    ) : FiatState
+
+    data class Error(val error: String) : FiatState
 }

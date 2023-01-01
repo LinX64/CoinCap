@@ -1,4 +1,4 @@
-package com.client.domain.usecase.home.rates
+package com.client.domain.usecase.rates
 
 import com.client.data.model.Rate
 import com.client.data.network.Result
@@ -8,4 +8,5 @@ interface GetRatesUseCase {
     fun getRates(): Flow<Result<List<Rate>>>
     fun getLiveRates(): Flow<List<Rate>>
     fun getLiveCryptoCurrencies(): Flow<Result<List<Rate>>>
+    fun getLiveFiatCurrencies(): Flow<Result<List<Rate>>>
 }

@@ -30,5 +30,6 @@ include(
 include(
     ":ui:home",
     ":ui:search",
-    ":ui:detail"
+    ":ui:detail",
+    ":ui:convert",
 )

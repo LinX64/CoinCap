@@ -37,3 +37,5 @@ fun Int.formatToPrice(): String = toString()
     .chunked(3)
     .joinToString(",")
     .reversed()
+
+fun String.getCountryName(): String = Locale("", this).displayCountry

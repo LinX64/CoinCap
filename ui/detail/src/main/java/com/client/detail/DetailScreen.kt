@@ -23,7 +23,7 @@ import com.client.ui.ProgressBar
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-fun DetailRoute(
+internal fun DetailRoute(
     viewModel: DetailViewModel = hiltViewModel()
 ) {
     val detailUiState by viewModel.rateRespUiState.collectAsStateWithLifecycle()
@@ -42,7 +42,7 @@ fun DetailScreen(
 }
 
 @Composable
-fun DetailView(
+internal fun DetailView(
     modifier: Modifier = Modifier,
     rateRes: RateDetailResp
 ) {

@@ -1,4 +1,4 @@
-package com.client.domain.usecase.home.rates
+package com.client.domain.usecase.rates
 
 import com.client.common.util.Consts
 import com.client.data.model.Rate
@@ -6,7 +6,7 @@ import com.client.data.model.RateDetailResp
 import com.client.data.network.Result
 import com.client.data.network.asResult
 import com.client.data.repository.foreignRates.RatesRepository
-import com.client.domain.usecase.home.localCurrency.GetLocalCurrencyUseCase
+import com.client.domain.usecase.localCurrency.GetLocalCurrencyUseCase
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
@@ -28,6 +28,14 @@ class GetRatesUseCaseImpl @Inject constructor(
         return getCombinedRates()
             .map { rates ->
                 rates.filter { rate -> rate.type == Consts.CRYPTO_STRING }
+            }
+            .asResult()
+    }
+
+    override fun getLiveFiatCurrencies(): Flow<Result<List<Rate>>> {
+        return getCombinedRates()
+            .map { rates ->
+                rates.filter { rate -> rate.type == Consts.FIAT_STRING }
             }
             .asResult()
     }
