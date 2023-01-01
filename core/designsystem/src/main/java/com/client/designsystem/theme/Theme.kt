@@ -1,4 +1,4 @@
-package com.client.coincap.ui.theme
+package com.client.designsystem.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

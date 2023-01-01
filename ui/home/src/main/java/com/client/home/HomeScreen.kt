@@ -52,9 +52,12 @@ internal fun HomeScreen(
     val isLoading = homeUiState is HomeUiState.Loading
     val state = rememberLazyGridState()
 
-    TrackScrollJank(scrollableState = state, stateName = "ui:home:grid")
+    com.client.ui.TrackScrollJank(
+        scrollableState = state,
+        stateName = "ui:home:grid"
+    )
 
-    if (isLoading) LoadingView()
+    if (isLoading) com.client.ui.LoadingView()
 
     val rates = (homeUiState as? HomeUiState.Success)?.rates ?: emptyList()
     val localRates = (localUiState as? HomeLocalUiState.Success)?.localRates ?: emptyList()
@@ -90,7 +93,10 @@ internal fun HomeScreen(
             LazyRow(modifier = modifier.fillMaxWidth()) {
                 items(localRates.size) {
                     val localRate = localRates[it]
-                    LocalCurrencyItem(localRate = localRate, onClick = {})
+                    LocalCurrencyItem(
+                        localRate = localRate,
+                        onClick = {}
+                    )
                 }
             }
         }
@@ -113,7 +119,7 @@ internal fun HomeScreen(
         items(rates.size) {
             val rate = rates[it]
             Column(modifier = modifier.fillMaxWidth()) {
-                CryptoCurrencyItem(
+                com.client.ui.CryptoCurrencyItem(
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
                     dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
@@ -123,7 +129,7 @@ internal fun HomeScreen(
     }
 
     if (homeUiState is HomeUiState.Error) {
-        ErrorView(errorMessage = "No data found!")
+        com.client.ui.ErrorView(errorMessage = "No data found!")
     }
 }
 

@@ -34,7 +34,7 @@ internal fun CandleChart(
             .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ) {
-        LineChart(
+        com.client.ui.LineChart(
             modifier = Modifier
                 .fillMaxWidth()
                 .size(150.dp)

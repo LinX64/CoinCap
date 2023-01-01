@@ -67,7 +67,7 @@ internal fun ConvertScreen(
     }
 
     if (isLoading) {
-        ProgressBar()
+        com.client.ui.ProgressBar()
     }
 }
 
@@ -160,7 +160,7 @@ fun ResultText() {
     }
 }
 
-@DevicePreviews
+@com.client.ui.DevicePreviews
 @Composable
 fun ConvertScreenPreview() {
     val rates = DummyData.rates()

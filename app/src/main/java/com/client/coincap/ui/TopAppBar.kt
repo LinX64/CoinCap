@@ -12,7 +12,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.client.coincap.R
-import com.client.coincap.ui.theme.CoinCapTheme
 import com.client.common.util.NavRoutes
 import com.client.search.navigation.navigateToSearch
 
@@ -54,7 +53,7 @@ fun TopAppBar(
 @Composable
 fun TopAppBarPreview() {
     val navController = rememberNavController()
-    CoinCapTheme {
+    com.client.designsystem.theme.CoinCapTheme {
         TopAppBar(
             navController = navController,
             destination = null

@@ -6,7 +6,7 @@ plugins {
 }
 
 android {
-    namespace = "com.client.coincap.core.convert"
+    namespace = "com.client.coincap.ui.convert"
 
     defaultConfig {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
