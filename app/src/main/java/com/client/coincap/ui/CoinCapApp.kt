@@ -43,30 +43,33 @@ fun CoinCapApp(
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onBackground,
-        topBar = {
-            if (!isCurrentRouteSearch) {
-                TopAppBar(
-                    navController = appState.navController,
-                    destination = currentDestination
-                )
-            }
-        },
         snackbarHost = { SnackbarHost(snackBarHostState) },
         bottomBar = {
             NiaBottomBar(
                 destinations = appState.topLevelDestinations,
                 onNavigateToDestination = appState::navigateToSpecificDestination,
                 currentDestination = appState.currentDestination,
-                modifier = Modifier.testTag("NiaBottomBar")
+                modifier = Modifier.testTag("home:botttomBar")
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { padding ->
 
-        AppNavigation(
-            appState = appState,
-            padding = padding
-        )
+        Column(Modifier.fillMaxSize()) {
+            val destination = appState.currentTopLevelDestination
+            if (destination != null) {
+                TopAppBar(
+                    title = destination.titleTextId,
+                    navController = appState.navController,
+                    destination = currentDestination
+                )
+            }
+
+            AppNavigation(
+                appState = appState,
+                padding = padding
+            )
+        }
 
         val notConnected = stringResource(R.string.no_internet_connection)
         LaunchedEffect(isOffline) {

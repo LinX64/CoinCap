@@ -1,4 +1,4 @@
-package com.client.coincap.ui.theme
+package com.client.designsystem.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf

@@ -1,5 +1,6 @@
 package com.client.coincap.ui
 
+import androidx.annotation.StringRes
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -11,20 +12,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.client.coincap.R
 import com.client.common.util.NavRoutes
+import com.client.designsystem.theme.CoinCapTheme
 import com.client.search.navigation.navigateToSearch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAppBar(
     modifier: Modifier = Modifier,
+    @StringRes title: Int,
     navController: NavHostController,
     destination: NavDestination?
 ) {
     val isCurrentRouteHome = destination?.route == NavRoutes.homeRoute
     TopAppBar(
-        title = { Text(text = stringResource(R.string.app_name)) },
+        title = { Text(text = stringResource(id = title)) },
         modifier = modifier.fillMaxWidth(),
         navigationIcon = {
             if (!isCurrentRouteHome) {
@@ -41,7 +43,7 @@ fun TopAppBar(
                 IconButton(onClick = { navController.navigateToSearch() }) {
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription = "Search"
+                        contentDescription = null
                     )
                 }
             }
@@ -53,8 +55,9 @@ fun TopAppBar(
 @Composable
 fun TopAppBarPreview() {
     val navController = rememberNavController()
-    com.client.designsystem.theme.CoinCapTheme {
+    CoinCapTheme {
         TopAppBar(
+            title = android.R.string.untitled,
             navController = navController,
             destination = null
         )

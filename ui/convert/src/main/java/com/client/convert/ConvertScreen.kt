@@ -13,28 +13,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.client.common.util.CountryFlags
-import com.client.convert.component.AmountField
-import com.client.convert.component.ConvertButton
-import com.client.convert.component.FromDropDown
-import com.client.convert.component.ToDropDown
+import com.client.convert.component.*
 import com.client.ui.DevicePreviews
 import com.client.ui.ProgressBar
 import com.client.ui.util.DummyData
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
-internal fun ConvertRoute(
+internal fun ExchangeRoute(
     modifier: Modifier = Modifier,
     viewModel: ConvertViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.liveFiats.collectAsStateWithLifecycle()
-    ConvertScreen(
+    ExchangeScreen(
         modifier = modifier,
         uiState = uiState,
         onAmountChange = viewModel::onAmountChange,
@@ -45,7 +40,7 @@ internal fun ConvertRoute(
 }
 
 @Composable
-internal fun ConvertScreen(
+internal fun ExchangeScreen(
     modifier: Modifier,
     uiState: ConvertUiState,
     onAmountChange: (String) -> Unit = {},
@@ -67,7 +62,7 @@ internal fun ConvertScreen(
     }
 
     if (isLoading) {
-        com.client.ui.ProgressBar()
+        ProgressBar()
     }
 }
 
@@ -90,7 +85,7 @@ private fun ContentView(
             Text(
                 text = "Currency \nConverter",
                 color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
 
@@ -132,39 +127,11 @@ private fun ContentView(
     }
 }
 
-@Composable
-fun ResultText() {
-    val flag = CountryFlags.getCountryFlagByCode("IR")
-    Text(
-        text = "Result",
-        modifier = Modifier.fillMaxWidth(),
-        textAlign = TextAlign.Center
-    )
-
-    Row(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
-    ) {
-        Text(
-            text = flag,
-            modifier = Modifier.padding(top = 8.dp)
-        )
-
-        Spacer(modifier = Modifier.width(8.dp))
-
-        Text(
-            text = "110,000 IRR",
-            fontWeight = FontWeight.Bold,
-            style = MaterialTheme.typography.headlineMedium
-        )
-    }
-}
-
-@com.client.ui.DevicePreviews
+@DevicePreviews
 @Composable
 fun ConvertScreenPreview() {
     val rates = DummyData.rates()
-    ConvertScreen(
+    ExchangeScreen(
         modifier = Modifier,
         uiState = ConvertUiState.Success(rates),
         onAmountChange = {},
