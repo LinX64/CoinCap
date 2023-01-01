@@ -14,7 +14,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.client.coincap.core.search.R
+import com.client.coincap.ui.search.R
 import com.client.common.util.formatToPrice
 import com.client.detail.navigation.navigateToDetail
 import com.client.search.component.InitialView
@@ -50,7 +50,7 @@ internal fun SearchScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        SearchBar(
+        com.client.ui.SearchBar(
             onQueryChange = { onQueryChanged(it.text) },
             onClear = onClear
         )
@@ -68,8 +68,12 @@ internal fun SearchScreen(
         }
 
         when (searchUiState) {
-            is SearchUiState.Loading -> ProgressBar(modifier.testTag("search:loading"))
-            is SearchUiState.Empty -> EmptyView(
+            is SearchUiState.Loading -> com.client.ui.ProgressBar(
+                modifier.testTag(
+                    "search:loading"
+                )
+            )
+            is SearchUiState.Empty -> com.client.ui.EmptyView(
                 modifier.testTag("search:empty"),
                 errorMessage = stringResource(id = R.string.no_results)
             )
@@ -89,7 +93,7 @@ private fun LazyGridScope.onboardingView(
         is SearchUiState.Initial -> Unit
         is SearchUiState.Success -> {
             items(searchUiState.rates, key = { it.id }) { rate ->
-                CryptoCurrencyItem(
+                com.client.ui.CryptoCurrencyItem(
                     modifier = Modifier.testTag("search:success"),
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
@@ -101,7 +105,7 @@ private fun LazyGridScope.onboardingView(
     }
 }
 
-@DevicePreviews
+@com.client.ui.DevicePreviews
 @Composable
 fun SearchScreenPreview() {
     val rates = DummyData.rates()

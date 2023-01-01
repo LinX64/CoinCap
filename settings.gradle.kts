@@ -23,7 +23,8 @@ include(
     ":core:common",
     ":core:data",
     ":core:domain",
-    ":core:ui"
+    ":core:ui",
+    ":core:designsystem"
 )
 
 // Ui module

@@ -6,8 +6,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import com.client.coincap.ui.CoinCapApp
-import com.client.coincap.ui.theme.CoinCapTheme
 import com.client.data.util.NetworkMonitor
+import com.client.designsystem.theme.CoinCapTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 

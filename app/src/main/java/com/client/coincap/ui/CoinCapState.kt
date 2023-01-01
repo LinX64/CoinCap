@@ -5,12 +5,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.Stable
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.util.trace
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
+import com.client.coincap.navigation.TabsDestinations
+import com.client.convert.navigation.navigateToConvert
 import com.client.data.util.NetworkMonitor
+import com.client.home.navigation.navigateToHome
 import com.client.ui.TrackDisposableJank
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.SharingStarted
@@ -42,6 +48,8 @@ class CoinCapState(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
+    val topLevelDestinations: List<TabsDestinations> = TabsDestinations.values().asList()
+
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
@@ -49,6 +57,23 @@ class CoinCapState(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = false
         )
+
+    fun navigateToSpecificDestination(topLevelDestination: TabsDestinations) {
+        trace("Navigation: ${topLevelDestination.name}") {
+            val topLevelNavOptions = navOptions {
+                popUpTo(navController.graph.findStartDestination().id) {
+                    saveState = true
+                }
+                launchSingleTop = true
+                restoreState = true
+            }
+
+            when (topLevelDestination) {
+                TabsDestinations.HOME -> navController.navigateToHome(topLevelNavOptions)
+                TabsDestinations.BOOKMARKS -> navController.navigateToConvert(topLevelNavOptions)
+            }
+        }
+    }
 }
 
 @Composable
