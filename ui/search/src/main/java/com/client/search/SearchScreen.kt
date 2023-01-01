@@ -3,8 +3,11 @@ package com.client.search
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -20,6 +23,7 @@ import com.client.detail.navigation.navigateToDetail
 import com.client.search.component.InitialView
 import com.client.ui.*
 import com.client.ui.util.DummyData
+import kotlinx.coroutines.job
 
 @OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
@@ -45,12 +49,15 @@ internal fun SearchScreen(
     onClear: () -> Unit
 ) {
     val state = rememberLazyGridState()
+    val focusRequester = FocusRequester()
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .padding(16.dp)
+            .focusRequester(focusRequester)
     ) {
-        com.client.ui.SearchBar(
+        SearchBar(
             onQueryChange = { onQueryChanged(it.text) },
             onClear = onClear
         )
@@ -68,18 +75,20 @@ internal fun SearchScreen(
         }
 
         when (searchUiState) {
-            is SearchUiState.Loading -> com.client.ui.ProgressBar(
+            is SearchUiState.Loading -> ProgressBar(
                 modifier.testTag(
                     "search:loading"
                 )
             )
-            is SearchUiState.Empty -> com.client.ui.EmptyView(
+            is SearchUiState.Empty -> EmptyView(
                 modifier.testTag("search:empty"),
                 errorMessage = stringResource(id = R.string.no_results)
             )
             is SearchUiState.Initial -> InitialView(modifier.testTag("search:init"))
             else -> Unit
         }
+
+        LaunchedEffect(Unit) { this.coroutineContext.job.invokeOnCompletion { focusRequester.requestFocus() } }
     }
 }
 
@@ -93,7 +102,7 @@ private fun LazyGridScope.onboardingView(
         is SearchUiState.Initial -> Unit
         is SearchUiState.Success -> {
             items(searchUiState.rates, key = { it.id }) { rate ->
-                com.client.ui.CryptoCurrencyItem(
+                CryptoCurrencyItem(
                     modifier = Modifier.testTag("search:success"),
                     rate = rate.rateUsd,
                     symbol = rate.symbol,
@@ -105,7 +114,7 @@ private fun LazyGridScope.onboardingView(
     }
 }
 
-@com.client.ui.DevicePreviews
+@DevicePreviews
 @Composable
 fun SearchScreenPreview() {
     val rates = DummyData.rates()
