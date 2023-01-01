@@ -12,6 +12,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.client.coincap.R
 import com.client.common.util.NavRoutes
 import com.client.designsystem.theme.CoinCapTheme
 import com.client.search.navigation.navigateToSearch
@@ -20,7 +21,7 @@ import com.client.search.navigation.navigateToSearch
 @Composable
 fun TopAppBar(
     modifier: Modifier = Modifier,
-    @StringRes title: Int,
+    @StringRes title: Int = R.string.app_name,
     navController: NavHostController,
     destination: NavDestination?
 ) {

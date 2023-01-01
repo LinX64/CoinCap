@@ -57,9 +57,16 @@ fun CoinCapApp(
 
         Column(Modifier.fillMaxSize()) {
             val destination = appState.currentTopLevelDestination
-            if (destination != null) {
+            val isDestinationSearch = appState.currentDestination?.route == NavRoutes.searchRoute
+            if (destination != null && !isDestinationSearch) {
                 TopAppBar(
                     title = destination.titleTextId,
+                    navController = appState.navController,
+                    destination = currentDestination
+                )
+            } else {
+                TopAppBar(
+                    title = R.string.detail,
                     navController = appState.navController,
                     destination = currentDestination
                 )

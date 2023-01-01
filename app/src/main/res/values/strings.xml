@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">CoinCap</string>
     <string name="no_internet_connection">You are not connected to the internet!</string>
+    <string name="detail">Detail</string>
 </resources>
