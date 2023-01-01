@@ -1,5 +1,6 @@
 package com.client.coincap.navigation
 
+import com.client.coincap.R
 import com.client.designsystem.icon.CoinCapIcons
 import com.client.designsystem.icon.Icon
 import com.client.coincap.ui.convert.R as convertR
@@ -13,13 +14,13 @@ enum class TabsDestinations(
 ) {
     HOME(
         selectedIcon = Icon.ImageVectorIcon(CoinCapIcons.Home),
-        unselectedIcon = Icon.ImageVectorIcon(CoinCapIcons.Home),
+        unselectedIcon = Icon.ImageVectorIcon(CoinCapIcons.HomeUnselected),
         iconTextId = homeR.string.home,
-        titleTextId = com.client.coincap.R.string.app_name
+        titleTextId = R.string.app_name
     ),
-    BOOKMARKS(
+    EXCHANGE(
         selectedIcon = Icon.ImageVectorIcon(CoinCapIcons.Exchange),
-        unselectedIcon = Icon.ImageVectorIcon(CoinCapIcons.Exchange),
+        unselectedIcon = Icon.ImageVectorIcon(CoinCapIcons.ExchangeUnselected),
         iconTextId = convertR.string.convert,
         titleTextId = convertR.string.convert
     )

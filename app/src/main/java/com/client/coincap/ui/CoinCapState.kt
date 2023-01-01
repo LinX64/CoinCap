@@ -14,8 +14,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import com.client.coincap.navigation.TabsDestinations
-import com.client.convert.navigation.navigateToConvert
+import com.client.convert.navigation.exchangeNavigationRoute
+import com.client.convert.navigation.navigateToExchange
 import com.client.data.util.NetworkMonitor
+import com.client.home.navigation.homeNavigationRoute
 import com.client.home.navigation.navigateToHome
 import com.client.ui.TrackDisposableJank
 import kotlinx.coroutines.CoroutineScope
@@ -50,6 +52,13 @@ class CoinCapState(
 
     val topLevelDestinations: List<TabsDestinations> = TabsDestinations.values().asList()
 
+    val currentTopLevelDestination: TabsDestinations?
+        @Composable get() = when (currentDestination?.route) {
+            homeNavigationRoute -> TabsDestinations.HOME
+            exchangeNavigationRoute -> TabsDestinations.EXCHANGE
+            else -> null
+        }
+
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
@@ -70,7 +79,7 @@ class CoinCapState(
 
             when (topLevelDestination) {
                 TabsDestinations.HOME -> navController.navigateToHome(topLevelNavOptions)
-                TabsDestinations.BOOKMARKS -> navController.navigateToConvert(topLevelNavOptions)
+                TabsDestinations.EXCHANGE -> navController.navigateToExchange(topLevelNavOptions)
             }
         }
     }

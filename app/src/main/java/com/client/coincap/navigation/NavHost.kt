@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
-import com.client.convert.navigation.convertScreen
+import com.client.convert.navigation.exchangeScreen
 import com.client.detail.navigation.detailScreen
 import com.client.home.navigation.homeNavigationRoute
 import com.client.home.navigation.homeScreen
@@ -24,6 +24,6 @@ fun NavHost(
         homeScreen(navController)
         searchScreen(navController)
         detailScreen()
-        convertScreen()
+        exchangeScreen()
     }
 }

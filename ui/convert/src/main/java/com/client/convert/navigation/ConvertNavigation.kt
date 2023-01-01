@@ -5,16 +5,16 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.client.common.util.NavRoutes
-import com.client.convert.ConvertRoute
+import com.client.convert.ExchangeRoute
 
-const val convertNavigationRoute = NavRoutes.convertRoute
+const val exchangeNavigationRoute = NavRoutes.exchangeRoute
 
-fun NavController.navigateToConvert(navOptions: NavOptions? = null) {
-    this.navigate(convertNavigationRoute, navOptions)
+fun NavController.navigateToExchange(navOptions: NavOptions? = null) {
+    this.navigate(exchangeNavigationRoute, navOptions)
 }
 
-fun NavGraphBuilder.convertScreen() {
-    composable(route = convertNavigationRoute) {
-        ConvertRoute()
+fun NavGraphBuilder.exchangeScreen() {
+    composable(route = exchangeNavigationRoute) {
+        ExchangeRoute()
     }
 }
