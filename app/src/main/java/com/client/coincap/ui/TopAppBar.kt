@@ -21,7 +21,8 @@ import com.client.search.navigation.navigateToSearch
 fun TopAppBar(
     modifier: Modifier = Modifier,
     navController: NavHostController,
-    destination: NavDestination?
+    destination: NavDestination?,
+    appState: CoinCapState
 ) {
     val isCurrentRouteHome = destination?.route == NavRoutes.homeRoute
     TopAppBar(
@@ -42,22 +43,17 @@ fun TopAppBar(
                 IconButton(onClick = { navController.navigateToSearch() }) {
                     Icon(
                         imageVector = Icons.Default.Search,
-                        contentDescription = "Search"
+                        contentDescription = null
+                    )
+                }
+
+                IconButton(onClick = { appState.setShowSettingsDialog(true) }) {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = null
                     )
                 }
             }
         }
     )
-}
-
-@Preview
-@Composable
-fun TopAppBarPreview() {
-    val navController = rememberNavController()
-    CoinCapTheme {
-        TopAppBar(
-            navController = navController,
-            destination = null
-        )
-    }
 }

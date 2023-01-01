@@ -1,10 +1,7 @@
 package com.client.coincap.ui
 
 import androidx.compose.material3.windowsizeclass.WindowSizeClass
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.Stable
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
@@ -42,6 +39,9 @@ class CoinCapState(
         @Composable get() = navController
             .currentBackStackEntryAsState().value?.destination
 
+    var shouldShowSettingsDialog by mutableStateOf(false)
+        private set
+
     val isOffline = networkMonitor.isOnline
         .map(Boolean::not)
         .stateIn(
@@ -49,6 +49,10 @@ class CoinCapState(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = false
         )
+
+    fun setShowSettingsDialog(shouldShow: Boolean) {
+        shouldShowSettingsDialog = shouldShow
+    }
 }
 
 @Composable

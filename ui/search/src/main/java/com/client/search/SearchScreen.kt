@@ -1,5 +1,8 @@
 package com.client.search
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.runtime.Composable
@@ -45,6 +48,8 @@ fun SearchScreen(
     onClear: () -> Unit
 ) {
     val state = rememberLazyGridState()
+    val isLoading = searchUiState is SearchUiState.Loading
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -57,24 +62,30 @@ fun SearchScreen(
 
         Spacer(modifier = modifier.padding(8.dp))
 
-        LazyVerticalGrid(
-            columns = GridCells.Adaptive(200.dp),
-            modifier = modifier
-                .fillMaxWidth()
-                .testTag("ui:search:grid"),
-            state = state
+        AnimatedVisibility(
+            visible = !isLoading,
+            enter = fadeIn(),
+            exit = fadeOut()
         ) {
-            onboardingView(searchUiState, navController)
-        }
+            LazyVerticalGrid(
+                columns = GridCells.Adaptive(200.dp),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .testTag("ui:search:grid"),
+                state = state
+            ) {
+                onboardingView(searchUiState, navController)
+            }
 
-        when (searchUiState) {
-            is SearchUiState.Loading -> ProgressBar(modifier.testTag("search:loading"))
-            is SearchUiState.Empty -> EmptyView(
-                modifier.testTag("search:empty"),
-                errorMessage = stringResource(id = R.string.no_results)
-            )
-            is SearchUiState.Initial -> InitialView(modifier.testTag("search:init"))
-            else -> Unit
+            when (searchUiState) {
+                is SearchUiState.Loading -> ProgressBar(modifier.testTag("search:loading"))
+                is SearchUiState.Empty -> EmptyView(
+                    modifier.testTag("search:empty"),
+                    errorMessage = stringResource(id = R.string.no_results)
+                )
+                is SearchUiState.Initial -> InitialView(modifier.testTag("search:init"))
+                else -> Unit
+            }
         }
     }
 }

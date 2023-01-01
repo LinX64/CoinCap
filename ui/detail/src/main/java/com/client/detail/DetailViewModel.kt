@@ -21,7 +21,7 @@ class DetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val rateId: String = DetailArgs(savedStateHandle).rateId
-    val rateRespUiState: StateFlow<DetailUiState> = getRatesUseCaseImpl(rateId)
+    val rateUiState: StateFlow<DetailUiState> = getRatesUseCaseImpl(rateId)
         .map { result ->
             when (result) {
                 is Result.Success -> DetailUiState.Success(result.data)

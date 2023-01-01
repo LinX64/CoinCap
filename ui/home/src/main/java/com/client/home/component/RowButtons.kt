@@ -36,13 +36,11 @@ fun RowButtons(
                     .size(24.dp)
                     .clip(RoundedCornerShape(25.dp))
                     .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f))
-                    .padding(5.dp),
-
+                    .padding(5.dp)
             )
 
             Text(
                 text = stringResource(R.string.buy),
-
                 modifier = modifier.padding(start = 5.dp),
             )
 
@@ -55,14 +53,12 @@ fun RowButtons(
                     .size(24.dp)
                     .clip(RoundedCornerShape(25.dp))
                     .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f))
-                    .padding(5.dp),
-
+                    .padding(5.dp)
             )
 
             Text(
                 text = stringResource(R.string.sell),
-
-                modifier = modifier.padding(start = 5.dp),
+                modifier = modifier.padding(start = 5.dp)
             )
         }
 
@@ -74,14 +70,12 @@ fun RowButtons(
                     .size(24.dp)
                     .clip(RoundedCornerShape(25.dp))
                     .background(MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.2f))
-                    .padding(5.dp),
-
+                    .padding(5.dp)
             )
 
             Text(
                 text = stringResource(R.string.send),
-
-                modifier = modifier.padding(start = 5.dp),
+                modifier = modifier.padding(start = 5.dp)
             )
         }
     }

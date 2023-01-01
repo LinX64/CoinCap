@@ -26,7 +26,7 @@ import com.client.ui.ProgressBar
 fun DetailRoute(
     viewModel: DetailViewModel = hiltViewModel()
 ) {
-    val detailUiState by viewModel.rateRespUiState.collectAsStateWithLifecycle()
+    val detailUiState by viewModel.rateUiState.collectAsStateWithLifecycle()
     DetailScreen(detailUiState = detailUiState)
 }
 

@@ -22,7 +22,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         setContent {
-            CoinCapTheme() {
+            CoinCapTheme {
                 CoinCapApp(
                     networkMonitor = networkMonitor,
                     windowSizeClass = calculateWindowSizeClass(this)

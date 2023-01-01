@@ -1,5 +1,8 @@
 package com.client.home
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -59,65 +62,71 @@ internal fun HomeScreen(
     val rates = (homeUiState as? HomeUiState.Success)?.rates ?: emptyList()
     val localRates = (localUiState as? HomeLocalUiState.Success)?.localRates ?: emptyList()
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp)
-            .testTag("ui:home:list")
+    AnimatedVisibility(
+        visible = !isLoading,
+        enter = fadeIn(),
+        exit = fadeOut()
     ) {
-        item { Header() }
-        item {
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        item {
-            Text(
-                text = stringResource(R.string.iranian_rial_title),
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(start = 5.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = stringResource(R.string.iranian_rial_subtitle),
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(start = 5.dp, bottom = 8.dp),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
-            )
-        }
-        item {
-            LazyRow(modifier = modifier.fillMaxWidth()) {
-                items(localRates.size) {
-                    val localRate = localRates[it]
-                    LocalCurrencyItem(localRate = localRate, onClick = {})
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(8.dp)
+                .testTag("ui:home:list")
+        ) {
+            item { Header() }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+            item {
+                Text(
+                    text = stringResource(R.string.iranian_rial_title),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(start = 5.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = stringResource(R.string.iranian_rial_subtitle),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(start = 5.dp, bottom = 8.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
+            item {
+                LazyRow(modifier = modifier.fillMaxWidth()) {
+                    items(localRates.size) {
+                        val localRate = localRates[it]
+                        LocalCurrencyItem(localRate = localRate, onClick = {})
+                    }
                 }
             }
-        }
-        item {
-            Spacer(modifier = Modifier.height(10.dp))
-        }
-        item {
-            Text(
-                text = stringResource(id = R.string.top_crypto_currencies),
-                modifier = modifier.padding(start = 5.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = stringResource(R.string.up_to_date_data),
-                modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
-            )
-        }
-        items(rates.size) {
-            val rate = rates[it]
-            Column(modifier = modifier.fillMaxWidth()) {
-                CryptoCurrencyItem(
-                    rate = rate.rateUsd,
-                    symbol = rate.symbol,
-                    dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
-                ) { navController.navigateToDetail(rate.id) }
+            item {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+            item {
+                Text(
+                    text = stringResource(id = R.string.top_crypto_currencies),
+                    modifier = modifier.padding(start = 5.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = stringResource(R.string.up_to_date_data),
+                    modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
+            items(rates.size) {
+                val rate = rates[it]
+                Column(modifier = modifier.fillMaxWidth()) {
+                    CryptoCurrencyItem(
+                        rate = rate.rateUsd,
+                        symbol = rate.symbol,
+                        dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
+                    ) { navController.navigateToDetail(rate.id) }
+                }
             }
         }
     }

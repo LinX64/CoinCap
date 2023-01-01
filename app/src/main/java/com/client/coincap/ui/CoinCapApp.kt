@@ -13,6 +13,7 @@ import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.client.coincap.R
 import com.client.coincap.navigation.CoinCapNavHost
+import com.client.coincap.ui.theme.CoinCapTheme
 import com.client.common.util.NavRoutes
 import com.client.data.util.NetworkMonitor
 
@@ -40,7 +41,8 @@ fun CoinCapApp(
             if (!isCurrentRouteSearch) {
                 TopAppBar(
                     navController = appState.navController,
-                    destination = currentDestination
+                    destination = currentDestination,
+                    appState = appState
                 )
             }
         },
@@ -61,6 +63,35 @@ fun CoinCapApp(
                     duration = SnackbarDuration.Long
                 )
             }
+        }
+
+        if (appState.shouldShowSettingsDialog) {
+            ThemeDialog(
+                onDismiss = { appState.setShowSettingsDialog(false) },
+                onThemeSelected = {
+                    println("Theme selected $it")
+                }
+            )
+        }
+    }
+}
+
+@Composable
+fun SetTheme(
+    themes: Themes
+) {
+    when (themes) {
+        Themes.LIGHT -> CoinCapTheme {
+
+        }
+        Themes.FOLLOW_SYSTEM -> CoinCapTheme() {
+
+        }
+        Themes.DARK -> CoinCapTheme(useDarkTheme = true) {
+            /*CoinCapApp(
+                networkMonitor = networkMonitor,
+                windowSizeClass = calculateWindowSizeClass(this)
+            )*/
         }
     }
 }
