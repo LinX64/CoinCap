@@ -34,15 +34,12 @@ internal fun HomeRoute(
 ) {
     val homeUiState by viewModel.cryptoLiveRates.collectAsStateWithLifecycle()
     val localRates by viewModel.localLiveRates.collectAsStateWithLifecycle()
-    val fiatRates by viewModel.fiatLiveRates.collectAsStateWithLifecycle()
     HomeScreen(
         modifier = modifier,
         homeUiState = homeUiState,
         localUiState = localRates,
         navController = navController
     )
-
-    println("fiatRates $fiatRates")
 }
 
 @Composable
