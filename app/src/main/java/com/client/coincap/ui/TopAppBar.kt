@@ -7,12 +7,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavDestination
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.client.coincap.R
-import com.client.coincap.ui.theme.CoinCapTheme
 import com.client.common.util.NavRoutes
 import com.client.search.navigation.navigateToSearch
 
