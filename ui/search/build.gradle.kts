@@ -6,7 +6,6 @@ plugins {
 }
 
 android {
-
     namespace = "com.client.coincap.core.search"
 
     defaultConfig {
