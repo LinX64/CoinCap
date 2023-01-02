@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="convert">Exchange</string>
+    <string name="converter_currency">Currency \nConverter</string>
+    <string name="convert_from">From</string>
+    <string name="convert_to">To</string>
+    <string name="amount">Amount</string>
 </resources>

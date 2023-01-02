@@ -4,9 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import com.client.convert.navigation.exchangeNavigationRoute
 import com.client.convert.navigation.exchangeScreen
 import com.client.detail.navigation.detailScreen
-import com.client.home.navigation.homeNavigationRoute
 import com.client.home.navigation.homeScreen
 import com.client.search.navigation.searchScreen
 
@@ -14,7 +14,7 @@ import com.client.search.navigation.searchScreen
 fun NavHost(
     navController: NavHostController,
     modifier: Modifier = Modifier,
-    startDestination: String = homeNavigationRoute
+    startDestination: String = exchangeNavigationRoute
 ) {
     NavHost(
         navController = navController,

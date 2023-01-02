@@ -39,3 +39,5 @@ fun Int.formatToPrice(): String = toString()
     .reversed()
 
 fun String.getCountryName(): String = Locale("", this).displayCountry
+fun getCountryCode(countryName: String) =
+    Locale.getISOCountries().find { Locale("", it).displayCountry == countryName }

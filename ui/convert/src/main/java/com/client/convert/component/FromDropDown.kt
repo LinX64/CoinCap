@@ -15,25 +15,22 @@ import com.client.ui.util.DummyData
 @Composable
 fun FromDropDown(
     modifier: Modifier = Modifier,
-    uiState: ConvertUiState
+    uiState: ConvertUiState,
+    onFromChange: (String) -> Unit
 ) {
     if (uiState is ConvertUiState.Success) {
         val rates = uiState.rates
-        val flags = rates.map {
-            CountryFlags.getCountryFlagByCode(it.symbol.take(2))
-        }
-
         val symbols = rates.map { it.symbol }.sortedBy { it }
-        val countryNames = rates.map {
-            it.symbol.take(2).getCountryName()
+        val options = symbols.map { symbol ->
+            val countryName = symbol.take(2).getCountryName()
+            val flag = symbol.take(2).let {
+                CountryFlags.getCountryFlagByCode(it)
+            }
+            "$flag  $symbol - $countryName"
         }
 
-        val currency = symbols.find { it == countryNames[0] }
-        val options = symbols + countryNames
         var expanded by remember { mutableStateOf(false) }
         var selectedOptionText by remember { mutableStateOf(options[0]) }
-        val flag = flags.find { selectedOptionText.contains(it) } ?: ""
-
         ExposedDropdownMenuBox(
             expanded = expanded,
             onExpandedChange = { expanded = !expanded },
@@ -45,9 +42,6 @@ fun FromDropDown(
                 readOnly = true,
                 value = selectedOptionText,
                 onValueChange = {},
-                leadingIcon = {
-                    Text(text = flag)
-                },
                 trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
                 colors = ExposedDropdownMenuDefaults.textFieldColors(
                     textColor = Color.Gray,
@@ -68,6 +62,7 @@ fun FromDropDown(
                         onClick = {
                             selectedOptionText = selectionOption
                             expanded = false
+                            onFromChange(selectionOption)
                         },
                         contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
                     )
@@ -82,6 +77,7 @@ fun FromDropDown(
 fun FromDropDownPreview() {
     val rates = DummyData.rates()
     FromDropDown(
-        uiState = ConvertUiState.Success(rates = rates)
+        uiState = ConvertUiState.Success(rates = rates),
+        onFromChange = {}
     )
 }
