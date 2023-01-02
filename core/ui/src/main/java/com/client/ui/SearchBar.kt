@@ -2,7 +2,6 @@ package com.client.ui
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Clear
@@ -18,7 +17,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
-import androidx.compose.ui.unit.dp
 import com.client.coincap.core.ui.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,7 +30,7 @@ fun SearchBar(
     val isQueryEmpty = query.value.text.isEmpty()
     Card(
         modifier = modifier.fillMaxWidth(),
-        shape = RoundedCornerShape(8.dp),
+        shape = MaterialTheme.shapes.medium
     ) {
         TextField(
             modifier = modifier.fillMaxWidth(),

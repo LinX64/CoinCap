@@ -6,19 +6,15 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
-import androidx.compose.material3.Divider
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.client.convert.component.*
-import com.client.ui.DevicePreviews
 import com.client.ui.ProgressBar
 import com.client.ui.util.DummyData
 
@@ -49,6 +45,8 @@ internal fun ExchangeScreen(
     onConvertClick: () -> Unit = {}
 ) {
     val isLoading = uiState is ConvertUiState.Loading
+    val amount = remember { mutableStateOf(onAmountChange) }
+
     AnimatedVisibility(
         visible = !isLoading,
         enter = fadeIn(),
@@ -56,7 +54,10 @@ internal fun ExchangeScreen(
     ) {
         LazyColumn(modifier = modifier.fillMaxSize()) {
             item {
-                ContentView(uiState = uiState)
+                ContentView(
+                    uiState = uiState,
+                    onAmountChange = amount.value
+                )
             }
         }
     }
@@ -69,8 +70,12 @@ internal fun ExchangeScreen(
 @Composable
 private fun ContentView(
     modifier: Modifier = Modifier,
-    uiState: ConvertUiState
+    uiState: ConvertUiState,
+    onAmountChange: (String) -> Unit
 ) {
+    val onFromChange = remember { mutableStateOf("") }
+    val onToChange = remember { mutableStateOf("") }
+
     Card(
         modifier = modifier
             .fillMaxSize()
@@ -82,52 +87,28 @@ private fun ContentView(
                 .fillMaxSize()
                 .padding(start = 16.dp, end = 16.dp, top = 16.dp),
         ) {
-            Text(
-                text = "Currency \nConverter",
-                color = MaterialTheme.colorScheme.primary,
-                style = MaterialTheme.typography.headlineMedium,
-                fontWeight = FontWeight.Bold
+            Header()
+
+            FromDropDown(
+                uiState = uiState,
+                onFromChange = { onFromChange.value = it }
             )
 
-            Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = "From",
-                style = MaterialTheme.typography.bodyLarge,
+            ToSection()
+
+            ToDropDown(
+                uiState = uiState,
+                onToChange = { onToChange.value = it }
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
-            FromDropDown(uiState = uiState)
+            AmountSection(onAmountChange, onFromChange)
 
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(
-                text = "To",
-                style = MaterialTheme.typography.bodyLarge,
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-            ToDropDown(uiState = uiState)
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(
-                text = "Amount",
-                style = MaterialTheme.typography.bodyLarge
-            )
-            Spacer(modifier = Modifier.height(8.dp))
-            AmountField()
-
-            Spacer(modifier = Modifier.height(32.dp))
-            Divider()
-            Spacer(modifier = Modifier.height(16.dp))
-
-            ResultText()
-
-            ConvertButton()
+            BottomSection()
         }
     }
 }
 
-@DevicePreviews
+@Preview(showBackground = true)
 @Composable
 fun ConvertScreenPreview() {
     val rates = DummyData.rates()

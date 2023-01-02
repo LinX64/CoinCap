@@ -7,6 +7,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import com.client.common.util.CountryFlags
+import com.client.common.util.getCountryName
 import com.client.convert.ConvertUiState
 import com.client.ui.util.DummyData
 
@@ -14,51 +15,61 @@ import com.client.ui.util.DummyData
 @Composable
 fun ToDropDown(
     modifier: Modifier = Modifier,
-    uiState: ConvertUiState
+    uiState: ConvertUiState,
+    onToChange: (String) -> Unit
 ) {
-    val options = listOf("IRR", "Option 2", "Option 3", "Option 4", "Option 5")
-    var expanded by remember { mutableStateOf(false) }
-    var selectedOptionText by remember { mutableStateOf(options[0]) }
-    val flag = CountryFlags.getCountryFlagByCode("IR")
+    if (uiState is ConvertUiState.Success) {
+        val rates = uiState.rates
+        val symbols = rates.map { it.symbol }.sortedBy { it }
+        val options = symbols.map { symbol ->
+            val countryName = symbol.take(2).getCountryName()
+            val flag = symbol.take(2).let {
+                CountryFlags.getCountryFlagByCode(it)
+            }
+            "$flag  $symbol - $countryName"
+        }
 
-    ExposedDropdownMenuBox(
-        expanded = expanded,
-        onExpandedChange = { expanded = !expanded },
-    ) {
-        TextField(
-            modifier = modifier
-                .fillMaxWidth()
-                .menuAnchor(),
-            readOnly = true,
-            value = selectedOptionText,
-            onValueChange = {},
-            leadingIcon = {
-                Text(text = flag)
-            },
-            trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
-            colors = ExposedDropdownMenuDefaults.textFieldColors(
-                textColor = Color.Gray,
-                disabledTextColor = Color.Transparent,
-                focusedIndicatorColor = Color.Transparent,
-                unfocusedIndicatorColor = Color.Transparent,
-                disabledIndicatorColor = Color.Transparent,
-                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
-            ),
-            singleLine = true
-        )
-        ExposedDropdownMenu(
+        var expanded by remember { mutableStateOf(false) }
+        var selectedOptionText by remember { mutableStateOf(options[0]) }
+        ExposedDropdownMenuBox(
             expanded = expanded,
-            onDismissRequest = { expanded = false },
+            onExpandedChange = { expanded = !expanded },
         ) {
-            options.forEach { selectionOption ->
-                DropdownMenuItem(
-                    text = { Text(selectionOption) },
-                    onClick = {
-                        selectedOptionText = selectionOption
-                        expanded = false
-                    },
-                    contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
-                )
+            TextField(
+                modifier = modifier
+                    .fillMaxWidth()
+                    .menuAnchor(),
+                readOnly = true,
+                value = selectedOptionText,
+                onValueChange = {
+                    selectedOptionText = it
+                    onToChange(it)
+                },
+                trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                colors = ExposedDropdownMenuDefaults.textFieldColors(
+                    textColor = Color.Gray,
+                    disabledTextColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent,
+                    disabledIndicatorColor = Color.Transparent,
+                    containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
+                ),
+                singleLine = true
+            )
+            ExposedDropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false },
+            ) {
+                options.forEach { selectionOption ->
+                    DropdownMenuItem(
+                        text = { Text(selectionOption) },
+                        onClick = {
+                            selectedOptionText = selectionOption
+                            expanded = false
+                        },
+                        contentPadding = ExposedDropdownMenuDefaults.ItemContentPadding,
+                    )
+                }
             }
         }
     }
@@ -71,6 +82,7 @@ fun ToDropDownPreview() {
     ToDropDown(
         uiState = ConvertUiState.Success(
             rates = rates
-        )
+        ),
+        onToChange = {}
     )
 }
