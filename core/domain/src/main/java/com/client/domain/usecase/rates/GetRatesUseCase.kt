@@ -5,8 +5,8 @@ import com.client.data.network.Result
 import kotlinx.coroutines.flow.Flow
 
 interface GetRatesUseCase {
-    fun getRates(): Flow<Result<List<Rate>>>
+    fun getRates(): Flow<List<Rate>>
     fun getLiveRates(): Flow<List<Rate>>
     fun getLiveCryptoCurrencies(): Flow<Result<List<Rate>>>
-    fun getLiveFiatCurrencies(): Flow<Result<List<Rate>>>
+    fun getFiatCurrencies(): Flow<List<Rate>>
 }

@@ -14,8 +14,4 @@ fun BottomSection() {
     Divider()
 
     Spacer(modifier = Modifier.height(16.dp))
-
-    ResultText()
-
-    ConvertButton()
 }

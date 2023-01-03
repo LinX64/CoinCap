@@ -39,7 +39,8 @@ fun CoinCapApp(
     val isOffline by appState.isOffline.collectAsStateWithLifecycle()
     val snackBarHostState = remember { SnackbarHostState() }
     val currentDestination = appState.currentDestination
-    val isCurrentRouteSearch = currentDestination?.route == NavRoutes.searchRoute
+    val destination = appState.currentTopLevelDestination
+    val isDestinationSearch = currentDestination?.route == NavRoutes.searchRoute
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onBackground,
@@ -56,8 +57,6 @@ fun CoinCapApp(
     ) { padding ->
 
         Column(Modifier.fillMaxSize()) {
-            val destination = appState.currentTopLevelDestination
-            val isDestinationSearch = appState.currentDestination?.route == NavRoutes.searchRoute
             if (destination != null && !isDestinationSearch) {
                 TopAppBar(
                     title = destination.titleTextId,

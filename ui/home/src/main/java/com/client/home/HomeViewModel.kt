@@ -50,22 +50,6 @@ class HomeViewModel @Inject constructor(
             started = SharingStarted.WhileSubscribed(5_000),
             initialValue = HomeUiState.Loading
         )
-
-    val fiatLiveRates: StateFlow<FiatState> = getRatesUseCase
-        .getLiveFiatCurrencies()
-        .distinctUntilChanged()
-        .map { result ->
-            when (result) {
-                is Loading -> FiatState.Loading
-                is Success -> FiatState.Success(result.data)
-                is Error -> FiatState.Error(result.exception.toString())
-            }
-        }
-        .stateIn(
-            scope = viewModelScope,
-            started = SharingStarted.WhileSubscribed(5_000),
-            initialValue = FiatState.Loading
-        )
 }
 
 sealed interface HomeUiState {
@@ -86,14 +70,4 @@ sealed interface HomeLocalUiState {
     ) : HomeLocalUiState
 
     data class Error(val error: String) : HomeLocalUiState
-}
-
-sealed interface FiatState {
-    object Loading : FiatState
-
-    data class Success(
-        val rates: List<Rate>
-    ) : FiatState
-
-    data class Error(val error: String) : FiatState
 }

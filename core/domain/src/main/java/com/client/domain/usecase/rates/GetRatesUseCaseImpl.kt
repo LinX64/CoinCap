@@ -20,7 +20,7 @@ class GetRatesUseCaseImpl @Inject constructor(
     operator fun invoke(id: String): Flow<Result<RateDetailResp>> =
         rateRepository.getRateBy(id).asResult()
 
-    override fun getRates(): Flow<Result<List<Rate>>> = getCombinedRates().asResult()
+    override fun getRates(): Flow<List<Rate>> = getCombinedRates()
 
     override fun getLiveRates(): Flow<List<Rate>> = rateRepository.getLiveRates()
 
@@ -32,12 +32,11 @@ class GetRatesUseCaseImpl @Inject constructor(
             .asResult()
     }
 
-    override fun getLiveFiatCurrencies(): Flow<Result<List<Rate>>> {
-        return getCombinedRates()
+    override fun getFiatCurrencies(): Flow<List<Rate>> {
+        return getRates()
             .map { rates ->
                 rates.filter { rate -> rate.type == Consts.FIAT_STRING }
             }
-            .asResult()
     }
 
     /**
@@ -55,7 +54,7 @@ class GetRatesUseCaseImpl @Inject constructor(
                 val inUsdPrice = rate.rateUsd.toDouble()
                 val price = sellPrice?.times(inUsdPrice)
 
-                rate.copy(usdPrice = price?.toInt())
+                rate.copy(usdPrice = price)
             }
         }
     }

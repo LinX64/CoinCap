@@ -12,7 +12,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun ConvertButton(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onConvertClicked: () -> Unit
 ) {
     Column(
         modifier = modifier
@@ -21,7 +22,7 @@ fun ConvertButton(
         verticalArrangement = Arrangement.Bottom
     ) {
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { onConvertClicked() },
             modifier = modifier
                 .fillMaxWidth()
                 .height(52.dp),
@@ -38,5 +39,5 @@ fun ConvertButton(
 @Preview
 @Composable
 fun ConvertButtonPreview() {
-    ConvertButton()
+    ConvertButton(onConvertClicked = {})
 }

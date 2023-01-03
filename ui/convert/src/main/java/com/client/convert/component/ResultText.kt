@@ -11,7 +11,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ResultText() {
+fun ResultText(
+    modifier: Modifier = Modifier,
+    result: String
+) {
     Text(
         text = "Result",
         modifier = Modifier.fillMaxWidth(),
@@ -19,7 +22,7 @@ fun ResultText() {
     )
 
     Text(
-        text = "110,000 IRR",
+        text = result,
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp),

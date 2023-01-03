@@ -31,7 +31,8 @@ internal fun ExchangeRoute(
         onAmountChange = viewModel::onAmountChange,
         onFromChange = viewModel::onFromChange,
         onToChange = viewModel::onToChange,
-        onConvertClick = viewModel::onConvertClick
+        onConvertClick = viewModel::onConvertClick,
+        convertResult = viewModel.convertResult.value
     )
 }
 
@@ -39,14 +40,14 @@ internal fun ExchangeRoute(
 internal fun ExchangeScreen(
     modifier: Modifier,
     uiState: ConvertUiState,
-    onAmountChange: (String) -> Unit = {},
-    onFromChange: (String) -> Unit = {},
-    onToChange: (String) -> Unit = {},
-    onConvertClick: () -> Unit = {}
+    onAmountChange: (String) -> Unit,
+    onFromChange: (String) -> Unit,
+    onToChange: (String) -> Unit,
+    onConvertClick: () -> Unit,
+    convertResult: String = ""
 ) {
     val isLoading = uiState is ConvertUiState.Loading
-    val amount = remember { mutableStateOf(onAmountChange) }
-
+    val amount by remember { mutableStateOf("") }
     AnimatedVisibility(
         visible = !isLoading,
         enter = fadeIn(),
@@ -54,57 +55,51 @@ internal fun ExchangeScreen(
     ) {
         LazyColumn(modifier = modifier.fillMaxSize()) {
             item {
-                ContentView(
-                    uiState = uiState,
-                    onAmountChange = amount.value
-                )
+                Card(
+                    modifier = modifier
+                        .fillMaxSize()
+                        .padding(start = 10.dp, end = 10.dp),
+                    shape = MaterialTheme.shapes.large
+                ) {
+                    Column(
+                        modifier = modifier
+                            .fillMaxSize()
+                            .padding(start = 16.dp, end = 16.dp, top = 16.dp)
+                    ) {
+                        Header()
+
+                        FromDropDown(
+                            uiState = uiState,
+                            onFromChange = { onFromChange(it) }
+                        )
+
+                        ToSection()
+
+                        ToDropDown(
+                            uiState = uiState,
+                            onToChange = { onToChange(it) }
+                        )
+
+                        AmountSection()
+
+                        AmountField(
+                            onAmountChange = { onAmountChange(it) },
+                            onFromChanged = amount
+                        )
+
+                        BottomSection()
+
+                        ResultText(result = convertResult)
+
+                        ConvertButton(onConvertClicked = onConvertClick)
+                    }
+                }
             }
         }
     }
 
     if (isLoading) {
         ProgressBar()
-    }
-}
-
-@Composable
-private fun ContentView(
-    modifier: Modifier = Modifier,
-    uiState: ConvertUiState,
-    onAmountChange: (String) -> Unit
-) {
-    val onFromChange = remember { mutableStateOf("") }
-    val onToChange = remember { mutableStateOf("") }
-
-    Card(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(start = 10.dp, end = 10.dp),
-        shape = MaterialTheme.shapes.large
-    ) {
-        Column(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(start = 16.dp, end = 16.dp, top = 16.dp),
-        ) {
-            Header()
-
-            FromDropDown(
-                uiState = uiState,
-                onFromChange = { onFromChange.value = it }
-            )
-
-            ToSection()
-
-            ToDropDown(
-                uiState = uiState,
-                onToChange = { onToChange.value = it }
-            )
-
-            AmountSection(onAmountChange, onFromChange)
-
-            BottomSection()
-        }
     }
 }
 
@@ -118,6 +113,7 @@ fun ConvertScreenPreview() {
         onAmountChange = {},
         onFromChange = {},
         onToChange = {},
-        onConvertClick = {}
+        onConvertClick = {},
+        convertResult = ""
     )
 }

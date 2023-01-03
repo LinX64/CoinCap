@@ -12,6 +12,9 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.retryWhen
+import kotlinx.coroutines.withContext
+import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 class RatesRepositoryImpl @Inject constructor(
@@ -30,6 +33,9 @@ class RatesRepositoryImpl @Inject constructor(
             delay(Consts.DELAY)
         }
     }
+        .retryWhen { cause: Throwable, attempt: Long ->
+            cause is TimeoutException && attempt < 3
+        }
         .flowOn(ioDispatcher)
 
     override fun getRateBy(id: String): Flow<RateDetailResp> = flow {
@@ -37,9 +43,11 @@ class RatesRepositoryImpl @Inject constructor(
         emit(rate)
     }.flowOn(ioDispatcher)
 
-    private suspend fun getRatesCall() = ratesApi
-        .getRates()
-        .rates
-        .map { it.toExternalModel() }
-        .sortedByDescending { it.currencySymbol }
+    private suspend fun getRatesCall(): List<Rate> = withContext(ioDispatcher) {
+        return@withContext ratesApi
+            .getRates()
+            .rates
+            .map { it.toExternalModel() }
+            .sortedByDescending { it.currencySymbol }
+    }
 }

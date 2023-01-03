@@ -1,20 +1,29 @@
 package com.client.convert
 
+import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.client.data.model.Rate
 import com.client.data.network.Result
-import com.client.domain.usecase.rates.GetRatesUseCaseImpl
+import com.client.data.network.asResult
+import com.client.domain.usecase.convert.ConvertRatesUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
 class ConvertViewModel @Inject constructor(
-    getRatesUseCaseImpl: GetRatesUseCaseImpl
+    private val convertRatesUseCaseImpl: ConvertRatesUseCaseImpl
 ) : ViewModel() {
 
-    val liveFiats = getRatesUseCaseImpl.getLiveFiatCurrencies()
+    private val fromValue = MutableStateFlow("")
+    private val toValue = MutableStateFlow("")
+    private val amountValue = MutableStateFlow("")
+    val convertResult: MutableState<String> = mutableStateOf("")
+
+    val liveFiats = convertRatesUseCaseImpl.getRates()
+        .asResult()
         .map { result ->
             when (result) {
                 is Result.Loading -> ConvertUiState.Loading
@@ -31,19 +40,34 @@ class ConvertViewModel @Inject constructor(
         )
 
     fun onAmountChange(amount: String) {
-        // TODO
+        amountValue.value = amount
     }
 
     fun onFromChange(from: String) {
-        // TODO
+        fromValue.value = from.split(" ")[2]
     }
 
     fun onToChange(to: String) {
-        // TODO
+        toValue.value = to.split(" ")[2]
     }
 
     fun onConvertClick() {
-        // TODO
+        if (fromValue.value.isEmpty() ||
+            toValue.value.isEmpty() ||
+            amountValue.value.isEmpty()
+        ) {
+            return
+        }
+        val rates = (liveFiats.value as ConvertUiState.Success).rates
+        if (rates.isNotEmpty()) {
+            val result = convertRatesUseCaseImpl(
+                rates = rates,
+                from = fromValue.value,
+                to = toValue.value,
+                amount = amountValue.value
+            )
+            convertResult.value = result
+        }
     }
 }
 
