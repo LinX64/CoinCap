@@ -16,23 +16,27 @@ import com.client.common.util.CountryFlags
 fun AmountField(
     modifier: Modifier = Modifier,
     onAmountChange: (String) -> Unit,
-    onFromChanged: String
+    onFromChanged: String,
+    maxLength: Int = 10,
 ) {
     var amount by remember { mutableStateOf("") }
     TextField(
         modifier = modifier.fillMaxWidth(),
         value = amount,
         onValueChange = {
-            amount = it
-            onAmountChange(it)
+            if (it.length <= maxLength) {
+                amount = it
+                onAmountChange(it)
+            }
         },
-        placeholder = { if (amount.isEmpty() && onFromChanged.isEmpty()) Text(text = "Enter amount") },
+        placeholder = { if (amount.isEmpty()) Text(text = "Enter amount") },
         leadingIcon = { LeadingIcon(onFromChanged) },
         trailingIcon = { TrailingIcon(onFromChanged) },
         keyboardOptions = KeyboardOptions(
             keyboardType = KeyboardType.Number,
             imeAction = ImeAction.Done
         ),
+        singleLine = true,
         colors = TextFieldDefaults.textFieldColors(
             textColor = Color.Gray,
             focusedIndicatorColor = Color.Transparent,

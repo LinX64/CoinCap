@@ -9,5 +9,6 @@ annotation class Dispatcher(val binDispatcher: BinDispatchers)
 
 enum class BinDispatchers {
     Main,
+    Default,
     IO
 }
