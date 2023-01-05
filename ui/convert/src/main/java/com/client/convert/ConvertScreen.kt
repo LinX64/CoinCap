@@ -1,8 +1,5 @@
 package com.client.convert
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Card
@@ -15,6 +12,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.client.convert.component.*
+import com.client.ui.AnimatedContent
 import com.client.ui.ProgressBar
 import com.client.ui.util.DummyData
 
@@ -48,11 +46,7 @@ internal fun ExchangeScreen(
 ) {
     val isLoading = uiState is ConvertUiState.Loading
     val amount by remember { mutableStateOf("") }
-    AnimatedVisibility(
-        visible = !isLoading,
-        enter = fadeIn(),
-        exit = fadeOut()
-    ) {
+    AnimatedContent {
         LazyColumn(modifier = modifier.fillMaxSize()) {
             item {
                 Card(

@@ -110,6 +110,7 @@ private fun PortfolioCard(modifier: Modifier) {
 
             Text(
                 text = "$ 1,200.00",
+                modifier = modifier.padding(start = 3.dp),
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
