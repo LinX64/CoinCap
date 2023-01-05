@@ -14,11 +14,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun shimmerLoadingEffect(
+fun shimmerLoading(
     duration: Int = 2000,
     color: Color = Color.LightGray,
 ): Brush {
-
     val gradient = listOf(
         color.copy(alpha = 0.8f),
         color.copy(alpha = 0.35f),
@@ -57,7 +56,7 @@ fun ShimmerLoadingPreview() {
                 height = 24.dp
             )
             .background(
-                brush = shimmerLoadingEffect(),
+                brush = shimmerLoading(),
                 shape = RoundedCornerShape(4.dp),
             )
     )
@@ -73,7 +72,7 @@ fun ShimmerLoadingLocalPreview() {
                 height = 100.dp
             )
             .background(
-                brush = shimmerLoadingEffect(),
+                brush = shimmerLoading(),
                 shape = RoundedCornerShape(4.dp),
             )
     )
