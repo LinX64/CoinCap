@@ -28,82 +28,82 @@ class HomeScreenTest {
 
     @Test
     fun progressBar_whenIsLoadingShouldBeVisible() {
-        composeTestRule.setContent {
-            BoxWithConstraints {
-                HomeScreen(
-                    homeUiState = HomeUiState.Loading,
-                    localUiState = HomeLocalUiState.Loading,
-                    navController = rememberNavController()
-                )
+        with(composeTestRule) {
+            setContent {
+                BoxWithConstraints {
+                    HomeScreen(
+                        homeUiState = HomeUiState.Loading,
+                        localUiState = HomeLocalUiState.Loading,
+                        navController = rememberNavController()
+                    )
+                }
             }
+            onNodeWithTag("ui:home:shimmer").assertExists()
         }
-
-        composeTestRule.onNodeWithTag("ui:loading").assertExists()
     }
 
     @Test
     fun progressBar_whenSuccessfulShouldNoBeVisible() {
-        composeTestRule.setContent {
-            BoxWithConstraints {
-                HomeScreen(
-                    homeUiState = HomeUiState.Success(emptyList()),
-                    localUiState = HomeLocalUiState.Success(emptyList()),
-                    navController = rememberNavController()
-                )
-            }
-        }
+        with(composeTestRule) {
+            setContent {
+                BoxWithConstraints {
+                    HomeScreen(
+                        homeUiState = HomeUiState.Success(emptyList()),
+                        localUiState = HomeLocalUiState.Success(emptyList()),
+                        navController = rememberNavController()
+                    )
 
-        composeTestRule.onNodeWithTag("ui:loading").assertDoesNotExist()
+                }
+            }
+            onNodeWithTag("ui:home:shimmer").assertDoesNotExist()
+        }
     }
 
     @Test
     fun when_CryptoCurrencyResultIsSuccessShouldShowList() {
-        composeTestRule.setContent {
-            BoxWithConstraints {
-                HomeScreen(
-                    homeUiState = HomeUiState.Success(rates = rates),
-                    localUiState = HomeLocalUiState.Success(localRates = localRates),
-                    navController = rememberNavController()
-                )
+        with(composeTestRule) {
+            setContent {
+                BoxWithConstraints {
+                    HomeScreen(
+                        homeUiState = HomeUiState.Success(rates = rates),
+                        localUiState = HomeLocalUiState.Success(localRates = localRates),
+                        navController = rememberNavController()
+                    )
+                }
             }
+            onNodeWithTag("ui:home:list").assertExists()
         }
-
-        composeTestRule
-            .onNodeWithTag("ui:home:list")
-            .assertExists()
     }
 
     @Test
     fun when_localCurrencyResultIsSuccessShouldShowList() {
-        composeTestRule.setContent {
-            BoxWithConstraints {
-                HomeScreen(
-                    homeUiState = HomeUiState.Success(rates = rates),
-                    localUiState = HomeLocalUiState.Success(localRates = localRates),
-                    navController = rememberNavController()
-                )
+        with(composeTestRule) {
+            setContent {
+                BoxWithConstraints {
+                    HomeScreen(
+                        homeUiState = HomeUiState.Success(rates = rates),
+                        localUiState = HomeLocalUiState.Success(localRates = localRates),
+                        navController = rememberNavController()
+                    )
+                }
             }
+            onAllNodesWithTag("ui:localCurrency").assertCountEquals(5)
         }
-
-        composeTestRule
-            .onAllNodesWithTag("ui:localCurrency")
-            .assertCountEquals(3)
     }
 
     @Test
     fun when_CryptoCurrencyResultIsErrorShouldShowErrorView() {
-        composeTestRule.setContent {
-            BoxWithConstraints {
-                HomeScreen(
-                    homeUiState = HomeUiState.Error("Error"),
-                    localUiState = HomeLocalUiState.Success(emptyList()),
-                    navController = rememberNavController()
-                )
+        with(composeTestRule) {
+            setContent {
+                BoxWithConstraints {
+                    HomeScreen(
+                        homeUiState = HomeUiState.Error("Error"),
+                        localUiState = HomeLocalUiState.Success(emptyList()),
+                        navController = rememberNavController()
+                    )
+                }
             }
+            onNodeWithTag("ui:error").assertExists()
         }
-
-        composeTestRule
-            .onNodeWithTag("ui:error")
-            .assertExists()
     }
 }
