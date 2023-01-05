@@ -65,7 +65,7 @@ internal fun SearchScreen(
         Spacer(modifier = modifier.padding(8.dp))
 
         LazyVerticalGrid(
-            columns = GridCells.Adaptive(200.dp),
+            columns = GridCells.Adaptive(300.dp),
             modifier = modifier
                 .fillMaxWidth()
                 .testTag("ui:search:grid"),

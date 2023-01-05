@@ -60,90 +60,100 @@ internal fun HomeScreen(
     )
 
     AnimatedContent {
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .padding(8.dp)
-                .testTag("ui:home:list")
-        ) {
-            item { Header() }
-            item {
-                Spacer(modifier = Modifier.height(8.dp))
-            }
-            item {
-                Text(
-                    text = stringResource(R.string.iranian_rial_title),
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(start = 5.dp),
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = stringResource(R.string.iranian_rial_subtitle),
-                    modifier = modifier
-                        .fillMaxWidth()
-                        .padding(start = 5.dp, bottom = 8.dp),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline
-                )
-            }
-            item {
-                when (localUiState) {
-                    is HomeLocalUiState.Loading -> ShimmerLocalHomeItems()
-                    is HomeLocalUiState.Success -> {
-                        val localRates = localUiState.localRates
-                        LazyRow(modifier = modifier.fillMaxWidth()) {
-                            items(localRates.size) {
-                                val localRate = localRates[it]
-                                LocalCurrencyItem(
-                                    localRate = localRate,
-                                    onClick = {}
-                                )
-                            }
-                        }
-                    }
-                    else -> Unit
-                }
-            }
-            item {
-                Spacer(modifier = Modifier.height(10.dp))
-            }
-            item {
-                Text(
-                    text = stringResource(id = R.string.top_crypto_currencies),
-                    modifier = modifier.padding(start = 5.dp),
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Text(
-                    text = stringResource(R.string.up_to_date_data),
-                    modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.outline
-                )
-            }
-            item {
-                when (homeUiState) {
-                    is HomeUiState.Loading -> ShimmerHomeItems()
-                    is HomeUiState.Success -> {
-                        val rates = homeUiState.rates
-                        rates.forEach { rate ->
-                            Column(modifier = modifier.fillMaxWidth()) {
-                                CryptoCurrencyItem(
-                                    rate = rate.rateUsd,
-                                    symbol = rate.symbol,
-                                    dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
-                                ) { navController.navigateToDetail(rate.id) }
-                            }
-                        }
-                    }
-                    else -> Unit
-                }
-            }
-        }
+        MainContent(modifier, localUiState, homeUiState, navController)
     }
 
     if (homeUiState is HomeUiState.Error) {
         ErrorView(errorMessage = "No data found!")
+    }
+}
+
+@Composable
+private fun MainContent(
+    modifier: Modifier,
+    localUiState: HomeLocalUiState,
+    homeUiState: HomeUiState,
+    navController: NavHostController
+) {
+    LazyColumn(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(8.dp)
+            .testTag("ui:home:list")
+    ) {
+        item { Header() }
+        item {
+            Spacer(modifier = Modifier.height(8.dp))
+        }
+        item {
+            Text(
+                text = stringResource(R.string.iranian_rial_title),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp),
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = stringResource(R.string.iranian_rial_subtitle),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(start = 5.dp, bottom = 8.dp),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
+        item {
+            when (localUiState) {
+                is HomeLocalUiState.Loading -> ShimmerLocalHomeItems()
+                is HomeLocalUiState.Success -> {
+                    val localRates = localUiState.localRates
+                    LazyRow(modifier = modifier.fillMaxWidth()) {
+                        items(localRates.size) {
+                            val localRate = localRates[it]
+                            LocalCurrencyItem(
+                                localRate = localRate,
+                                onClick = {}
+                            )
+                        }
+                    }
+                }
+                else -> Unit
+            }
+        }
+        item {
+            Spacer(modifier = Modifier.height(10.dp))
+        }
+        item {
+            Text(
+                text = stringResource(id = R.string.top_crypto_currencies),
+                modifier = modifier.padding(start = 5.dp),
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                text = stringResource(R.string.up_to_date_data),
+                modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.outline
+            )
+        }
+        item {
+            when (homeUiState) {
+                is HomeUiState.Loading -> ShimmerHomeItems()
+                is HomeUiState.Success -> {
+                    val rates = homeUiState.rates
+                    rates.forEach { rate ->
+                        Column(modifier = modifier.fillMaxWidth()) {
+                            CryptoCurrencyItem(
+                                rate = rate.rateUsd,
+                                symbol = rate.symbol,
+                                dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
+                            ) { navController.navigateToDetail(rate.id) }
+                        }
+                    }
+                }
+                else -> Unit
+            }
+        }
     }
 }
 
@@ -158,7 +168,7 @@ fun ShimmerLocalHomeItems() {
                     .width(120.dp)
                     .height(135.dp)
                     .background(
-                        brush = shimmerLoadingEffect(),
+                        brush = shimmerLoading(),
                         shape = RoundedCornerShape(4.dp),
                     )
             )
@@ -176,7 +186,7 @@ fun ShimmerHomeItems() {
                     .padding(bottom = 2.dp)
                     .height(60.dp)
                     .background(
-                        brush = shimmerLoadingEffect(),
+                        brush = shimmerLoading(),
                         shape = RoundedCornerShape(4.dp),
                     )
             )

@@ -11,23 +11,31 @@ import com.client.common.util.getCountryName
 import com.client.convert.ConvertUiState
 import com.client.ui.util.DummyData
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FromDropDown(
     modifier: Modifier = Modifier,
     uiState: ConvertUiState,
     onFromChange: (String) -> Unit
+) = when (uiState) {
+    is ConvertUiState.Success -> SuccessState(uiState, modifier, onFromChange)
+    is ConvertUiState.Error -> Text(text = uiState.error)
+    else -> Unit
+}
+
+@Composable
+@OptIn(ExperimentalMaterial3Api::class)
+private fun SuccessState(
+    uiState: ConvertUiState.Success,
+    modifier: Modifier,
+    onFromChange: (String) -> Unit
 ) {
-    var options: List<String> = emptyList()
-    if (uiState is ConvertUiState.Success) {
-        val rates = uiState.rates
-        options = rates.map { it.symbol }.sortedBy { it }.map { symbol ->
-            val getSymbol = symbol.take(2)
-            with(getSymbol) {
-                val countryName = getCountryName()
-                val flag = CountryFlags.getCountryFlagByCode(this)
-                "$flag  $symbol - $countryName"
-            }
+    val rates = uiState.rates
+    val options = rates.map { it.symbol }.sortedBy { it }.map { symbol ->
+        val getSymbol = symbol.take(2)
+        with(getSymbol) {
+            val countryName = getCountryName()
+            val flag = CountryFlags.getCountryFlagByCode(this)
+            "$flag  $symbol - $countryName"
         }
     }
 
