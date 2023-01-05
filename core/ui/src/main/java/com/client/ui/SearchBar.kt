@@ -1,6 +1,5 @@
 package com.client.ui
 
-import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -70,7 +69,7 @@ private fun TrailingIcon(
     query: MutableState<TextFieldValue>,
     onClear: () -> Unit
 ) {
-    AnimatedVisibility(visible = true) {
+    AnimatedContent {
         IconButton(onClick = {
             query.value = TextFieldValue()
             onClear()

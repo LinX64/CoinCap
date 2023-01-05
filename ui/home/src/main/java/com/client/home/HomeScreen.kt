@@ -1,14 +1,15 @@
 package com.client.home
 
 import androidx.compose.animation.*
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -51,7 +52,6 @@ internal fun HomeScreen(
     localUiState: HomeLocalUiState,
     navController: NavHostController
 ) {
-    val isLoading = homeUiState is HomeUiState.Loading
     val state = rememberLazyGridState()
 
     TrackScrollJank(
@@ -59,18 +59,7 @@ internal fun HomeScreen(
         stateName = "ui:home:grid"
     )
 
-    if (isLoading) LoadingView()
-
-    val rates = (homeUiState as? HomeUiState.Success)?.rates ?: emptyList()
-    val localRates = (localUiState as? HomeLocalUiState.Success)?.localRates ?: emptyList()
-
-    AnimatedVisibility(
-        visible = !isLoading,
-        enter = slideInVertically() + expandVertically(
-            expandFrom = Alignment.Top
-        ) + fadeIn(initialAlpha = 0.3f),
-        exit = slideOutVertically() + shrinkVertically() + fadeOut()
-    ) {
+    AnimatedContent {
         LazyColumn(
             modifier = modifier
                 .fillMaxSize()
@@ -99,14 +88,21 @@ internal fun HomeScreen(
                 )
             }
             item {
-                LazyRow(modifier = modifier.fillMaxWidth()) {
-                    items(localRates.size) {
-                        val localRate = localRates[it]
-                        LocalCurrencyItem(
-                            localRate = localRate,
-                            onClick = {}
-                        )
+                when (localUiState) {
+                    is HomeLocalUiState.Loading -> ShimmerLocalHomeItems()
+                    is HomeLocalUiState.Success -> {
+                        val localRates = localUiState.localRates
+                        LazyRow(modifier = modifier.fillMaxWidth()) {
+                            items(localRates.size) {
+                                val localRate = localRates[it]
+                                LocalCurrencyItem(
+                                    localRate = localRate,
+                                    onClick = {}
+                                )
+                            }
+                        }
                     }
+                    else -> Unit
                 }
             }
             item {
@@ -125,20 +121,66 @@ internal fun HomeScreen(
                     color = MaterialTheme.colorScheme.outline
                 )
             }
-            items(rates.size) {
-                val rate = rates[it]
-                Column(modifier = modifier.fillMaxWidth()) {
-                    CryptoCurrencyItem(
-                        rate = rate.rateUsd,
-                        symbol = rate.symbol,
-                        dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
-                    ) { navController.navigateToDetail(rate.id) }
+            item {
+                when (homeUiState) {
+                    is HomeUiState.Loading -> ShimmerHomeItems()
+                    is HomeUiState.Success -> {
+                        val rates = homeUiState.rates
+                        rates.forEach { rate ->
+                            Column(modifier = modifier.fillMaxWidth()) {
+                                CryptoCurrencyItem(
+                                    rate = rate.rateUsd,
+                                    symbol = rate.symbol,
+                                    dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
+                                ) { navController.navigateToDetail(rate.id) }
+                            }
+                        }
+                    }
+                    else -> Unit
                 }
             }
         }
     }
+
     if (homeUiState is HomeUiState.Error) {
         ErrorView(errorMessage = "No data found!")
+    }
+}
+
+@Composable
+fun ShimmerLocalHomeItems() {
+    LazyRow(modifier = Modifier.fillMaxWidth()) {
+        items(10) {
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(5.dp)
+                    .width(120.dp)
+                    .height(135.dp)
+                    .background(
+                        brush = shimmerLoadingEffect(),
+                        shape = RoundedCornerShape(4.dp),
+                    )
+            )
+        }
+    }
+}
+
+@Composable
+fun ShimmerHomeItems() {
+    Column {
+        repeat(10) {
+            Spacer(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 2.dp)
+                    .height(60.dp)
+                    .background(
+                        brush = shimmerLoadingEffect(),
+                        shape = RoundedCornerShape(4.dp),
+                    )
+            )
+        }
     }
 }
 
@@ -166,6 +208,16 @@ fun HomeScreenErrorPreview() {
         localUiState = HomeLocalUiState.Success(
             localRates = localRates()
         ),
+        navController = rememberNavController()
+    )
+}
+
+@Preview
+@Composable
+fun ShimmerLoadingPreview() {
+    HomeScreen(
+        homeUiState = HomeUiState.Loading,
+        localUiState = HomeLocalUiState.Loading,
         navController = rememberNavController()
     )
 }
