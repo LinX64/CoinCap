@@ -8,7 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun RowScope.NiaNavigationBarItem(
+fun RowScope.NavigationBarItem(
     selected: Boolean,
     onClick: () -> Unit,
     icon: @Composable () -> Unit,
@@ -18,7 +18,7 @@ fun RowScope.NiaNavigationBarItem(
     label: @Composable (() -> Unit)? = null,
     alwaysShowLabel: Boolean = true
 ) {
-    NavigationBarItem(
+    this@NavigationBarItem.NavigationBarItem(
         selected = selected,
         onClick = onClick,
         icon = if (selected) selectedIcon else icon,

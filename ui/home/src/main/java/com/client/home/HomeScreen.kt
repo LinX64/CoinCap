@@ -1,5 +1,6 @@
 package com.client.home
 
+import androidx.compose.animation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -7,6 +8,7 @@ import androidx.compose.foundation.lazy.grid.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
@@ -52,84 +54,91 @@ internal fun HomeScreen(
     val isLoading = homeUiState is HomeUiState.Loading
     val state = rememberLazyGridState()
 
-    com.client.ui.TrackScrollJank(
+    TrackScrollJank(
         scrollableState = state,
         stateName = "ui:home:grid"
     )
 
-    if (isLoading) com.client.ui.LoadingView()
+    if (isLoading) LoadingView()
 
     val rates = (homeUiState as? HomeUiState.Success)?.rates ?: emptyList()
     val localRates = (localUiState as? HomeLocalUiState.Success)?.localRates ?: emptyList()
 
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .padding(8.dp)
-            .testTag("ui:home:list")
+    AnimatedVisibility(
+        visible = !isLoading,
+        enter = slideInVertically() + expandVertically(
+            expandFrom = Alignment.Top
+        ) + fadeIn(initialAlpha = 0.3f),
+        exit = slideOutVertically() + shrinkVertically() + fadeOut()
     ) {
-        item { Header() }
-        item {
-            Spacer(modifier = Modifier.height(8.dp))
-        }
-        item {
-            Text(
-                text = stringResource(R.string.iranian_rial_title),
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(start = 5.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = stringResource(R.string.iranian_rial_subtitle),
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(start = 5.dp, bottom = 8.dp),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
-            )
-        }
-        item {
-            LazyRow(modifier = modifier.fillMaxWidth()) {
-                items(localRates.size) {
-                    val localRate = localRates[it]
-                    LocalCurrencyItem(
-                        localRate = localRate,
-                        onClick = {}
-                    )
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(8.dp)
+                .testTag("ui:home:list")
+        ) {
+            item { Header() }
+            item {
+                Spacer(modifier = Modifier.height(8.dp))
+            }
+            item {
+                Text(
+                    text = stringResource(R.string.iranian_rial_title),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(start = 5.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = stringResource(R.string.iranian_rial_subtitle),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(start = 5.dp, bottom = 8.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
+            item {
+                LazyRow(modifier = modifier.fillMaxWidth()) {
+                    items(localRates.size) {
+                        val localRate = localRates[it]
+                        LocalCurrencyItem(
+                            localRate = localRate,
+                            onClick = {}
+                        )
+                    }
+                }
+            }
+            item {
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+            item {
+                Text(
+                    text = stringResource(id = R.string.top_crypto_currencies),
+                    modifier = modifier.padding(start = 5.dp),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Text(
+                    text = stringResource(R.string.up_to_date_data),
+                    modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
+                    style = MaterialTheme.typography.bodySmall,
+                    color = MaterialTheme.colorScheme.outline
+                )
+            }
+            items(rates.size) {
+                val rate = rates[it]
+                Column(modifier = modifier.fillMaxWidth()) {
+                    CryptoCurrencyItem(
+                        rate = rate.rateUsd,
+                        symbol = rate.symbol,
+                        dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
+                    ) { navController.navigateToDetail(rate.id) }
                 }
             }
         }
-        item {
-            Spacer(modifier = Modifier.height(10.dp))
-        }
-        item {
-            Text(
-                text = stringResource(id = R.string.top_crypto_currencies),
-                modifier = modifier.padding(start = 5.dp),
-                style = MaterialTheme.typography.titleMedium
-            )
-            Text(
-                text = stringResource(R.string.up_to_date_data),
-                modifier = modifier.padding(start = 5.dp, bottom = 10.dp),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.outline
-            )
-        }
-        items(rates.size) {
-            val rate = rates[it]
-            Column(modifier = modifier.fillMaxWidth()) {
-                com.client.ui.CryptoCurrencyItem(
-                    rate = rate.rateUsd,
-                    symbol = rate.symbol,
-                    dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
-                ) { navController.navigateToDetail(rate.id) }
-            }
-        }
     }
-
     if (homeUiState is HomeUiState.Error) {
-        com.client.ui.ErrorView(errorMessage = "No data found!")
+        ErrorView(errorMessage = "No data found!")
     }
 }
 

@@ -20,7 +20,7 @@ import com.client.coincap.navigation.NavHost
 import com.client.coincap.navigation.TabsDestinations
 import com.client.common.util.NavRoutes
 import com.client.data.util.NetworkMonitor
-import com.client.designsystem.component.NiaNavigationBarItem
+import com.client.designsystem.component.NavigationBarItem
 import com.client.designsystem.icon.Icon
 
 @OptIn(
@@ -41,34 +41,36 @@ fun CoinCapApp(
     val currentDestination = appState.currentDestination
     val destination = appState.currentTopLevelDestination
     val isDestinationSearch = currentDestination?.route == NavRoutes.searchRoute
+    val isDestinationDetail = currentDestination?.route == NavRoutes.coinDetailsRoute
 
     Scaffold(
         contentColor = MaterialTheme.colorScheme.onBackground,
         snackbarHost = { SnackbarHost(snackBarHostState) },
         bottomBar = {
-            NiaBottomBar(
+            BottomBar(
                 destinations = appState.topLevelDestinations,
                 onNavigateToDestination = appState::navigateToSpecificDestination,
-                currentDestination = appState.currentDestination,
-                modifier = Modifier.testTag("home:botttomBar")
+                currentDestination = currentDestination,
+                modifier = Modifier.testTag("home:bottomBar")
             )
         },
         contentWindowInsets = WindowInsets(0, 0, 0, 0)
     ) { padding ->
-
         Column(Modifier.fillMaxSize()) {
-            if (destination != null && !isDestinationSearch) {
-                TopAppBar(
-                    title = destination.titleTextId,
-                    navController = appState.navController,
-                    destination = currentDestination
-                )
-            } else {
-                TopAppBar(
-                    title = R.string.detail,
-                    navController = appState.navController,
-                    destination = currentDestination
-                )
+            when {
+                destination != null && !isDestinationSearch -> {
+                    TopAppBar(
+                        title = destination.titleTextId,
+                        navController = appState.navController,
+                        destination = currentDestination
+                    )
+                }
+                isDestinationDetail -> {
+                    TopAppBar(
+                        navController = appState.navController,
+                        destination = currentDestination
+                    )
+                }
             }
 
             AppNavigation(
@@ -90,7 +92,7 @@ fun CoinCapApp(
 }
 
 @Composable
-private fun NiaBottomBar(
+private fun BottomBar(
     destinations: List<TabsDestinations>,
     onNavigateToDestination: (TabsDestinations) -> Unit,
     currentDestination: NavDestination?,
@@ -101,7 +103,7 @@ private fun NiaBottomBar(
     ) {
         destinations.forEach { destination ->
             val selected = currentDestination.isTopLevelDestinationInHierarchy(destination)
-            NiaNavigationBarItem(
+            NavigationBarItem(
                 selected = selected,
                 onClick = { onNavigateToDestination(destination) },
                 icon = {
