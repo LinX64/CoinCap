@@ -17,13 +17,13 @@ fun ResultText(
 ) {
     Text(
         text = "Result",
-        modifier = Modifier.fillMaxWidth(),
+        modifier = modifier.fillMaxWidth(),
         textAlign = TextAlign.Center
     )
 
     Text(
         text = result,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(8.dp),
         textAlign = TextAlign.Center,
