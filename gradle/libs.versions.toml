@@ -42,7 +42,7 @@ protobufPlugin = "0.8.19"
 
 retrofit = "2.9.0"
 okhttp = "4.10.0"
-gson = "2.10"
+gson = "2.10.1"
 gsonConverter = "2.9.0"
 
 room = "2.5.0-rc01"
