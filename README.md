@@ -18,7 +18,9 @@ an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions
 - Material 3
 - Compose Navigation
 
-### Screenshots
+### Showcase
+
+https://user-images.githubusercontent.com/15968667/210910446-79249585-3c54-451f-a310-b32088a35313.mp4
 
 <p>
 <img src="https://i.imgur.com/4hQXpR2.png" height="420" />
@@ -30,7 +32,7 @@ an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions
 ### Architecture
 
 I've tried to follow the best practices from Google's official
-repository [nowInAndroid](https://github.com/android/nowinandroid), and used Modularization to make
+repository [NowInAndroid](https://github.com/android/nowinandroid), and used Modularization to make
 the app is more scalable and maintainable.
 
 ### Modules
@@ -120,7 +122,6 @@ Please see: https://detekt.dev/docs/rules/formatting
 ### TODO
 
 - Add Offline first support
-- Fix the search issue with the price (combine two repositories)
-- Tests
+- Unit Tests
 - Get data from Server for LineChart
 - Add more features
