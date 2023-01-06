@@ -87,7 +87,7 @@ class HomeScreenTest {
                     )
                 }
             }
-            onAllNodesWithTag("ui:localCurrency").assertCountEquals(4)
+            onAllNodesWithTag("ui:localCurrency").assertCountEquals(3)
         }
     }
 
