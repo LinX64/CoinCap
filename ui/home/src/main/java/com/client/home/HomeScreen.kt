@@ -159,9 +159,11 @@ private fun MainContent(
 
 @Composable
 fun ShimmerLocalHomeItems() {
-    LazyRow(modifier = Modifier
-        .fillMaxWidth()
-        .testTag("ui:home:shimmer")) {
+    LazyRow(
+        modifier = Modifier
+            .fillMaxWidth()
+            .testTag("ui:home:shimmer")
+    ) {
         items(10) {
             Spacer(
                 modifier = Modifier
