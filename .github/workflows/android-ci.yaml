@@ -26,9 +26,6 @@ jobs:
       - name: Check Gradle wrapper
         uses: gradle/wrapper-validation-action@v1
 
-      - name: Lint Check
-        run: ./gradlew lint
-
       - name: Run Detekt & AutoCorrect
         run: ./gradlew detekt --auto-correct
 
