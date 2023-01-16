@@ -56,7 +56,6 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Run instrumented tests with GMD
-        continue-on-error: true
         run: ./gradlew cleanManagedDevices --unused-only && ./gradlew connectedDebugAndroidTest -Dorg.gradle.workers.max=1  -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true --info
 
       - name: Upload test reports
