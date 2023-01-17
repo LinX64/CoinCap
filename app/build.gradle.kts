@@ -48,10 +48,10 @@ android {
         }
         managedDevices {
             devices {
-                maybeCreate<ManagedVirtualDevice>("pixel4api30").apply {
-                    device = "Pixel 4"
-                    apiLevel = 30
-                    systemImageSource = "aosp-atd"
+                maybeCreate<ManagedVirtualDevice>("pixel6api31").apply {
+                    device = "Pixel 6"
+                    apiLevel = 31
+                    systemImageSource = "aosp"
                 }
             }
         }
