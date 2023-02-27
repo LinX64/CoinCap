@@ -35,7 +35,7 @@ kotlinxCoroutines = "1.6.4"
 kotlinxDatetime = "0.4.0"
 kotlinxSerializationJson = "1.4.1"
 ksp = "1.7.21-1.0.8"
-lint = "30.4.1"
+lint = "30.4.2"
 
 protobuf = "3.21.12"
 protobufPlugin = "0.8.19"
