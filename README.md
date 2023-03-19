@@ -6,7 +6,7 @@ Coroutines, Flow, Hilt, Coil, etc.
 This project is using Material 3 components, as well as the Compose navigation library. It also has
 an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions).
 
-### Tech Stack
+### Libraries and Tools
 
 - Jetpack Compose
 - Hilt
@@ -31,9 +31,9 @@ https://user-images.githubusercontent.com/15968667/210910446-79249585-3c54-451f-
 
 ### Architecture
 
-I've tried to follow the best practices from Google's official
+I've used the best practices from Google's official
 repository [NowInAndroid](https://github.com/android/nowinandroid), and used Modularization to make
-the app is more scalable and maintainable.
+the app more scalable and maintainable.
 
 ### Modules
 
@@ -42,10 +42,10 @@ the app is more scalable and maintainable.
 ### Features
 
 1. The logic behind searching is to get the data only after the last character is entered (using
-   flatMapLatest() flow operator).
+   `flatMapLatest()` flow operator).
 2. For the home screen, I am planning to get some data from the server for showing on the LineChart,
    but for now, I am using dummy data.
-3. Unfortunately, the API doesn't provide the data for the LineChart, so I am using dummy data for
+3. Unfortunately, the API doesn't provide the data for the `LineChart`, so I am using dummy data for
    now.
 4. Iran (my home country) has been facing inflation for the last decade, and surprisingly, because
    of protests and the lack of management, the inflation rate is increasing day by day. So, I took
@@ -93,7 +93,7 @@ different format, something like this format:
 It was pretty hard to deserialize the data, so I had to write a custom deserializer for it. The
 deserializer is basically converting all those three objects into a list of [LocalRate] objects. Here you can find the deserializer: [CurrencyDeserializer](https://github.com/LinX64/CoinCap/blob/master/core/data/src/main/java/com/client/data/util/CurrencyDeserializer.kt)
 
-I am sure this is one of the major problems that all Android developers may face while using GSON and Retrofit, so I hope this will help you.
+I am sure this is one of the major problems that all Android developers might face while using `GSON` and `Retrofit`, so I hope this will help you.
 
 ### API
 
