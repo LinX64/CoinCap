@@ -1,4 +1,3 @@
-import com.android.build.api.dsl.ManagedVirtualDevice
 import com.client.coincap.CoinCapBuildType
 
 plugins {
@@ -46,21 +45,6 @@ android {
         unitTests {
             isIncludeAndroidResources = true
         }
-        managedDevices {
-            devices {
-                maybeCreate<ManagedVirtualDevice>("pixel6api31").apply {
-                    device = "Pixel 6"
-                    apiLevel = 31
-                    systemImageSource = "aosp"
-                }
-            }
-        }
-        /**
-         * TODO: Add more devices once available, also consider adding this
-         * as a convention plugin in the future (once Flamingo is released)
-         *
-         * @see https://developer.android.com/studio/test/gradle-managed-devices?authuser=1#create_a_gradle_managed_device
-         */
     }
 }
 

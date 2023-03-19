@@ -1,4 +1,6 @@
+
 import com.android.build.api.dsl.ApplicationExtension
+import com.client.coincap.configureGradleManagedDevices
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.getByType
@@ -9,6 +11,7 @@ class AndroidApplicationComposeConventionPlugin : Plugin<Project> {
             pluginManager.apply("com.android.application")
             val extension = extensions.getByType<ApplicationExtension>()
             configureAndroidCompose(extension)
+            configureGradleManagedDevices(extension)
         }
     }
 }
