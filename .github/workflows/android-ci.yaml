@@ -48,6 +48,10 @@ jobs:
     needs: check
     name: Instrumented tests
     runs-on: macOS-12
+    strategy:
+      matrix:
+        device-config: [ "pixel_6api31aosp" ]
+
     steps:
       - uses: actions/setup-java@v3
         with:
@@ -60,8 +64,8 @@ jobs:
 
       - name: Run instrumented tests with GMD
         run: ./gradlew cleanManagedDevices --unused-only &&
-          ./gradlew pixel6api31debugAndroidTest -Dorg.gradle.workers.max=1
-          -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true --info
+          ./gradlew ${{ matrix.device-config }}debugAndroidTest -Dorg.gradle.workers.max=1
+          -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
 
       - name: Upload test reports
         if: always()

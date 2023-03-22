@@ -52,7 +52,6 @@ class HomeScreenTest {
                         localUiState = HomeLocalUiState.Success(emptyList()),
                         navController = rememberNavController()
                     )
-
                 }
             }
             onNodeWithTag("ui:home:shimmer").assertDoesNotExist()
@@ -87,7 +86,7 @@ class HomeScreenTest {
                     )
                 }
             }
-            onAllNodesWithTag("ui:localCurrency").assertCountEquals(3)
+            onAllNodesWithTag("ui:localCurrency").assertCountEquals(4)
         }
     }
 

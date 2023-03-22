@@ -1,4 +1,6 @@
+
 import com.android.build.gradle.LibraryExtension
+import com.client.coincap.configureGradleManagedDevices
 import com.client.coincap.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -19,6 +21,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
                 defaultConfig.targetSdk = 33
+                configureGradleManagedDevices(this)
             }
             val libs = extensions.getByType<VersionCatalogsExtension>().named("libs")
             configurations.configureEach {
