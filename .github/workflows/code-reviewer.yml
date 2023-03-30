@@ -18,4 +18,4 @@ jobs:
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           LANGUAGE: English
           top_p: 1
-          temperature: 5
+          temperature: 1
