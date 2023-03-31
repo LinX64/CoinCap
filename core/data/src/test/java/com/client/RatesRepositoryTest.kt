@@ -9,14 +9,17 @@ import com.client.util.rateDetailRespStub
 import com.client.util.ratesResponseStub
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.runTest
 import org.amshove.kluent.shouldBeEqualTo
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.Mockito.mock
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.*
+import org.mockito.kotlin.verify
+import org.mockito.kotlin.whenever
 
 @RunWith(MockitoJUnitRunner::class)
 class RatesRepositoryTest {
@@ -65,6 +68,7 @@ class RatesRepositoryTest {
 
             assertEquals(10, emissions.size)
 
+            emissions.clear()
             job.cancel()
         }
 
