@@ -1,6 +1,11 @@
 package com.client.detail
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -10,7 +15,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.client.common.util.capitalize
 import com.client.data.model.Rate
@@ -21,7 +25,6 @@ import com.client.ui.DevicePreviews
 import com.client.ui.ErrorView
 import com.client.ui.ProgressBar
 
-@OptIn(ExperimentalLifecycleComposeApi::class)
 @Composable
 internal fun DetailRoute(
     viewModel: DetailViewModel = hiltViewModel()

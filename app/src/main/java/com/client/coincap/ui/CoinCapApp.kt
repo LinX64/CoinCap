@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavDestination
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -23,10 +22,7 @@ import com.client.data.util.NetworkMonitor
 import com.client.designsystem.component.NavigationBarItem
 import com.client.designsystem.icon.Icon
 
-@OptIn(
-    ExperimentalMaterial3Api::class,
-    ExperimentalLifecycleComposeApi::class
-)
+@OptIn(ExperimentalMaterial3Api::class,)
 @Composable
 fun CoinCapApp(
     networkMonitor: NetworkMonitor,
