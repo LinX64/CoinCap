@@ -22,4 +22,12 @@ dependencies {
     implementation(libs.gson.core)
     implementation(libs.gson.converter)
     implementation(libs.okhttp.logging)
+
+    testImplementation(libs.junit4)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.mockito.kotlin)
+    testImplementation(libs.mockito.inline)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.kluent)
+    testImplementation(libs.turbine)
 }

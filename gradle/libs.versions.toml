@@ -1,13 +1,13 @@
 [versions]
-accompanist = "0.28.0"
+accompanist = "0.30.0"
 androidDesugarJdkLibs = "2.0.3"
 androidGradlePlugin = "7.4.2"
-androidxActivity = "1.6.1"
+androidxActivity = "1.7.0"
 androidxAppCompat = "1.6.1"
 androidxBrowser = "1.4.0"
-androidxComposeBom = "2023.01.00"
+androidxComposeBom = "2023.03.00"
 androidxComposeCompiler = "1.4.0-alpha02"
-androidxComposeRuntimeTracing = "1.0.0-alpha01"
+androidxComposeRuntimeTracing = "1.0.0-alpha03"
 androidxCore = "1.9.0"
 androidxCoreSplashscreen = "1.0.0"
 androidxDataStore = "1.0.0"
@@ -25,7 +25,7 @@ androidxTestRules = "1.5.0"
 androidxTracing = "1.1.0"
 androidxUiAutomator = "2.2.0"
 androidxWork = "2.8.1"
-coil = "2.2.2"
+coil = "2.3.0"
 hilt = "2.45"
 hiltExt = "1.0.0"
 jacoco = "0.8.7"
@@ -48,6 +48,9 @@ gsonConverter = "2.9.0"
 room = "2.5.1"
 detekt = "1.22.0"
 turbine = "0.12.3"
+mockito = "5.2.0"
+mockitoKotlin = "4.1.0"
+kluent = "1.72"
 
 [libraries]
 accompanist-flowlayout = { group = "com.google.accompanist", name = "accompanist-flowlayout", version.ref = "accompanist" }
@@ -110,6 +113,11 @@ kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-cor
 kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
 lint-api = { group = "com.android.tools.lint", name = "lint-api", version.ref = "lint" }
 turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+mockito-core = { group = "org.mockito", name = "mockito-core", version.ref = "mockito" }
+mockito-inline = { group = "org.mockito", name = "mockito-inline", version.ref = "mockito" }
+mockito-android = { group = "org.mockito", name = "mockito-android", version.ref = "mockito" }
+mockito-kotlin = { group = "org.mockito.kotlin", name = "mockito-kotlin", version.ref = "mockitoKotlin" }
+kluent = { group = "org.amshove.kluent", name = "kluent", version.ref = "kluent" }
 
 # Retrofit
 retrofit-core = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
