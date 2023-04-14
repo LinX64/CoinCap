@@ -6,7 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import com.client.common.util.NavRoutes
-import com.client.search.SearchRoute
+import com.client.search.SearchScreenRoute
 
 const val searchNavigationRoute = NavRoutes.searchRoute
 
@@ -16,6 +16,6 @@ fun NavController.navigateToSearch(navOptions: NavOptions? = null) {
 
 fun NavGraphBuilder.searchScreen(navController: NavHostController) {
     composable(route = searchNavigationRoute) {
-        SearchRoute(navController = navController)
+        SearchScreenRoute(navController = navController)
     }
 }
