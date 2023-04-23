@@ -47,7 +47,7 @@ jobs:
   androidTest:
     needs: check
     name: Instrumented tests
-    runs-on: macOS-12
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         device-config: [ "pixel_6api31aosp" ]
@@ -61,6 +61,21 @@ jobs:
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v2
+
+      - name: Install KVM
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y qemu-kvm libvirt-daemon-system libvirt-clients bridge-utils virt-manager
+          sudo adduser $USER libvirt
+          sudo adduser $USER kvm
+
+      - name: Load KVM module and set permissions on /dev/kvm
+        run: |
+          sudo modprobe kvm
+          sudo modprobe kvm_amd 
+          sudo chmod 666 /dev/kvm
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
 
       - name: Run instrumented tests with GMD
         run: ./gradlew cleanManagedDevices --unused-only &&
