@@ -41,7 +41,7 @@ protobuf = "3.21.12"
 protobufPlugin = "0.8.19"
 
 retrofit = "2.9.0"
-okhttp = "4.10.0"
+okhttp = "4.11.0"
 gson = "2.10.1"
 gsonConverter = "2.9.0"
 
