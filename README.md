@@ -22,6 +22,9 @@ an integrated Static Analysis tool (Detekt) and CI/CD pipeline (Github Actions +
 
 - I've used GitHub Actions, and Bitrise just to see different results from different platforms, and so far, IMO, GitHub Actions is nicer, Bitrise already has everything but I'd like to have some flexilibty and write some scripts :)
 
+
+Test for bitrise
+
 ### Showcase
 
 https://user-images.githubusercontent.com/15968667/210910446-79249585-3c54-451f-a310-b32088a35313.mp4
