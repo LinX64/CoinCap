@@ -7,6 +7,7 @@ androidxAppCompat = "1.6.1"
 androidxBrowser = "1.4.0"
 androidxComposeBom = "2023.04.01"
 androidxComposeCompiler = "1.4.0-alpha02"
+androidxComposeMaterial3 = "1.1.0-alpha06"
 androidxComposeRuntimeTracing = "1.0.0-alpha03"
 androidxCore = "1.9.0"
 androidxCoreSplashscreen = "1.0.1"
@@ -25,6 +26,7 @@ androidxTestRules = "1.5.0"
 androidxTracing = "1.1.0"
 androidxUiAutomator = "2.2.0"
 androidxWork = "2.8.1"
+material3 = "1.6.0"
 coil = "2.3.0"
 hilt = "2.45"
 hiltExt = "1.0.0"
@@ -65,7 +67,7 @@ androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", versi
 androidx-compose-foundation = { group = "androidx.compose.foundation", name = "foundation" }
 androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout" }
 androidx-compose-material-iconsExtended = { group = "androidx.compose.material", name = "material-icons-extended" }
-androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3", version.ref = "androidxComposeMaterial3" }
 androidx-compose-material3-windowSizeClass = {group = "androidx.compose.material3", name = "material3-window-size-class" }
 androidx-compose-runtime = { group = "androidx.compose.runtime", name = "runtime" }
 androidx-compose-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata" }

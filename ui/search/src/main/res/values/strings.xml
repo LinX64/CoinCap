@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="no_results">No results found!</string>
-    <string name="search_body_desc">Search for a Crypto or currency...</string>
+    <string name="search_body_desc">Search for a Crypto or currency…</string>
     <string name="search_body_expl">Example: Bitcoin, Ethereum, USD, EUR, etc.</string>
+    <string name="search">Search…</string>
 </resources>

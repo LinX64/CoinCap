@@ -133,7 +133,7 @@ fun AppNavigation(appState: CoinCapState, padding: PaddingValues) {
         navController = appState.navController,
         modifier = Modifier
             .padding(padding)
-            .consumedWindowInsets(padding),
+            .consumeWindowInsets(padding)
     )
 }
 
