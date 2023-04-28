@@ -4,7 +4,7 @@ Best practice (Modularization) - built entirely with Jetpack Compose and cutting
 Coroutines, Flow, Hilt, Coil, etc.
 
 This project is using Material 3 components, as well as the Compose navigation library. It also has
-an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions).
+an integrated Static Analysis tool (Detekt) and CI/CD pipeline (Github Actions + Bitrise).
 
 ### Libraries and Tools
 
@@ -17,6 +17,10 @@ an integrated Static Analysis tool (Detekt) and a CI/CD pipeline (Github Actions
 - GitHub Actions
 - Material 3
 - Compose Navigation
+
+#### CI/CD
+
+- I've used GitHub Actions, and Bitrise just to see different results from different platforms, and so far, IMO, GitHub Actions is nicer, Bitrise already has everything but I'd like to have some flexilibty and write some scripts :)
 
 ### Showcase
 
