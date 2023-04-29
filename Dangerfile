@@ -1,6 +1,6 @@
 ticket_pattern = '^[iI]3-\d{3}$'
 diff = git.diff_for_file("file/path")
-lines_changed = diff.patch.split("\n").count { |line| line.start_with?("+", "-") }
+lines_changed = diff&.patch&.split("\n")&.count { |line| line.start_with?("+", "-") } || 0
 
 if github.pr_author
     message "Thanks @#{github.pr_author} for your contribution! 😊"
