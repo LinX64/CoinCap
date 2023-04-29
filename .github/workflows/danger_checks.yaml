@@ -18,11 +18,10 @@ jobs:
       - name: Set Up Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.6
+          ruby-version: 3.2.2
 
       - name: Danger Checks
         run: |
-          ./gradlew dependencyUpdates
           gem install bundler
           bundle install
           bundle exec danger
