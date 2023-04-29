@@ -22,15 +22,15 @@ if git.modified_files.length > 15
     warn "Please consider splitting this PR into multiple smaller ones."
 end
 
-if git.title.length > 80
+if github.pr_title.length > 80
     fail "Please keep the title under 80 characters."
 end
 
-if git.title[0] != git.title[0].capitalize
+if github.pr_title[0] != github.pr_title[0].capitalize
     fail "Please capitalize the title."
 end
 
-if git.title !~ /#{ticket_pattern}/
+if github.pr_title !~ /#{ticket_pattern}/
     fail "Please add a ticket number to the title."
 end
 
