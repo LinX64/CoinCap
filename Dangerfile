@@ -1,3 +1,5 @@
+reviewers = github.pull_request.requested_reviewers
+
 message "Thanks @#{github.pr_author} for your contribution! 😊"
 
 ticket_pattern = /^[iI]3-\d{3}$/
@@ -18,7 +20,7 @@ if git.modified_files.length > 15
     warn "Please consider splitting this PR into multiple smaller ones."
 end
 
-if git.requested_reviewers.length == 0
+if reviewers.empty?
     warn "Please add at least one reviewer to this PR."
 end
 
