@@ -1,8 +1,20 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     `kotlin-dsl`
 }
 
 group = "com.client.coincap.buildlogic"
+
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_11.toString()
+    }
+}
+
+kotlin {
+    jvmToolchain(11)
+}
 
 dependencies {
     compileOnly(libs.android.gradlePlugin)

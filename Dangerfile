@@ -1,4 +1,4 @@
-ticket_pattern = '^[iI]3-\d{3}$'
+ticket_pattern = '\b[iI]3[0-9]{2}\b'
 diff = git.diff_for_file("file/path")
 lines_changed = diff&.patch&.split("\n")&.count { |line| line.start_with?("+", "-") } || 0
 
