@@ -1,5 +1,7 @@
 # CoinCap
 
+## Unfortunately, the APIs that I was using are not available at the moment. I'll try to find new APIs for this project.
+
 Best practice (Modularization) - built entirely with Jetpack Compose and cutting-edge libraries like
 Coroutines, Flow, Hilt, Coil, etc.
 
