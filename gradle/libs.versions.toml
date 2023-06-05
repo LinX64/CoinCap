@@ -51,7 +51,7 @@ room = "2.5.1"
 detekt = "1.22.0"
 turbine = "0.13.0"
 mockito = "5.2.0"
-mockitoKotlin = "4.1.0"
+mockitoKotlin = "5.0.0"
 kluent = "1.73"
 
 [libraries]
