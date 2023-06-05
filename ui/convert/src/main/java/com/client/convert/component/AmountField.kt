@@ -20,6 +20,7 @@ fun AmountField(
     maxLength: Int = 10,
 ) {
     var amount by remember { mutableStateOf("") }
+    val containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
     TextField(
         modifier = modifier.fillMaxWidth(),
         value = amount,
@@ -37,11 +38,12 @@ fun AmountField(
             imeAction = ImeAction.Done
         ),
         singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
-            textColor = Color.Gray,
+        colors = TextFieldDefaults.colors(
+            focusedContainerColor = containerColor,
+            unfocusedContainerColor = containerColor,
+            disabledContainerColor = containerColor,
             focusedIndicatorColor = Color.Transparent,
             unfocusedIndicatorColor = Color.Transparent,
-            containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
         )
     )
     // TODO: Use VisualTransformation to format the amount
