@@ -22,11 +22,7 @@ an integrated Static Analysis tool (Detekt) and CI/CD pipeline (Github Actions +
 
 #### CI/CD
 
-- I've used GitHub Actions, and Bitrise just to see different results from different platforms, and so far, IMO, GitHub Actions is nicer, Bitrise already has everything but I'd like to have some flexilibty and write some scripts :)
-
-
-#### Danger
-I'm using [Danger](https://github.com/danger/kotlin) on this project to automatically give me some ideas and auto checks for pull requests, in case I might be missing something.
+- I've used GitHub Actions, and Bitrise just to see different results from different platforms, and so far, IMO, GitHub Actions is nicer, Bitrise already has everything but I'd like to have some flexibility and write some scripts :)
 
 ### Showcase
 
