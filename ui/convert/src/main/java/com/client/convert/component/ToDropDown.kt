@@ -54,12 +54,10 @@ private fun SuccessState(
             onValueChange = {},
             trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
             colors = ExposedDropdownMenuDefaults.textFieldColors(
-                textColor = Color.Gray,
                 disabledTextColor = Color.Transparent,
                 focusedIndicatorColor = Color.Transparent,
                 unfocusedIndicatorColor = Color.Transparent,
                 disabledIndicatorColor = Color.Transparent,
-                containerColor = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f)
             ),
             singleLine = true
         )
