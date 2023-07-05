@@ -47,7 +47,7 @@ okhttp = "4.11.0"
 gson = "2.10.1"
 gsonConverter = "2.9.0"
 
-room = "2.5.1"
+room = "2.5.2"
 detekt = "1.22.0"
 turbine = "0.13.0"
 mockito = "5.2.0"
