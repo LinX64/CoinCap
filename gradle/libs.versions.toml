@@ -50,7 +50,7 @@ gsonConverter = "2.9.0"
 room = "2.5.2"
 detekt = "1.22.0"
 turbine = "1.0.0"
-mockito = "5.2.0"
+mockito = "5.4.0"
 mockitoKotlin = "5.0.0"
 kluent = "1.73"
 
