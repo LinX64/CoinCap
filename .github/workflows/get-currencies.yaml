@@ -1,0 +1,34 @@
+name: Get Currencies
+
+# This workflow is triggered on a schedule
+# (e.g., daily at 00:00 UTC).
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  update-currencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.9'
+
+      - name: Install Bonbast
+        run: pip install -U bonbast
+
+      - name: Export Currencies Data to JSON
+        run: python -m bonbast export --pretty > currencies.json && cat currencies.json
+
+      - name: Commit and Push
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add currencies.json
+          git commit -m "Update currencies data"
+          git push
