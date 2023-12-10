@@ -24,6 +24,8 @@ jobs:
 
       - name: Export Currencies Data to JSON
         run: python -m bonbast export --pretty > currencies.json && cat currencies.json
+        with:
+          max-attempts: 3
 
       - name: Commit and Push
         run: |
