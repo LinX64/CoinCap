@@ -1,8 +1,10 @@
 name: Get Currencies
 
-# This workflow is triggered on pushes to the master branch
+# This workflow is triggered on cron schedule
+# every 5 minutes
 on:
-  pull_request:
+  schedule:
+    - cron: '*/5 * * * *'
 
 jobs:
   update-currencies:
