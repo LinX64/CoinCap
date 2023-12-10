@@ -14,6 +14,8 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
+        with:
+          ref: master
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -25,6 +27,9 @@ jobs:
 
       - name: Export Currencies Data to JSON
         run: python -m bonbast export --pretty > currencies.json && cat currencies.json
+        with:
+          timeout-minutes: 5
+          max-attempts: 3
 
       - name: Commit and Push
         run: |
@@ -32,4 +37,4 @@ jobs:
           git config --local user.name "GitHub Action"
           git add currencies.json
           git commit -m "Update currencies data"
-          git push
+          git push origin HEAD:${GITHUB_REF#refs/heads/} 
