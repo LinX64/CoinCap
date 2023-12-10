@@ -3,7 +3,7 @@ package com.client.data.repository.localRates
 import com.client.common.util.CalenderHelper
 import com.client.common.util.Consts
 import com.client.data.model.localRates.LocalRate
-import com.client.data.network.di.BinDispatchers.*
+import com.client.data.network.di.BinDispatchers.IO
 import com.client.data.network.di.Dispatcher
 import com.client.data.retrofit.LocalRatesApi
 import kotlinx.coroutines.CoroutineDispatcher

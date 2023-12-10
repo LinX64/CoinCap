@@ -15,7 +15,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.client.convert.component.*
+import com.client.convert.component.AmountField
+import com.client.convert.component.AmountSection
+import com.client.convert.component.BottomSection
+import com.client.convert.component.ConvertButton
+import com.client.convert.component.FromDropDown
+import com.client.convert.component.Header
+import com.client.convert.component.ResultText
+import com.client.convert.component.ToDropDown
+import com.client.convert.component.ToSection
 import com.client.ui.AnimatedContent
 import com.client.ui.ProgressBar
 import com.client.ui.util.DummyData
