@@ -1,12 +1,10 @@
 # CoinCap
 
-## Unfortunately, the APIs that I was using are not available at the moment. I'll try to find new APIs for this project.
-
 Best practice (Modularization) - built entirely with Jetpack Compose and cutting-edge libraries like
 Coroutines, Flow, Hilt, Coil, etc.
 
 This project is using Material 3 components, as well as the Compose navigation library. It also has
-an integrated Static Analysis tool (Detekt) and CI/CD pipeline (Github Actions + Bitrise).
+an integrated Static Analysis tool (Detekt) and CI/CD pipeline (Github Actions) + web scraping using a python script.
 
 ### Libraries and Tools
 
@@ -22,7 +20,13 @@ an integrated Static Analysis tool (Detekt) and CI/CD pipeline (Github Actions +
 
 #### CI/CD
 
-- I've used GitHub Actions, and Bitrise just to see different results from different platforms, and so far, IMO, GitHub Actions is nicer, Bitrise already has everything but I'd like to have some flexibility and write some scripts :)
+- I've used GitHub Actions, and Bitrise just to see different results from different platforms, and
+  so far, IMO, GitHub Actions is nicer, Bitrise already has everything but I'd like to have some
+  flexibility and write some scripts :)
+
+- There was an issue with the previous local rates API, from bonbast.com which I replaced that with
+  a new strategy. I've used a new script to scrap the data with Github Actions and store it in a
+  file called currencies.json. The script is available in the project.
 
 ### Showcase
 
@@ -97,9 +101,12 @@ different format, something like this format:
 ````
 
 It was pretty hard to deserialize the data, so I had to write a custom deserializer for it. The
-deserializer is basically converting all those three objects into a list of [LocalRate] objects. Here you can find the deserializer: [CurrencyDeserializer](https://github.com/LinX64/CoinCap/blob/master/core/data/src/main/java/com/client/data/util/CurrencyDeserializer.kt)
+deserializer is basically converting all those three objects into a list of [LocalRate] objects.
+Here you can find the
+deserializer: [CurrencyDeserializer](https://github.com/LinX64/CoinCap/blob/master/core/data/src/main/java/com/client/data/util/CurrencyDeserializer.kt)
 
-I am sure this is one of the major problems that all Android developers might face while using `GSON` and `Retrofit`, so I hope this will help you.
+I am sure this is one of the major problems that all Android developers might face while
+using `GSON` and `Retrofit`, so I hope this will help you.
 
 ### API
 
