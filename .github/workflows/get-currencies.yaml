@@ -1,10 +1,10 @@
 name: Get Currencies
 
-# This workflow is triggered on pushes to the master branch
+# This workflow is triggered on cron schedule
+# every 5 minutes
 on:
-  push:
-    branches:
-      - master
+  schedule:
+    - cron: '*/5 * * * *'
 
 jobs:
   update-currencies:
@@ -25,10 +25,11 @@ jobs:
         run: pip install -U bonbast
 
       - name: Export Currencies Data to JSON
-        run: python -m bonbast export --pretty > currencies.json && cat currencies.json
-        with:
-          timeout-minutes: 5
-          max-attempts: 3
+        run: |
+          for i in {1..3}; do
+              bonbast export > currencies.json && break || sleep 10
+          done
+          cat currencies.json
 
       - name: Commit and Push
         run: |
@@ -36,4 +37,6 @@ jobs:
           git config --local user.name "GitHub Action"
           git add currencies.json
           git commit -m "Update currencies data"
-          git push origin HEAD:${GITHUB_REF#refs/heads/} 
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
