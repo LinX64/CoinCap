@@ -31,4 +31,6 @@ jobs:
           git config --local user.name "GitHub Action"
           git add currencies.json
           git commit -m "Update currencies data"
-          git push origin HEAD:${GITHUB_REF#refs/heads/} 
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
