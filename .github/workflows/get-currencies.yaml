@@ -1,10 +1,11 @@
 name: Get Currencies
 
-# This workflow is triggered on a schedule
-# (e.g., daily at 00:00 UTC).
+# This workflow is triggered on pushes to the master branch
 on:
-  schedule:
-    - cron: '0 0 * * *'
+  push:
+    branches:
+      - master
+  pull_request:
 
 jobs:
   update-currencies:
