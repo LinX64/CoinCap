@@ -8,12 +8,12 @@ group = "com.client.coincap.buildlogic"
 
 tasks.withType<KotlinCompile>().configureEach {
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
 kotlin {
-    jvmToolchain(11)
+    jvmToolchain(17)
 }
 
 dependencies {
@@ -28,30 +28,42 @@ gradlePlugin {
             id = "coincap.android.application.compose"
             implementationClass = "AndroidApplicationComposeConventionPlugin"
         }
+
         register("androidApplication") {
             id = "coincap.android.application"
             implementationClass = "AndroidApplicationConventionPlugin"
         }
+
         register("androidLibraryCompose") {
             id = "coincap.android.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
         }
+
         register("androidLibrary") {
             id = "coincap.android.library"
             implementationClass = "AndroidLibraryConventionPlugin"
         }
+
         register("androidFeature") {
             id = "coincap.android.feature"
             implementationClass = "AndroidFeatureConventionPlugin"
         }
+
         register("androidTest") {
             id = "coincap.android.test"
             implementationClass = "AndroidTestConventionPlugin"
         }
+
         register("androidHilt") {
             id = "coincap.android.hilt"
             implementationClass = "AndroidHiltConventionPlugin"
         }
+
+        register("jvmLibrary") {
+            id = "volution.jvm.library"
+            implementationClass = "JvmLibraryConventionPlugin"
+        }
+
         register("kotlinDetekt") {
             id = "coincap.kotlin.detekt"
             implementationClass = "DetektConventionPlugin"
