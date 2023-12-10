@@ -37,7 +37,7 @@ fun CryptoCurrencyItem(
     modifier: Modifier = Modifier,
     rate: String,
     symbol: String,
-    dollarPrice: String,
+    localPrice: String,
     onClick: () -> Unit
 ) {
     Card(
@@ -67,7 +67,7 @@ fun CryptoCurrencyItem(
             ColumnItems(
                 rate = rate,
                 symbol = symbol,
-                dollarPrice = dollarPrice
+                localPrice = localPrice
             )
         }
     }
@@ -77,7 +77,7 @@ fun CryptoCurrencyItem(
 private fun ColumnItems(
     rate: String,
     symbol: String,
-    dollarPrice: String
+    localPrice: String
 ) {
     Column {
         Text(
@@ -121,7 +121,7 @@ private fun ColumnItems(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = "$dollarPrice t",
+            text = "$localPrice t",
             style = MaterialTheme.typography.bodySmall,
             fontWeight = FontWeight.Bold
         )
@@ -134,6 +134,6 @@ fun RateCellPreview() {
     CryptoCurrencyItem(
         rate = "1.0",
         symbol = "BTC",
-        dollarPrice = "695656566"
+        localPrice = "695656566"
     ) {}
 }

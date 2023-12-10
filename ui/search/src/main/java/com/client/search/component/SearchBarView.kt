@@ -129,7 +129,7 @@ private fun LazyGridScope.onboardingView(
                 modifier = Modifier.testTag("search:success"),
                 rate = rate.rateUsd,
                 symbol = rate.symbol,
-                dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
+                localPrice = rate.usdPrice?.formatToPrice() ?: ""
             ) { navController.navigateToDetail(rate.id) }
         }
     }

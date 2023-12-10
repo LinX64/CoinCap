@@ -17,12 +17,29 @@ class CurrencyDeserializer : JsonDeserializer<LocalRateResponse> {
         if (json == null || context == null) throw NullPointerException("Json or context is null!")
 
         val ratesSet = json.asJsonObject.entrySet()
-        val ratesList = ratesSet.map {
-            val name = it.key
-            val sell = it.value.asJsonObject.get("sell").asInt
-            val buy = it.value.asJsonObject.get("buy").asInt
-            LocalRate(name, sell, buy)
-        }
+
+        /**
+         * filter out the rates which don't have sell & buy values
+         * More info: The new way of retrieving the rates is different from the old one.
+         * It returns more currencies (gold's price without sell and buy)
+         */
+        val filteredRatesSet = ratesSet
+            .filter {
+                val rateObject = it.value.asJsonObject
+                rateObject.has("sell") && rateObject.has("buy")
+            }
+        val ratesList = filteredRatesSet
+            .map {
+                val name = it.key
+                val sell = it.value.asJsonObject.get("sell").asInt
+                val buy = it.value.asJsonObject.get("buy").asInt
+
+                LocalRate(
+                    code = name,
+                    sell = sell,
+                    buy = buy
+                )
+            }
         return LocalRateResponse(ratesList)
     }
 }

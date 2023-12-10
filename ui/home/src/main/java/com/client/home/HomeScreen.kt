@@ -1,13 +1,19 @@
 package com.client.home
 
-import androidx.compose.animation.*
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -23,7 +29,12 @@ import com.client.coincap.ui.home.R
 import com.client.common.util.formatToPrice
 import com.client.detail.navigation.navigateToDetail
 import com.client.home.component.Header
-import com.client.ui.*
+import com.client.ui.AnimatedContent
+import com.client.ui.CryptoCurrencyItem
+import com.client.ui.ErrorView
+import com.client.ui.LocalCurrencyItem
+import com.client.ui.TrackScrollJank
+import com.client.ui.shimmerLoading
 import com.client.ui.util.DummyData.localRates
 import com.client.ui.util.DummyData.rates
 
@@ -58,7 +69,12 @@ internal fun HomeScreen(
     )
 
     AnimatedContent {
-        MainContent(modifier, localUiState, homeUiState, navController)
+        MainContent(
+            modifier = modifier,
+            localUiState = localUiState,
+            homeUiState = homeUiState,
+            navController = navController
+        )
     }
 
     if (homeUiState is HomeUiState.Error) {
@@ -115,6 +131,7 @@ private fun MainContent(
                         }
                     }
                 }
+
                 else -> Unit
             }
         }
@@ -144,11 +161,12 @@ private fun MainContent(
                             CryptoCurrencyItem(
                                 rate = rate.rateUsd,
                                 symbol = rate.symbol,
-                                dollarPrice = rate.usdPrice?.formatToPrice() ?: ""
+                                localPrice = rate.usdPrice?.formatToPrice() ?: ""
                             ) { navController.navigateToDetail(rate.id) }
                         }
                     }
                 }
+
                 else -> Unit
             }
         }
