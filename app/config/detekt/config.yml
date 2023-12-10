@@ -478,7 +478,7 @@ formatting:
   active: true
   android: true
   NoWildcardImports:
-    active: true
+    active: false
 
 style:
   active: true
