@@ -1,6 +1,8 @@
 package com.client.data.network.di
 
-import com.client.data.network.di.BinDispatchers.*
+import com.client.data.network.di.BinDispatchers.Default
+import com.client.data.network.di.BinDispatchers.IO
+import com.client.data.network.di.BinDispatchers.Main
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
