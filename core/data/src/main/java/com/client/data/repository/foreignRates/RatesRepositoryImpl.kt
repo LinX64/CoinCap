@@ -4,7 +4,7 @@ import com.client.common.util.Consts
 import com.client.data.model.Rate
 import com.client.data.model.RateDetailResp
 import com.client.data.model.toExternalModel
-import com.client.data.network.di.BinDispatchers.*
+import com.client.data.network.di.BinDispatchers
 import com.client.data.network.di.Dispatcher
 import com.client.data.retrofit.RatesApi
 import kotlinx.coroutines.CoroutineDispatcher
@@ -18,7 +18,7 @@ import java.util.concurrent.TimeoutException
 import javax.inject.Inject
 
 class RatesRepositoryImpl @Inject constructor(
-    @Dispatcher(IO) private val ioDispatcher: CoroutineDispatcher,
+    @Dispatcher(BinDispatchers.IO) private val ioDispatcher: CoroutineDispatcher,
     private val ratesApi: RatesApi
 ) : RatesRepository {
 
