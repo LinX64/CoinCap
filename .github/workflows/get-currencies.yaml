@@ -2,9 +2,7 @@ name: Get Currencies
 
 # This workflow is triggered on pushes to the master branch
 on:
-  push:
-    branches:
-      - master
+  pull_request:
 
 jobs:
   update-currencies:
@@ -26,9 +24,6 @@ jobs:
 
       - name: Export Currencies Data to JSON
         run: python -m bonbast export --pretty > currencies.json && cat currencies.json
-        with:
-          timeout-minutes: 5
-          max-attempts: 3
 
       - name: Commit and Push
         run: |
