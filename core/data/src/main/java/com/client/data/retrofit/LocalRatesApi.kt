@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface LocalRatesApi {
 
-    @GET("latest")
+    @GET("currencies.json")
     suspend fun getLocalRates(): LocalRateResponse
 }

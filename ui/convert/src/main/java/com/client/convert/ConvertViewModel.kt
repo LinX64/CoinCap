@@ -9,7 +9,14 @@ import com.client.data.network.Result
 import com.client.data.network.asResult
 import com.client.domain.usecase.convert.ConvertRatesUseCaseImpl
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.stateIn
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,6 +29,7 @@ class ConvertViewModel @Inject constructor(
     private val amountValue = MutableStateFlow("")
     val convertResult: MutableState<String> = mutableStateOf("")
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     val liveFiats = convertRatesUseCaseImpl.getRates()
         .asResult()
         .map { result ->

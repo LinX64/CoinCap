@@ -2,7 +2,7 @@ package com.client.common.util
 
 object Consts {
     const val RATES_API = "https://api.coincap.io/v2/"
-    const val LOCAL_RATES_API = "https://bonbast-api.deta.dev/"
+    const val LOCAL_RATES_API = "https://raw.githubusercontent.com/linx64/CoinCap/master/"
     const val CryptoIconUrl = "https://coinicons-api.vercel.app/api/icon/"
 
     const val NORMAL = "Normal"
