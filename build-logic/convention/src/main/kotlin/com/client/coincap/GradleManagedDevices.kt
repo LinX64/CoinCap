@@ -6,7 +6,7 @@ import org.gradle.kotlin.dsl.invoke
 import java.util.*
 
 internal fun configureGradleManagedDevices(
-    commonExtension: CommonExtension<*, *, *, *>,
+    commonExtension: CommonExtension<*, *, *, *, *>
 ) {
     val deviceConfigs = listOf(
         DeviceConfig("Pixel 6", 31, "aosp")

@@ -36,7 +36,6 @@ import com.client.data.util.NetworkMonitor
 import com.client.designsystem.component.NavigationBarItem
 import com.client.designsystem.icon.Icon
 
-@OptIn(ExperimentalMaterial3Api::class,)
 @Composable
 fun CoinCapApp(
     networkMonitor: NetworkMonitor,
