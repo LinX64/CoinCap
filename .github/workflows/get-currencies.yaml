@@ -1,10 +1,7 @@
 name: Get Currencies
 
-# This workflow is triggered on pushes to the master branch
+# This workflow is triggered on pull requests.
 on:
-  push:
-    branches:
-      - master
   pull_request:
 
 jobs:
