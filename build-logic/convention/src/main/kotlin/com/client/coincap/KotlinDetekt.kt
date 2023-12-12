@@ -8,7 +8,7 @@ import org.gradle.api.Project
  */
 internal fun Project.configureDetekt(extension: DetektExtension) {
     extension.apply {
-        config = files("$rootDir/app/config/detekt/config.yml")
+        config.setFrom(files("$rootDir/app/config/detekt/config.yml"))
         parallel = true
         buildUponDefaultConfig = true
         autoCorrect = true

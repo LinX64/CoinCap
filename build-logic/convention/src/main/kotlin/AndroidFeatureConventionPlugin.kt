@@ -1,4 +1,3 @@
-
 import com.android.build.gradle.LibraryExtension
 import com.client.coincap.configureGradleManagedDevices
 import org.gradle.api.Plugin
