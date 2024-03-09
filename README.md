@@ -1,4 +1,4 @@
-# CoinCap
+# CoinCap - (I'm not maintaining this project anymore)
 
 Best practice (Modularization) - built entirely with Jetpack Compose and cutting-edge libraries like
 Coroutines, Flow, Hilt, Coil, etc.
